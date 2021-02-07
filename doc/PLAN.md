@@ -50,10 +50,12 @@ The initial screen will start with a “simulation menu” where the user will h
 
 This is one potential design for the XML file, shown working on two different types of simulations. In this design, ConfigParams and States are able to have sub-tags to let more than one parameter and more than one state be specified in the configuration. LayoutFile is also used to store a reference to a .txt file that can then be parsed into the game separately.
 
-
-
+![Fire XML 1](fire1.png "Sample XML File")
+![Segregation XML 1](segregation1.png "Sample XML File")
 
 This is another potential design for the XML file. This time, satisfied and probCatch are their own tags instead of being params in the ConfigParams tag. I don’t think that having them be their own tags is a better design, as these tags will be different for every XML file. With the first design, ConfigParams and Params can be used for every simulation. The other major difference is that the layout is specified in the XML file directly instead of having a reference to a .txt file. I don’t think that including the layout in the XML file versus in the .txt file will create any major differences in amount of code needed or difficulty of implementation, but it does condense the location of the data and prevent file not found errors from the .txt file.
+![Fire XML 2](fire2.png "Sample XML File")
+![Segregation XML 2](segregation2.png "Sample XML File")
 
 ## Design Details
 We will go over every class in detail.
