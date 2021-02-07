@@ -2,6 +2,8 @@ package cellsociety.grid;
 
 import cellsociety.cells.Cell;
 
+enum Type {FIRE, SEGREGATION, PERCOLATION, WATOR, LIFE}
+
 /**
  * Class that holds cell in proper formation for simulation.
  *
@@ -23,10 +25,20 @@ public class Grid {
    * @return Cell object located at indicated position in grid
    */
   public Cell getCellAtLocation(int i, int j) {
-    if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length) {
+    if (isInBounds(i, j)) {
       return grid[i][j];
     }
     return null;
+  }
+
+  public void setCellAtLocation(int i, int j, Cell cell) {
+    if (isInBounds(i, j)) {
+      grid[i][j] = cell;
+    }
+  }
+
+  public boolean isInBounds(int i, int j) {
+    return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
 
 }
