@@ -24,7 +24,7 @@ Additionally, we decided to implement the XML file as described below.
 ## User Interface
 
 
-![User Interface] (user_interface.png)
+![User Interface](user_interface.png)
 
 The initial screen will start with a “simulation menu” where the user will have the option to choose what simulation they want to do. There will be buttons for the user to click to start each type of simulation. When you start a simulation there will be a menu at the top with slower, faster, play and stop buttons.  At the bottom of the screen there will be an exit button that takes you to the starting screen with the simulation menu. This way you can switch simulations in the middle of running another simulation.
 
