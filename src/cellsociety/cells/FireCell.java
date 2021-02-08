@@ -17,12 +17,22 @@ public class FireCell extends Cell {
   private final int BURNING = 2;
 
   private int type;
+  private int row;
+  private int col;
   private Map<Type, String> typesToGraphics;
   private List<Cell> neighbors;
 
-  public FireCell(int type) {
-    this.neighbors = new ArrayList<Cell>();
+  public FireCell(int type, int row, int col) {
     this.type = type;
+    this.row = row;
+    this.col = col;
+  }
+
+  private void findNeighbors() {
+    int[][] neighborDirections = {{0, 1}, {1,0}, {-1, 0}, {0, -1}};
+    for (int i = 0; i < neighborDirections.length; i++) {
+
+    }
   }
 
   /**
@@ -32,5 +42,9 @@ public class FireCell extends Cell {
    */
   public List<Cell> getNeighbors() {
     return neighbors;
+  }
+
+  public int[] getCoordinates() {
+    return new int[]{row, col};
   }
 }

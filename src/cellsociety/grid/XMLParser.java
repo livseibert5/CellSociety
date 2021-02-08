@@ -1,7 +1,6 @@
 package cellsociety.grid;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import javax.xml.parsers.ParserConfigurationException;
@@ -48,11 +47,9 @@ public class XMLParser {
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));
-
-    GridCreator gridCreator = new GridCreator(Integer.parseInt(retrieveTextContent("Width")),
+    Grid grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
         Type.valueOf(retrieveTextContent("Type")));
-    grid = gridCreator.getGrid();
   }
 
   private String retrieveTextContent(String tagName) {

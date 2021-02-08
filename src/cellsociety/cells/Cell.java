@@ -10,14 +10,14 @@ import cellsociety.grid.Type;
  */
 public abstract class Cell {
 
-  private Type type;
+  private int type;
 
   /**
    * Accesses simulation type of cell.
    *
    * @return type of cell in simulation
    */
-  public Type getType() {
+  public int getType() {
     return type;
   }
 
@@ -28,4 +28,5 @@ public abstract class Cell {
    */
   abstract public List<Cell> getNeighbors();
 
+  public abstract int[] getCoordinates();
 }

@@ -1,6 +1,10 @@
 package cellsociety.grid;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.FireCell;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class that holds cell in proper formation for simulation.
@@ -9,10 +13,32 @@ import cellsociety.cells.Cell;
  */
 public class Grid {
 
-  Cell[][] grid;
+  private Cell[][] grid;
+  private Type type;
+  private int width;
+  private int height;
 
-  public Grid(int width, int height) {
+  public Grid(int width, int height, String fileName, Type type) {
     grid = new Cell[width][height];
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    readFile(fileName);
+  }
+
+  private void readFile(String fileName) {
+    Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
+    int row = 0;
+    while (reader.hasNextLine()) {
+      String line = reader.nextLine();
+      String[] gridRow = line.split("");
+      for (int col = 0; col < gridRow.length; col++) {
+        if (type == Type.FIRE) {
+          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col));
+        }
+      }
+      row++;
+    }
   }
 
   /**
@@ -39,6 +65,17 @@ public class Grid {
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
+    }
+  }
+
+  public void getCellNeighbors(Cell cell, int[][] directions) {
+    int[] location = cell.getCoordinates();
+    List<Cell> neighbors = new ArrayList<>();
+    for (int i = 0; i < directions.length; i++) {
+      Cell neighbor = getCellAtLocation(location[0] + directions[i][0], location[1] + directions[i][1]);
+      if (neighbor != null) {
+        neighbors.add(neighbor);
+      }
     }
   }
 
