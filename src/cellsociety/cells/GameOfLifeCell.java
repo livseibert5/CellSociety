@@ -11,6 +11,23 @@ public class GameOfLifeCell extends Cell {
   }
 
   public void determineNextState() {
+    int livingNeighbors = countLiveNeighbors();
+    if (state == ALIVE && (livingNeighbors < 2 || livingNeighbors >= 4)) {
+      nextState = DEAD;
+    } else if (state == ALIVE || (state == DEAD && livingNeighbors == 3)) {
+      nextState = ALIVE;
+    } else if (state == DEAD) {
+      nextState = DEAD;
+    }
+  }
 
+  private int countLiveNeighbors() {
+    int livingNeighbors = 0;
+    for (Cell neighbor: neighbors) {
+      if (neighbor.getState() == ALIVE) {
+        livingNeighbors++;
+      }
+    }
+    return livingNeighbors;
   }
 }
