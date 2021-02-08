@@ -1,5 +1,7 @@
 package cellsociety.cells;
 
+import cellsociety.grid.Type;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,17 @@ import java.util.List;
  */
 public class FireCell extends Cell {
 
+  private final int EMPTY = 0;
+  private final int TREE = 1;
+  private final int BURNING = 2;
+
+  private int type;
+  private Map<Type, String> typesToGraphics;
   private List<Cell> neighbors;
 
-  public FireCell() {
-    neighbors = new ArrayList<Cell>();
+  public FireCell(int type) {
+    this.neighbors = new ArrayList<Cell>();
+    this.type = type;
   }
 
   /**

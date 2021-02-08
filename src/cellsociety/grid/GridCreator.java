@@ -31,7 +31,7 @@ public class GridCreator {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         if (type == Type.FIRE) {
-          grid.setCellAtLocation(row, col, new FireCell());
+          grid.setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col])));
         }
       }
       row++;
