@@ -17,8 +17,16 @@ public class FireCell extends Cell {
 
   private Map<Type, String> typesToGraphics;
 
-  public FireCell(int type, int row, int col, double probCatch) {
-    super(type, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
+  /**
+   * Constructor for fire cell, uses super constructor and initializes probCatch.
+   *
+   * @param state initial state of cell
+   * @param row row of cell
+   * @param col col of cell
+   * @param probCatch probability a tree will catch fire if its neighbor is burning
+   */
+  public FireCell(int state, int row, int col, double probCatch) {
+    super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
     this.probCatch = probCatch;
   }
 
