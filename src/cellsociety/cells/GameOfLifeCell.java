@@ -9,4 +9,8 @@ public class GameOfLifeCell extends Cell {
     super(type, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
   }
+
+  public void determineNextState() {
+
+  }
 }

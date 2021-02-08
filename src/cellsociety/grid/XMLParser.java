@@ -49,7 +49,7 @@ public class XMLParser {
     simulationData.put("Description", retrieveTextContent("Description"));
     Grid grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        Type.valueOf(retrieveTextContent("Type")));
+        Type.valueOf(retrieveTextContent("Type")), Double.parseDouble(retrieveTextContent("Param")));
   }
 
   private String retrieveTextContent(String tagName) {

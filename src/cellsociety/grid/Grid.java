@@ -2,6 +2,10 @@ package cellsociety.grid;
 
 import cellsociety.cells.Cell;
 import cellsociety.cells.FireCell;
+import cellsociety.cells.GameOfLifeCell;
+import cellsociety.cells.PercolationCell;
+import cellsociety.cells.SegregationCell;
+import cellsociety.cells.WatorCell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,12 +21,14 @@ public class Grid {
   private Type type;
   private int width;
   private int height;
+  private double param;
 
-  public Grid(int width, int height, String fileName, Type type) {
+  public Grid(int width, int height, String fileName, Type type, double param) {
     grid = new Cell[width][height];
     this.type = type;
     this.width = width;
     this.height = height;
+    this.param = param;
     readFile(fileName);
     initializeCells();
   }
@@ -35,7 +41,15 @@ public class Grid {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         if (type == Type.FIRE) {
-          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col));
+          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col, param));
+        } else if (type == Type.LIFE) {
+          setCellAtLocation(row, col, new GameOfLifeCell(Integer.parseInt(gridRow[col]), row, col));
+        } else if (type == Type.PERCOLATION) {
+          setCellAtLocation(row, col, new PercolationCell(Integer.parseInt(gridRow[col]), row, col));
+        } else if (type == Type.WATOR) {
+          setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col));
+        } else if (type == Type.SEGREGATION) {
+          setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col));
         }
       }
       row++;
@@ -56,13 +70,6 @@ public class Grid {
     return null;
   }
 
-  /**
-   * Puts cell object in simulation grid at row i and col j.
-   *
-   * @param i row of cell
-   * @param j col of cell
-   * @param cell Cell object to put at given location
-   */
   private void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;

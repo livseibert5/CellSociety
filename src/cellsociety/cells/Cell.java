@@ -1,7 +1,6 @@
 package cellsociety.cells;
 
 import java.util.List;
-import cellsociety.grid.Type;
 
 /**
  * Superclass that all cell types will inherit from.
@@ -10,14 +9,23 @@ import cellsociety.grid.Type;
  */
 public abstract class Cell {
 
-  private int type;
-  private int row;
-  private int col;
-  private List<Cell> neighbors;
-  private int[][] neighborDirections;
+  protected int state;
+  protected int nextState;
+  protected int row;
+  protected int col;
+  protected List<Cell> neighbors;
+  protected int[][] neighborDirections;
 
-  public Cell(int type, int row, int col, int[][] neighborDirections) {
-    this.type = type;
+  /**
+   * Cell constructor used to set basic properties of cell object.
+   *
+   * @param state              initial state of cell
+   * @param row                row of cell
+   * @param col                col of cell
+   * @param neighborDirections directions to neighboring cells
+   */
+  public Cell(int state, int row, int col, int[][] neighborDirections) {
+    this.state = state;
     this.row = row;
     this.col = col;
     this.neighborDirections = neighborDirections;
@@ -28,24 +36,38 @@ public abstract class Cell {
    *
    * @return type of cell in simulation
    */
-  public int getType() {
-    return type;
+  public int getState() {
+    return state;
   }
 
   /**
-   * Accesses cell's neighbors so its state can be updated.
-   *
-   * @return list of cell's neighboring cells
+   * Sets a cell to its next state.
    */
-  public List<Cell> getNeighbors() {
-    return neighbors;
+  public void updateState() {
+    state = nextState;
   }
 
+  /**
+   * Lets the grid determine a cell's neighbors and pass the resulting list back to the cell.
+   *
+   * @param neighbors list of adjacent cells
+   */
   public void setNeighbors(List<Cell> neighbors) {
     this.neighbors = neighbors;
   }
 
+  /**
+   * Each cell type has its own rules for which neighbors matter when determining the next state.
+   * These rules are accessible here so that grid can find and return the correct neighbors.
+   *
+   * @return directions to cell's neighbors
+   */
   public int[][] getNeighborDirections() {
     return neighborDirections;
   }
+
+  /**
+   * Calculate next state of cell depending on states of neighboring cells.
+   */
+  public abstract void determineNextState();
 }

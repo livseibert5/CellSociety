@@ -4,7 +4,7 @@
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
   <Description>Simulate how fire spreads over land.</Description>
-  <probCatch>.25</probCatch>
+  <Param>.25</Param>
   <Width>10</Width>
   <Height>10</Height>
   <LayoutFile>burning.txt</LayoutFile>
