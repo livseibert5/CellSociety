@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>FIRE</Type>
+  <Title>Spreading of Fire</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate how fire spreads over land.</Description>
+  <Param>.25</Param>
+  <Width>11</Width>
+  <Height>5</Height>
+  <LayoutFile>fireline.txt</LayoutFile>
+</Simulation>

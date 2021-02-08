@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>LIFE</Type>
+  <Title>Game of Life</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate life and death of cells.</Description>
+  <Width>6</Width>
+  <Height>6</Height>
+  <LayoutFile>gameoflifebeacon.txt</LayoutFile>
+</Simulation>
