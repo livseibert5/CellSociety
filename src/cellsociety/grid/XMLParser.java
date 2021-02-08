@@ -36,6 +36,13 @@ public class XMLParser {
     root = doc.getDocumentElement();
   }
 
+  /**
+   * Parses the data from the XML file into appropriate data structures.
+   *
+   * @throws ParserConfigurationException
+   * @throws SAXException
+   * @throws IOException
+   */
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
     simulationData.put("Title", retrieveTextContent("Title"));
@@ -53,10 +60,20 @@ public class XMLParser {
     return node.item(0).getTextContent();
   }
 
+  /**
+   * Accesses grid created by this class.
+   *
+   * @return new grid object
+   */
   public Grid getGrid() {
     return grid;
   }
 
+  /**
+   * Accesses simulation info parsed from XML file.
+   *
+   * @return simulationData HashMap with xml data
+   */
   public Map<String, String> getInfo() {
     return simulationData;
   }

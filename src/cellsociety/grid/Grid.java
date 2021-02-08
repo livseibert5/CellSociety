@@ -29,13 +29,20 @@ public class Grid {
     return null;
   }
 
+  /**
+   * Puts cell object in simulation grid at row i and col j.
+   *
+   * @param i row of cell
+   * @param j col of cell
+   * @param cell Cell object to put at given location
+   */
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
     }
   }
 
-  public boolean isInBounds(int i, int j) {
+  private boolean isInBounds(int i, int j) {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
 
