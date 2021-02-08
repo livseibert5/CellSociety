@@ -1,6 +1,7 @@
 package cellsociety.cells;
 
 import java.util.List;
+import cellsociety.grid.Type;
 
 /**
  * Superclass that all cell types will inherit from.
@@ -9,14 +10,14 @@ import java.util.List;
  */
 public abstract class Cell {
 
-  private int type;
+  private Type type;
 
   /**
    * Accesses simulation type of cell.
    *
    * @return type of cell in simulation
    */
-  public int getType() {
+  public Type getType() {
     return type;
   }
 

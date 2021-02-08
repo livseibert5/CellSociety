@@ -2,8 +2,6 @@ package cellsociety.grid;
 
 import cellsociety.cells.Cell;
 
-enum Type {FIRE, SEGREGATION, PERCOLATION, WATOR, LIFE}
-
 /**
  * Class that holds cell in proper formation for simulation.
  *

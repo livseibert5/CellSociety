@@ -1,24 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Simulation>
   <Type>FIRE</Type>
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
   <Description>Simulate how fire spreads over land.</Description>
   <probCatch>.25</probCatch>
-  <States>
-    <State>
-      <Name>EMPTY</Name>
-      <Value>0</Value>
-    </State>
-    <State>
-      <Name>TREE</Name>
-      <Value>1</Value>
-    </State>
-    <State>
-      <Name>BURNING</Name>
-      <Value>2</Value>
-    </State>
-  </States>
-  <Width>600</Width>
-  <Height>600</Height>
+  <Width>10</Width>
+  <Height>10</Height>
   <LayoutFile>burning.txt</LayoutFile>
 </Simulation>
