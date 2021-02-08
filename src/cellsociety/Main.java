@@ -10,7 +10,7 @@ public class Main {
      * Start of the program.
      */
     public static void main (String[] args) {
-        XMLParser parser = new XMLParser("fire.xml");
+        XMLParser parser = new XMLParser("firestandard.xml");
         try {
             parser.readFile();
         } catch (Exception e) {

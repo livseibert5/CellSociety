@@ -5,7 +5,7 @@
   <Author>Team 9</Author>
   <Description>Simulate how fire spreads over land.</Description>
   <Param>.25</Param>
-  <Width>10</Width>
-  <Height>10</Height>
-  <LayoutFile>burning.txt</LayoutFile>
+  <Width>11</Width>
+  <Height>5</Height>
+  <LayoutFile>fireline.txt</LayoutFile>
 </Simulation>
