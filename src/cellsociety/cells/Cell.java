@@ -11,6 +11,17 @@ import cellsociety.grid.Type;
 public abstract class Cell {
 
   private int type;
+  private int row;
+  private int col;
+  private List<Cell> neighbors;
+  private int[][] neighborDirections;
+
+  public Cell(int type, int row, int col, int[][] neighborDirections) {
+    this.type = type;
+    this.row = row;
+    this.col = col;
+    this.neighborDirections = neighborDirections;
+  }
 
   /**
    * Accesses simulation type of cell.
@@ -26,7 +37,15 @@ public abstract class Cell {
    *
    * @return list of cell's neighboring cells
    */
-  abstract public List<Cell> getNeighbors();
+  public List<Cell> getNeighbors() {
+    return neighbors;
+  }
 
-  public abstract int[] getCoordinates();
+  public void setNeighbors(List<Cell> neighbors) {
+    this.neighbors = neighbors;
+  }
+
+  public int[][] getNeighborDirections() {
+    return neighborDirections;
+  }
 }

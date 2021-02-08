@@ -24,6 +24,7 @@ public class Grid {
     this.width = width;
     this.height = height;
     readFile(fileName);
+    initializeCells();
   }
 
   private void readFile(String fileName) {
@@ -62,19 +63,28 @@ public class Grid {
    * @param j col of cell
    * @param cell Cell object to put at given location
    */
-  public void setCellAtLocation(int i, int j, Cell cell) {
+  private void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
     }
   }
 
-  public void getCellNeighbors(Cell cell, int[][] directions) {
-    int[] location = cell.getCoordinates();
+  private void setNeighbors(int row, int col, Cell cell) {
+    int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
     for (int i = 0; i < directions.length; i++) {
-      Cell neighbor = getCellAtLocation(location[0] + directions[i][0], location[1] + directions[i][1]);
+      Cell neighbor = getCellAtLocation(row + directions[i][0], col + directions[i][1]);
       if (neighbor != null) {
         neighbors.add(neighbor);
+      }
+    }
+    cell.setNeighbors(neighbors);
+  }
+
+  private void initializeCells() {
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        setNeighbors(i, j, grid[i][j]);
       }
     }
   }
