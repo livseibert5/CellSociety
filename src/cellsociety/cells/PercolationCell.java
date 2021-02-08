@@ -10,7 +10,20 @@ public class PercolationCell extends Cell {
     super(type, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
   }
-  public void determineNextState() {
 
+  public void determineNextState() {
+    if (state == BLOCKED) {
+      nextState = BLOCKED;
+    } else if (state == PERCOLATED) {
+      nextState = PERCOLATED;
+    } else if (state == OPEN) {
+      for (Cell neighbor: neighbors) {
+        if (neighbor.getState() == PERCOLATED) {
+          nextState = PERCOLATED;
+          return;
+        }
+      }
+      nextState = OPEN;
+    }
   }
 }
