@@ -1,6 +1,4 @@
-package cellsociety.controller;
-
-import cellsociety.grid.Grid;
+package cellsociety;
 
 public class FireController extends Controller{
 

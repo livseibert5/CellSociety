@@ -1,5 +1,4 @@
-package cellsociety.controller;
-import cellsociety.grid.Grid;
+package cellsociety;
 
 public abstract class Controller {
 
