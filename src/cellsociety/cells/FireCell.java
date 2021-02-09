@@ -19,15 +19,20 @@ public class FireCell extends Cell {
 
   /**
    * Constructor for fire cell, uses super constructor and initializes probCatch.
+   * If no probCatch value specified in XML, it is set to .30 on default.
    *
    * @param state initial state of cell
    * @param row row of cell
    * @param col col of cell
-   * @param probCatch probability a tree will catch fire if its neighbor is burning
+   * @param params map of params needed for simulation
    */
-  public FireCell(int state, int row, int col, double probCatch) {
+  public FireCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
-    this.probCatch = probCatch;
+    if (params.containsKey("probCatch")) {
+      this.probCatch = params.get("probCatch");
+    } else {
+      this.probCatch = .30;
+    }
   }
 
   /**
