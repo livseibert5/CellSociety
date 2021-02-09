@@ -47,9 +47,15 @@ public class XMLParser {
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));
-    Grid grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        Type.valueOf(retrieveTextContent("Type")), Double.parseDouble(retrieveTextContent("Param")));
+    double param;
+    try {
+      param = Double.parseDouble(retrieveTextContent("Param"));
+    } catch (NullPointerException e) {
+      param = 0.0;
+    }
+    grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+          Type.valueOf(retrieveTextContent("Type")), param);
   }
 
   private String retrieveTextContent(String tagName) {
