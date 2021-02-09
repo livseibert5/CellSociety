@@ -4,7 +4,12 @@
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
   <Description>Simulate how fire spreads over land.</Description>
-  <Param>.25</Param>
+  <ConfigParams>
+    <Param>
+      <Name>probCatch</Name>
+      <Value>.25</Value>
+    </Param>
+  </ConfigParams>
   <Width>11</Width>
   <Height>11</Height>
   <LayoutFile>firecorners.txt</LayoutFile>

@@ -1,5 +1,7 @@
 package cellsociety.cells;
 
+import java.util.Map;
+
 /**
  * Cell class for segregation simulation cells.
  *
@@ -10,23 +12,28 @@ public class SegregationCell extends Cell {
   private final int TYPEX = 0;
   private final int TYPEO = 1;
   private final int EMPTY = 2;
+  private final int MOVE = 3;
   private final double satisfied;
 
   private boolean isSatisfied = false;
 
   /**
    * Constructor for simulation cells, uses super constructor and sets the satisfied
-   * parameter.
+   * parameter. .30 is the default value for satisfied if no value specified.
    *
    * @param state initial state of cell
    * @param row row location of cell
    * @param col column location of cell
-   * @param satisfied % of like neighbors needed to be satisfied
+   * @param params map of params needed for simulation
    */
-  public SegregationCell(int state, int row, int col, double satisfied) {
+  public SegregationCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
-    this.satisfied = satisfied;
+    if (params.containsKey("satisfied")) {
+      this.satisfied = params.get("satisfied");
+    } else {
+      this.satisfied = .30;
+    }
   }
 
   /**
@@ -37,6 +44,8 @@ public class SegregationCell extends Cell {
     isSatisfied = percentLikeNeighbors >= satisfied;
     if (isSatisfied) {
       nextState = state;
+    } else {
+      nextState = MOVE;
     }
   }
 

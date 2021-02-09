@@ -1,5 +1,8 @@
 package cellsociety.cells;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Cell class for Wa-Tor simulation cells.
  *
@@ -10,6 +13,11 @@ public class WatorCell extends Cell {
   private int EMPTY = 0;
   private int PREDATOR = 1;
   private int PREY = 2;
+
+  private int breedTime;
+  private int breedTimeCounter;
+  private int energy;
+  private int offspringEnergy;
 
   /**
    * Constructor for Wa-Tor simulation cells, uses super constructor.
@@ -23,6 +31,15 @@ public class WatorCell extends Cell {
   }
 
   public void determineNextState() {
+    if (state == PREY) {
+      List<Cell> freeSpaces = new ArrayList<>();
+      for (Cell cell: neighbors) {
+        if (cell.getState() == EMPTY) {
+          freeSpaces.add(cell);
+        }
+      }
+    } else if (state == PREDATOR) {
 
+    }
   }
 }

@@ -1,5 +1,8 @@
 package cellsociety.grid;
 
+import java.util.ArrayList;
+import org.w3c.dom.Node;
+import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
@@ -47,9 +50,28 @@ public class XMLParser {
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));
-    Grid grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+    Map<String, Double> params = new HashMap<>();
+    Type type = Type.valueOf(retrieveTextContent("Type"));
+    if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
+      params = getSimulationParameters();
+    }
+    grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        Type.valueOf(retrieveTextContent("Type")), Double.parseDouble(retrieveTextContent("Param")));
+        type, params);
+  }
+
+  private Map<String, Double> getSimulationParameters() {
+    Map<String, Double> params = new HashMap<>();
+    NodeList node = root.getElementsByTagName("Param");
+    for (int i = 0; i < node.getLength(); i++) {
+      Node currNode = node.item(i);
+      Element nodeElement = (Element) currNode;
+      String name = nodeElement.getElementsByTagName("Name").item(0).getTextContent();
+      Double val = Double
+          .parseDouble(nodeElement.getElementsByTagName("Value").item(0).getTextContent());
+      params.put(name, val);
+    }
+    return params;
   }
 
   private String retrieveTextContent(String tagName) {

@@ -8,6 +8,7 @@ import cellsociety.cells.SegregationCell;
 import cellsociety.cells.WatorCell;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ public class Grid {
   private Type type;
   private int width;
   private int height;
-  private double param;
+  private Map<String, Double> params;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications
@@ -31,14 +32,14 @@ public class Grid {
    * @param height number of rows of cell
    * @param fileName .txt file with initial layout of grid
    * @param type type of simulation to run
-   * @param param any parameter needed for running the simulation
+   * @param params map of parameters needed for simulation
    */
-  public Grid(int width, int height, String fileName, Type type, double param) {
+  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params) {
     grid = new Cell[height][width];
     this.type = type;
     this.width = width;
     this.height = height;
-    this.param = param;
+    this.params = params;
     readFile(fileName);
     initializeCells();
   }
@@ -51,7 +52,7 @@ public class Grid {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         if (type == Type.FIRE) {
-          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col, param));
+          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col, params));
         } else if (type == Type.LIFE) {
           setCellAtLocation(row, col, new GameOfLifeCell(Integer.parseInt(gridRow[col]), row, col));
         } else if (type == Type.PERCOLATION) {
@@ -59,7 +60,7 @@ public class Grid {
         } else if (type == Type.WATOR) {
           setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col));
         } else if (type == Type.SEGREGATION) {
-          setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col, param));
+          setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col, params));
         }
       }
       row++;
