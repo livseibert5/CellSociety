@@ -4,6 +4,16 @@
   <Title>Predator Prey Model</Title>
   <Author>Team 9</Author>
   <Description>Simulate predation.</Description>
+  <ConfigParams>
+    <Param>
+      <Name>breedTime</Name>
+      <Value>4</Value>
+    </Param>
+    <Param>
+      <Name>offspringEnergy</Name>
+      <Value>7</Value>
+    </Param>
+  </ConfigParams>
   <Width>8</Width>
   <Height>8</Height>
   <LayoutFile>predatorprey1.txt</LayoutFile>
