@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>WATOR</Type>
+  <Title>Predator Prey Model</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate predation.</Description>
+  <Width>8</Width>
+  <Height>8</Height>
+  <LayoutFile>predatorprey1.txt</LayoutFile>
+</Simulation>

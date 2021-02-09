@@ -1,8 +1,6 @@
 package cellsociety.grid;
 
-import java.util.ArrayList;
 import org.w3c.dom.Node;
-import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
@@ -55,9 +53,15 @@ public class XMLParser {
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();
     }
-    grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params);
+    if (type == Type.WATOR) {
+      grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+          type, params);
+    } else {
+      grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+          type, params);
+    }
   }
 
   private Map<String, Double> getSimulationParameters() {
