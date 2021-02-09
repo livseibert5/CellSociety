@@ -14,6 +14,11 @@ public class WatorCell extends Cell {
   private int PREDATOR = 1;
   private int PREY = 2;
 
+  private int breedTime;
+  private int breedTimeCounter;
+  private int energy;
+  private int offspringEnergy;
+
   /**
    * Constructor for Wa-Tor simulation cells, uses super constructor.
    *
