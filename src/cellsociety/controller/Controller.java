@@ -21,6 +21,11 @@ public abstract class Controller {
       }
     }
   }
+
+  /**
+   * default method for simulationEnded
+   * @returns true if state has not changed for any cell, false otherwise
+   */
   public boolean simulationEnded()  {
     int[] dims = oldGrid.getSizeOfGrid();
 
