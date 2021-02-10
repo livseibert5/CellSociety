@@ -1,6 +1,7 @@
 package cellsociety.grid;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.EmptyCell;
 import cellsociety.cells.FireCell;
 import cellsociety.cells.GameOfLifeCell;
 import cellsociety.cells.PercolationCell;
@@ -102,6 +103,9 @@ public class Grid {
   private void initializeCells() {
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
+        if (grid[i][j] == null) {
+          setCellAtLocation(i, j, new EmptyCell(0, i, j));
+        }
         setNeighbors(i, j, grid[i][j]);
       }
     }
