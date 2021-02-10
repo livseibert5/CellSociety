@@ -21,7 +21,18 @@ public abstract class Controller {
       }
     }
   }
-  public abstract boolean simulationEnded();
+  public boolean simulationEnded()  {
+    int[] dims = oldGrid.getSizeOfGrid();
+
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j< dims[1]; j++)  {
+        if (oldGrid.getCellAtLocation(i, j).getState() != newGrid.getCellAtLocation(i, j).getState()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   protected Grid getNewGrid()  {
     return newGrid;
