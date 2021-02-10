@@ -109,7 +109,6 @@ public class Grid {
           setCellAtLocation(i, j, new EmptyCell(0, i, j));
         }
         setNeighbors(i, j, grid[i][j]);
-        System.out.println(grid[i][j]);
       }
     }
   }

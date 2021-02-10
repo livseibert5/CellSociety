@@ -46,13 +46,13 @@ public class XMLParser {
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
     parseSimulationData();
-    Map<String, Double> params = new HashMap<>();
     Type type;
     try {
       type = Type.valueOf(retrieveTextContent("Type"));
     } catch (IllegalArgumentException e) {
       type = Type.EMPTY;
     }
+    Map<String, Double> params = new HashMap<>();
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();
     }
@@ -70,15 +70,23 @@ public class XMLParser {
   }
 
   private void createGrid(Type type, Map<String, Double> params) {
-    grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params);
+    try {
+      grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+          type, params);
+    } catch (NumberFormatException e) {
+      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params);
+    }
   }
 
   private void createToroidalGrid(Type type, Map<String, Double> params) {
-    grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params);
+    try {
+      grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+          type, params);
+    } catch (NumberFormatException e) {
+      grid = new ToroidalGrid(8, 8, retrieveTextContent("LayoutFile"), type, params);
+    }
   }
 
   private Map<String, Double> getSimulationParameters() {
@@ -87,10 +95,14 @@ public class XMLParser {
     for (int i = 0; i < node.getLength(); i++) {
       Node currNode = node.item(i);
       Element nodeElement = (Element) currNode;
-      String name = nodeElement.getElementsByTagName("Name").item(0).getTextContent();
-      Double val = Double
-          .parseDouble(nodeElement.getElementsByTagName("Value").item(0).getTextContent());
-      params.put(name, val);
+      try {
+        String name = nodeElement.getElementsByTagName("Name").item(0).getTextContent();
+        Double val = Double
+            .parseDouble(nodeElement.getElementsByTagName("Value").item(0).getTextContent());
+        params.put(name, val);
+      } catch (Exception e) {
+        return params;
+      }
     }
     return params;
   }
