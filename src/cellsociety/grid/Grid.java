@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class Grid {
 
-  private Cell[][] grid;
+  protected Cell[][] grid;
   private Type type;
   private int width;
   private int height;
@@ -58,7 +58,7 @@ public class Grid {
         } else if (type == Type.PERCOLATION) {
           setCellAtLocation(row, col, new PercolationCell(Integer.parseInt(gridRow[col]), row, col));
         } else if (type == Type.WATOR) {
-          setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col));
+          setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col, params));
         } else if (type == Type.SEGREGATION) {
           setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col, params));
         }
@@ -107,8 +107,7 @@ public class Grid {
     }
   }
 
-  private boolean isInBounds(int i, int j) {
+  protected boolean isInBounds(int i, int j) {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
-
 }

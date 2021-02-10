@@ -10,7 +10,7 @@ public class Main {
      * Start of the program.
      */
     public static void main (String[] args) {
-        XMLParser parser = new XMLParser("fireline.xml");
+        XMLParser parser = new XMLParser("predatorprey1.xml");
         try {
             parser.readFile();
         } catch (Exception e) {
