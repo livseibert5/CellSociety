@@ -45,23 +45,40 @@ public class XMLParser {
    */
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
-    simulationData.put("Title", retrieveTextContent("Title"));
-    simulationData.put("Author", retrieveTextContent("Author"));
-    simulationData.put("Description", retrieveTextContent("Description"));
+    parseSimulationData();
     Map<String, Double> params = new HashMap<>();
-    Type type = Type.valueOf(retrieveTextContent("Type"));
+    Type type;
+    try {
+      type = Type.valueOf(retrieveTextContent("Type"));
+    } catch (IllegalArgumentException e) {
+      type = Type.EMPTY;
+    }
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();
     }
     if (type == Type.WATOR) {
-      grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-          type, params);
+      createToroidalGrid(type, params);
     } else {
-      grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-          type, params);
+      createGrid(type, params);
     }
+  }
+
+  private void parseSimulationData() {
+    simulationData.put("Title", retrieveTextContent("Title"));
+    simulationData.put("Author", retrieveTextContent("Author"));
+    simulationData.put("Description", retrieveTextContent("Description"));
+  }
+
+  private void createGrid(Type type, Map<String, Double> params) {
+    grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        type, params);
+  }
+
+  private void createToroidalGrid(Type type, Map<String, Double> params) {
+    grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        type, params);
   }
 
   private Map<String, Double> getSimulationParameters() {
@@ -79,8 +96,12 @@ public class XMLParser {
   }
 
   private String retrieveTextContent(String tagName) {
-    NodeList node = root.getElementsByTagName(tagName);
-    return node.item(0).getTextContent();
+    try {
+      NodeList node = root.getElementsByTagName(tagName);
+      return node.item(0).getTextContent();
+    } catch (NullPointerException e) {
+      return tagName;
+    }
   }
 
   /**

@@ -62,6 +62,8 @@ public class Grid {
           setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col, params));
         } else if (type == Type.SEGREGATION) {
           setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col, params));
+        } else {
+          setCellAtLocation(row, col, new EmptyCell(0, row, col));
         }
       }
       row++;
@@ -107,6 +109,7 @@ public class Grid {
           setCellAtLocation(i, j, new EmptyCell(0, i, j));
         }
         setNeighbors(i, j, grid[i][j]);
+        System.out.println(grid[i][j]);
       }
     }
   }

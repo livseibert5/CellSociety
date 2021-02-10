@@ -10,7 +10,7 @@ public class Main {
      * Start of the program.
      */
     public static void main (String[] args) {
-        XMLParser parser = new XMLParser("gameoflifebad.xml");
+        XMLParser parser = new XMLParser("typelesssimulation.xml");
         try {
             parser.readFile();
         } catch (Exception e) {

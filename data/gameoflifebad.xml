@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simulation>
   <Type>LIFE</Type>
-  <Title>Game of Life</Title>
   <Author>Team 9</Author>
   <Description>Sets grid to be much bigger than the input file to test XMLParser error handling.</Description>
   <Width>12</Width>
