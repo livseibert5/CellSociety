@@ -17,6 +17,10 @@ public abstract class Controller {
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j< dims[1]; j++)  {
         newGrid.getCellAtLocation(i, j).determineNextState();
+      }
+    }
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j< dims[1]; j++)  {
         newGrid.getCellAtLocation(i, j).updateState();
       }
     }
