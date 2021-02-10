@@ -90,7 +90,7 @@ public class Grid {
     return null;
   }
 
-  private void setCellAtLocation(int i, int j, Cell cell) {
+  public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
     }
