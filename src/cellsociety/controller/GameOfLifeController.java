@@ -10,8 +10,5 @@ public class GameOfLifeController extends Controller{
   }
 
 
-  @Override
-  public boolean simulationEnded() {
-    return false;
-  }
+
 }
