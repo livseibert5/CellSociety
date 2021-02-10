@@ -7,10 +7,10 @@
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>
-      <Value>.25</Value>
+      <Value>.55</Value>
     </Param>
   </ConfigParams>
-  <Width>11</Width>
-  <Height>11</Height>
+  <Width>25</Width>
+  <Height>25</Height>
   <LayoutFile>firestandard.txt</LayoutFile>
 </Simulation>
