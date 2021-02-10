@@ -5,7 +5,7 @@ Livia Seibert (las120)
 Billy Luqiu (wyl6)
 Lola Maglione (cm524)
 
-## Overview
+##base Overview
 
 We will use the model view controller interface. We want a grid of cells whose rules come from the model that is being updated by a controller and is being displayed on a user interface at regular intervals.
 
