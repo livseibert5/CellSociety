@@ -21,14 +21,13 @@ public class WatorCell extends Cell {
   private double offspringEnergy;
 
   /**
-   * Constructor for Wa-Tor simulation cells, uses super constructor. Checks if
-   * parameters breedTime (time before prey can produce offspring) and offspringEnergy
-   * (energy predator needs before it can breed) are specified in the XML file, otherwise
-   * it sets them to a default value of 5.0.
+   * Constructor for Wa-Tor simulation cells, uses super constructor. Checks if parameters breedTime
+   * (time before prey can produce offspring) and offspringEnergy (energy predator needs before it
+   * can breed) are specified in the XML file, otherwise it sets them to a default value of 5.0.
    *
    * @param state initial state of Wa-Tor cell
-   * @param row row location of cell
-   * @param col col location of cell
+   * @param row   row location of cell
+   * @param col   col location of cell
    */
   public WatorCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
@@ -47,7 +46,7 @@ public class WatorCell extends Cell {
   public void determineNextState() {
     if (state == PREY) {
       List<Cell> freeSpaces = new ArrayList<>();
-      for (Cell cell: neighbors) {
+      for (Cell cell : neighbors) {
         if (cell.getState() == EMPTY) {
           freeSpaces.add(cell);
         }

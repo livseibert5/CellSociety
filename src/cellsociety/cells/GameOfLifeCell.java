@@ -14,8 +14,8 @@ public class GameOfLifeCell extends Cell {
    * Constructor for game of life cell, uses super constructor.
    *
    * @param state initial state of cell
-   * @param row row location of cell
-   * @param col col location of cell
+   * @param row   row location of cell
+   * @param col   col location of cell
    */
   public GameOfLifeCell(int state, int row, int col) {
     super(state, row, col,
@@ -23,8 +23,7 @@ public class GameOfLifeCell extends Cell {
   }
 
   /**
-   * Calculates next state of cell based on the number of living neighbors
-   * the cell has.
+   * Calculates next state of cell based on the number of living neighbors the cell has.
    */
   public void determineNextState() {
     int livingNeighbors = countLiveNeighbors();
@@ -39,7 +38,7 @@ public class GameOfLifeCell extends Cell {
 
   private int countLiveNeighbors() {
     int livingNeighbors = 0;
-    for (Cell neighbor: neighbors) {
+    for (Cell neighbor : neighbors) {
       if (neighbor.getState() == ALIVE) {
         livingNeighbors++;
       }
