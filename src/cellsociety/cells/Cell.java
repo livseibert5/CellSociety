@@ -70,4 +70,8 @@ public abstract class Cell {
    * Calculate next state of cell depending on states of neighboring cells.
    */
   public abstract void determineNextState();
+
+  public int getNextState() {
+    return nextState;
+  }
 }

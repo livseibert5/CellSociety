@@ -58,4 +58,8 @@ public class SegregationCell extends Cell {
     }
     return likeNeighbors;
   }
+
+  public boolean getIsSatisfied()  {
+    return isSatisfied;
+  }
 }

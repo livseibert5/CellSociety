@@ -44,6 +44,10 @@ public class Grid {
     initializeCells();
   }
 
+  private Grid() {
+    //constructor so we can get copy of grid
+  }
+
   private void readFile(String fileName) {
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
     int row = 0;
@@ -51,19 +55,24 @@ public class Grid {
       String line = reader.nextLine();
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
-        if (type == Type.FIRE) {
-          setCellAtLocation(row, col, new FireCell(Integer.parseInt(gridRow[col]), row, col, params));
-        } else if (type == Type.LIFE) {
-          setCellAtLocation(row, col, new GameOfLifeCell(Integer.parseInt(gridRow[col]), row, col));
-        } else if (type == Type.PERCOLATION) {
-          setCellAtLocation(row, col, new PercolationCell(Integer.parseInt(gridRow[col]), row, col));
-        } else if (type == Type.WATOR) {
-          setCellAtLocation(row, col, new WatorCell(Integer.parseInt(gridRow[col]), row, col, params));
-        } else if (type == Type.SEGREGATION) {
-          setCellAtLocation(row, col, new SegregationCell(Integer.parseInt(gridRow[col]), row, col, params));
-        }
+        int cellState = Integer.parseInt(gridRow[col]);
+        setCellWithType(row, col, cellState);
       }
       row++;
+    }
+  }
+
+  private void setCellWithType(int row, int col, int cellState) {
+    if (type == Type.FIRE) {
+      setCellAtLocation(row, col, new FireCell(cellState, row, col, params));
+    } else if (type == Type.LIFE) {
+      setCellAtLocation(row, col, new GameOfLifeCell(cellState, row, col));
+    } else if (type == Type.PERCOLATION) {
+      setCellAtLocation(row, col, new PercolationCell(cellState, row, col));
+    } else if (type == Type.WATOR) {
+      setCellAtLocation(row, col, new WatorCell(cellState, row, col, params));
+    } else if (type == Type.SEGREGATION) {
+      setCellAtLocation(row, col, new SegregationCell(cellState, row, col, params));
     }
   }
 
@@ -81,7 +90,7 @@ public class Grid {
     return null;
   }
 
-  private void setCellAtLocation(int i, int j, Cell cell) {
+  public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
     }
@@ -109,5 +118,27 @@ public class Grid {
 
   protected boolean isInBounds(int i, int j) {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
+  }
+
+  public int[] getSizeOfGrid()  {
+    return new int[]{width, height};
+  }
+
+  public Grid getCopyOfGrid() {
+    Grid newGrid = new Grid();
+    setParamsOfNewGrid(newGrid);
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++)  {
+        newGrid.setCellWithType(i, j, this.getCellAtLocation(i, j).getState());
+      }
+    }
+    return newGrid;
+  }
+  private void setParamsOfNewGrid(Grid newGrid) {
+    newGrid.height = this.height;
+    newGrid.width = this.width;
+    newGrid.type = this.type;
+    newGrid.params = this.params;
+    newGrid.grid = new Cell[newGrid.height][newGrid.width];
   }
 }
