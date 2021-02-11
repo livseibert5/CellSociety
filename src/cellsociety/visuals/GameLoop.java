@@ -4,12 +4,14 @@ import javafx.application.Application;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 
 public class GameLoop extends Application {
@@ -38,6 +40,7 @@ public class GameLoop extends Application {
     public void start(Stage stage){
         myScene = visuals.creatingLandingScreen();
         stage.setScene(myScene);
+
         stage.show();
     }
 }
