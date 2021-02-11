@@ -28,8 +28,7 @@ public class SegregationController extends Controller{
         SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i,j);
         int oldState = oldCell.getState();
         oldCell.determineNextState();
-        oldCell.updateState();
-        int newState = oldCell.getState();
+        int newState = oldCell.getNextState();
         if (newState == 3)  {
           statesToAddAtCurrentIteration.add(oldState);
         }
