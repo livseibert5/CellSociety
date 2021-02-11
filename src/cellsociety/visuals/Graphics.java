@@ -30,11 +30,14 @@ public class Graphics {
         Text welcome = constructText(100, 36, "Simulation Menu", FontWeight.BOLD, FONT);
         Text instructions = constructText(125, 15,
                                     "click on any simulation to start", FontWeight.NORMAL, FONT);
-        Button gameOfLifeButton = eventButton("Game of Life", instructions.getY()+100);
+        eventButton("Game of Life", 100, root);
+        eventButton("Percolation",140, root);
+        eventButton("Segregation", 180, root);
+        eventButton("Wa-tor", 220, root);
+        eventButton("Fire", 260, root);
 
         root.getChildren().add(welcome);
         root.getChildren().add(instructions);
-        root.getChildren().add(gameOfLifeButton);
 
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
 
@@ -58,7 +61,7 @@ public class Graphics {
         return text;
     }
 
-    public Button eventButton(String buttonName, double baseY){
+    public void eventButton(String buttonName, double baseY, Group root){
         Button button = new Button(buttonName);
 
         Bounds buttonBounds = button.getBoundsInParent();
@@ -66,14 +69,13 @@ public class Graphics {
         double descent = buttonBounds.getMinY();
         double width = buttonBounds.getWidth();
 
-        double xPosition = ((SCREEN_WIDTH-width)/2)-50;
-        double yPosition = baseY + 50;
+        double xPosition = ((SCREEN_WIDTH/2)-50);
+        double yPosition = baseY + 150;
 
         button.setTranslateY(yPosition);
         button.setTranslateX(xPosition);
+        root.getChildren().add(button);
 
-
-        return button;
     }
 }
 
