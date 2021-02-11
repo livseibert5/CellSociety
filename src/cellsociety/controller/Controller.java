@@ -11,6 +11,10 @@ public abstract class Controller {
     setNewGrid();
   }
 
+  public void resetController() {
+    this.oldGrid = this.newGrid;
+    setNewGrid();
+  }
   public void updateState() {
     int[] dims = oldGrid.getSizeOfGrid();
 
