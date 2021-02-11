@@ -126,7 +126,7 @@ public class Grid {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
 
-  public int[] getSizeOfGrid()  {
+  public int[] getSizeOfGrid() {
     return new int[]{width, height};
   }
 
@@ -134,7 +134,7 @@ public class Grid {
     Grid newGrid = new Grid();
     setParamsOfNewGrid(newGrid);
     for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++)  {
+      for (int j = 0; j < grid[i].length; j++) {
         newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
         newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
       }

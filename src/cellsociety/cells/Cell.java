@@ -75,5 +75,7 @@ public abstract class Cell {
     return nextState;
   }
 
-  public List<Cell> getNeighbors() { return neighbors; }
+  public List<Cell> getNeighbors() {
+    return neighbors;
+  }
 }

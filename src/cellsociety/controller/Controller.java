@@ -1,4 +1,5 @@
 package cellsociety.controller;
+
 import cellsociety.grid.Grid;
 
 public abstract class Controller {
@@ -15,16 +16,17 @@ public abstract class Controller {
     this.oldGrid = this.newGrid;
     setNewGrid();
   }
+
   public void updateState() {
     int[] dims = oldGrid.getSizeOfGrid();
 
     for (int i = 0; i < dims[1]; i++) {
-      for (int j = 0; j< dims[0]; j++)  {
+      for (int j = 0; j < dims[0]; j++) {
         newGrid.getCellAtLocation(i, j).determineNextState();
       }
     }
     for (int i = 0; i < dims[1]; i++) {
-      for (int j = 0; j< dims[0]; j++)  {
+      for (int j = 0; j < dims[0]; j++) {
         newGrid.getCellAtLocation(i, j).updateState();
       }
     }
@@ -32,14 +34,16 @@ public abstract class Controller {
 
   /**
    * default method for simulationEnded
+   *
    * @returns true if state has not changed for any cell, false otherwise
    */
-  public boolean simulationEnded()  {
+  public boolean simulationEnded() {
     int[] dims = oldGrid.getSizeOfGrid();
 
     for (int i = 0; i < dims[1]; i++) {
-      for (int j = 0; j< dims[0]; j++)  {
-        if (oldGrid.getCellAtLocation(i, j).getState() != newGrid.getCellAtLocation(i, j).getState()) {
+      for (int j = 0; j < dims[0]; j++) {
+        if (oldGrid.getCellAtLocation(i, j).getState() != newGrid.getCellAtLocation(i, j)
+            .getState()) {
           return false;
         }
       }
@@ -47,11 +51,11 @@ public abstract class Controller {
     return true;
   }
 
-  public Grid getNewGrid()  {
+  public Grid getNewGrid() {
     return newGrid;
   }
 
-  protected Grid getOldGrid()  {
+  protected Grid getOldGrid() {
     return oldGrid;
   }
 

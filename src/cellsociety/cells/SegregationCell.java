@@ -59,7 +59,7 @@ public class SegregationCell extends Cell {
     return likeNeighbors;
   }
 
-  public boolean getIsSatisfied()  {
+  public boolean getIsSatisfied() {
     return isSatisfied;
   }
 }
