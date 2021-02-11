@@ -13,43 +13,42 @@ import javafx.animation.Timeline;
  * Feel free to completely change this code or delete it entirely.
  */
 public class Main extends Application {
+    /**
+     * Start of the program.
+     */
+    Grid grid;
+    FireController fireControl;
 
-  /**
-   * Start of the program.
-   */
-  Grid grid;
-  FireController fireControl;
+    private static final int FRAMES_PER_SECOND = 60;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-  private static final int FRAMES_PER_SECOND = 60;
-  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-
-  private void step(double elapsedTime) {
-    fireControl.updateState();
-    grid = fireControl.getNewGrid();
-    grid.printGrid();
-  }
-
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    XMLParser parser = new XMLParser("gameoflifepenta.xml");
-    try {
-      parser.readFile();
-    } catch (Exception e) {
-      e.printStackTrace();
+    private void step(double elapsedTime) {
+        fireControl.updateState();
+        grid = fireControl.getNewGrid();
+        grid.printGrid();
     }
-    grid = parser.getGrid();
-    grid.printGrid();
-    fireControl = new FireController(grid);
-    KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), event -> step(SECOND_DELAY));
-    Timeline animation = new Timeline();
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.getKeyFrames().add(frame);
-    animation.play();
 
-  }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        XMLParser parser = new XMLParser("gameoflifepenta.xml");
+        try {
+            parser.readFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        grid = parser.getGrid();
+        grid.printGrid();
+        fireControl = new FireController(grid);
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), event -> step(SECOND_DELAY));
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
 
-  public static void main(String[] args) {
-    launch(args);
-  }
+    }
+
+    public static void main (String[] args) {
+        launch(args);
+    }
 }
 

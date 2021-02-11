@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SegregationController extends Controller {
+public class SegregationController extends Controller{
 
   private List<Integer> statesToAddAtCurrentIteration = new ArrayList();
   private boolean[][] updated;
   private int[] dims;
-
-  public SegregationController(Grid grid) {
+  public SegregationController(Grid grid)  {
     super(grid);
     Grid oldGrid = super.getOldGrid();
     dims = oldGrid.getSizeOfGrid();
@@ -25,14 +24,15 @@ public class SegregationController extends Controller {
     Grid oldGrid = super.getOldGrid();
     Grid newGrid = super.getNewGrid();
     for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j < dims[1]; j++) {
-        SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i, j);
+      for (int j = 0; j< dims[1]; j++)  {
+        SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i,j);
         int oldState = oldCell.getState();
         oldCell.determineNextState();
         int newState = oldCell.getNextState();
-        if (newState == 3) {
+        if (newState == 3)  {
           statesToAddAtCurrentIteration.add(oldState);
-        } else {
+        }
+        else  {
           newGrid.setCellAtLocation(i, j, new SegregationCell(oldState, i, j, null));
           updated[i][j] = true;
         }
@@ -40,14 +40,11 @@ public class SegregationController extends Controller {
     }
     addRemovedCells(newGrid);
   }
-
   private void addRemovedCells(Grid newGrid) {
     Collections.shuffle(statesToAddAtCurrentIteration);
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (statesToAddAtCurrentIteration.size() == 0) {
-          return;
-        }
+        if (statesToAddAtCurrentIteration.size() == 0) return;
         if (!updated[i][j]) {
           newGrid.setCellAtLocation(i, j, new SegregationCell(
               statesToAddAtCurrentIteration.remove(0), i, j, null));
@@ -65,7 +62,7 @@ public class SegregationController extends Controller {
     int[] dims = oldGrid.getSizeOfGrid();
 
     for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j < dims[1]; j++) {
+      for (int j = 0; j< dims[1]; j++)  {
         SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i, j);
         SegregationCell newCell = (SegregationCell) newGrid.getCellAtLocation(i, j);
         if (oldCell.getIsSatisfied() != newCell.getIsSatisfied()) {
