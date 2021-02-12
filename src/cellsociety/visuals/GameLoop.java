@@ -1,5 +1,6 @@
 package cellsociety.visuals;
 
+import cellsociety.grid.Grid;
 import cellsociety.grid.XMLParser;
 import javafx.application.Application;
 import javafx.geometry.Bounds;
@@ -21,7 +22,7 @@ public class GameLoop extends Application {
     //private XMLParser = new XMLParser(fileName);
     private Scene myScene;
     private static final String TITLE = "Cellular Automata";
-
+    XMLParser parse = new XMLParser("firestandard.xml");
     private void step(double elapsedTime){
 
     }
@@ -39,17 +40,15 @@ public class GameLoop extends Application {
 
     }
 
-//    private void parseFile(){
-//        XMLParser parser = new XMLParser();
-//    }
-
     public void setScene(Scene scene){
         myScene = scene;
     }
     //when a button is clicked then
     @Override
     public void start(Stage stage){
-        myScene = visuals.creatingLandingScreen();
+        Grid grid = parse.getGrid();
+        Scene scene = new Scene(visuals.createFireGrid(grid));
+        myScene = scene;
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();

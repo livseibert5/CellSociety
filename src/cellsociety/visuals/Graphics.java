@@ -1,13 +1,16 @@
 package cellsociety.visuals;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import cellsociety.cells.Cell;
+import cellsociety.grid.Grid;
+import cellsociety.grid.XMLParser;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -20,7 +23,10 @@ public class Graphics {
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
-
+    private XMLParser view = new XMLParser("firestandard.xml");
+    public GridPane gridView;
+    private Color[] colorOfCell = {Color.YELLOW, Color.GREEN, Color.RED};
+    private int SQUARE_DIMENSIONS = 20;
 
     public Scene creatingLandingScreen(){
         Group root = new Group();
@@ -41,9 +47,25 @@ public class Graphics {
         return scene;
     }
 
-//    public Scene createGrid(){
-//        return scene;
-//    }
+    public GridPane createFireGrid(Grid grid){
+        grid = this.view.getGrid();
+        int[] sizeOfGrid = grid.getSizeOfGrid();
+        int width = sizeOfGrid[0];
+        int length = sizeOfGrid[1];
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
+               Cell cell = grid.getCellAtLocation(i, j);
+                if(cell.getState() == 0){
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[0]), i, j);
+                }else if(cell.getState() == 1){
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[1]), i, j);
+                }else if(cell.getState() == 2){
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[2]), i, j);
+                }
+            }
+        }
+        return gridView;
+    }
 
     private Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
         Text text = new Text(75, 100, message);
