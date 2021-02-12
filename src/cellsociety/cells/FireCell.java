@@ -18,12 +18,12 @@ public class FireCell extends Cell {
   private Map<Type, String> typesToGraphics;
 
   /**
-   * Constructor for fire cell, uses super constructor and initializes probCatch.
-   * If no probCatch value specified in XML, it is set to .30 on default.
+   * Constructor for fire cell, uses super constructor and initializes probCatch. If no probCatch
+   * value specified in XML, it is set to .30 on default.
    *
-   * @param state initial state of cell
-   * @param row row of cell
-   * @param col col of cell
+   * @param state  initial state of cell
+   * @param row    row of cell
+   * @param col    col of cell
    * @param params map of params needed for simulation
    */
   public FireCell(int state, int row, int col, Map<String, Double> params) {
@@ -36,9 +36,8 @@ public class FireCell extends Cell {
   }
 
   /**
-   * EMPTY and BURNING cells always have a next state of EMPTY, TREE's
-   * next state is determined based on the probCatch parameter if it has
-   * a burning neighbor.
+   * EMPTY and BURNING cells always have a next state of EMPTY, TREE's next state is determined
+   * based on the probCatch parameter if it has a burning neighbor.
    */
   public void determineNextState() {
     if (state == TREE) {

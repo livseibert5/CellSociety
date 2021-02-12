@@ -18,13 +18,13 @@ public abstract class Controller {
   public void updateState() {
     int[] dims = oldGrid.getSizeOfGrid();
 
-    for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j< dims[1]; j++)  {
+    for (int i = 0; i < dims[1]; i++) {
+      for (int j = 0; j< dims[0]; j++)  {
         newGrid.getCellAtLocation(i, j).determineNextState();
       }
     }
-    for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j< dims[1]; j++)  {
+    for (int i = 0; i < dims[1]; i++) {
+      for (int j = 0; j< dims[0]; j++)  {
         newGrid.getCellAtLocation(i, j).updateState();
       }
     }
@@ -37,8 +37,8 @@ public abstract class Controller {
   public boolean simulationEnded()  {
     int[] dims = oldGrid.getSizeOfGrid();
 
-    for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j< dims[1]; j++)  {
+    for (int i = 0; i < dims[1]; i++) {
+      for (int j = 0; j< dims[0]; j++)  {
         if (oldGrid.getCellAtLocation(i, j).getState() != newGrid.getCellAtLocation(i, j).getState()) {
           return false;
         }
@@ -47,7 +47,7 @@ public abstract class Controller {
     return true;
   }
 
-  protected Grid getNewGrid()  {
+  public Grid getNewGrid()  {
     return newGrid;
   }
 
@@ -58,7 +58,4 @@ public abstract class Controller {
   protected void setNewGrid() {
     newGrid = oldGrid.getCopyOfGrid();
   }
-
-
-
 }
