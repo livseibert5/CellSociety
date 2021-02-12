@@ -32,22 +32,29 @@ public class Graphics {
     public boolean ifSimulationButtonHit = false;
     public static final String LANDING_SCREEN_PACKAGE = "cellsociety.visuals.resources.LandingScene";
     public static final String FIRE_SCREEN_PACKAGE = "cellsociety.visuals.resources.FireSimulation";
+    public static final String GAME_OF_LIFE_SCREEN_PACKAGE = "cellsociety.visuals.resources.GameOfLifeSimulation";
+    public static final String PERCOLATION_PACKAGE = "cellsociety.visuals.resources.PercolationSimulation";
+    public static final String SEGREGATION_PACKAGE = "cellsociety.visuals.resources.SegregationSimulation";
+    public static final String WATOR_PACKAGE = "cellsociety.visuals.resources.WaTorSimulation";
 
     public static final String DEFAULT_RESOURCE_FOLDER = "/" + LANDING_SCREEN_PACKAGE.replace(".", "/");
-    ResourceBundle myLandingSceneResources;
-    ResourceBundle myFireSimulationResources;
+    public static final ResourceBundle myLandingSceneResources = ResourceBundle.getBundle(LANDING_SCREEN_PACKAGE);
+    public static final ResourceBundle myFireSimulationResources = ResourceBundle.getBundle(FIRE_SCREEN_PACKAGE);
+    public static final ResourceBundle myGameOfLifeSimulationResources = ResourceBundle.getBundle(GAME_OF_LIFE_SCREEN_PACKAGE);
+    public static final ResourceBundle myPercolationSimulationResources = ResourceBundle.getBundle(PERCOLATION_PACKAGE);
+    public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
+    public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
+
 
     public Graphics(){
         gridView = new GridPane();
-        myLandingSceneResources = ResourceBundle.getBundle(LANDING_SCREEN_PACKAGE);
-        myFireSimulationResources = ResourceBundle.getBundle(FIRE_SCREEN_PACKAGE);
     }
 
     private String getFileName(String fileName){
         return fileName;
     }
 
-    public Scene createFireGrid(Grid grid){
+    public Scene createGrid(Grid grid, ResourceBundle simulationResource){
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
@@ -55,26 +62,17 @@ public class Graphics {
             for(int j = 0; j < length; j++){
                Cell cell = grid.getCellAtLocation(i, j);
                 if(cell.getState() == 0){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(myFireSimulationResources.getString("0"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("0"))), i, j);
                 }else if(cell.getState() == 1){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(myFireSimulationResources.getString("1"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(simulationResource.getString("1"))), i, j);
                 }else if(cell.getState() == 2){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(myFireSimulationResources.getString("2"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("2"))), i, j);
                 }
             }
         }
 
         Scene scene = new Scene(gridView);
         return scene;
-    }
-
-    public void setIfSimulationButtonHit(){
-        ifSimulationButtonHit = !ifSimulationButtonHit;
-        System.out.println("simulation" + ifSimulationButtonHit);
-    }
-
-    public boolean getSimulationButtonStatus(){
-        return ifSimulationButtonHit;
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {

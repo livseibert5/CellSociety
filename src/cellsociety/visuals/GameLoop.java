@@ -2,24 +2,17 @@ package cellsociety.visuals;
 
 import cellsociety.grid.Grid;
 import cellsociety.grid.XMLParser;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 
 public class GameLoop extends Application {
@@ -42,13 +35,42 @@ public class GameLoop extends Application {
         Text welcome = visuals.constructText(100, 36, "Simulation Menu", FontWeight.BOLD, visuals.FONT);
         Text instructions = visuals.constructText(125, 15,
                 "click on any simulation to start", FontWeight.NORMAL, visuals.FONT);
-//        createButton("Game of Life", 100, root);
-//        createButton("Percolation",140, root);
-//        createButton("Segregation", 180, root);
-//        createButton("Wa-tor", 220, root);
+
+        visuals.createButton("Game of Life", 100, root, event -> {
+            try {
+                setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+
+        visuals.createButton("Percolation", 140, root, event -> {
+            try {
+                setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+
+        visuals.createButton("Segregation", 180, root, event -> {
+            try {
+                setGrid("segregation.xml", visuals.mySegregationSimulationResources);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+
+        visuals.createButton("Wa-Tor", 220, root, event -> {
+            try {
+                setGrid("predatorprey1.xml", visuals.myWaTorSimulationResources);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+
         visuals.createButton("Fire", 260, root, event -> {
             try {
-                setFireGrid();
+                setGrid("firestandard.xml", visuals.myFireSimulationResources);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -67,11 +89,11 @@ public class GameLoop extends Application {
 
     }
 
-    private void setFireGrid() throws IOException, SAXException, ParserConfigurationException {
-        XMLParser parse = new XMLParser("firestandard.xml");
+    private void setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+        XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
-        Scene scene = visuals.createFireGrid(grid);
+        Scene scene = visuals.createGrid(grid, resourceBundle);
         myStage.setScene(scene);
     }
 
