@@ -13,7 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 
 public class GameLoop extends Application {
@@ -22,7 +25,8 @@ public class GameLoop extends Application {
     //private XMLParser = new XMLParser(fileName);
     private Scene myScene;
     private static final String TITLE = "Cellular Automata";
-    XMLParser parse = new XMLParser("firestandard.xml");
+    public XMLParser parse = new XMLParser("firestandard.xml");
+
     private void step(double elapsedTime){
 
     }
@@ -45,7 +49,8 @@ public class GameLoop extends Application {
     }
     //when a button is clicked then
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
+        parse.readFile();
         Grid grid = parse.getGrid();
         Scene scene = new Scene(visuals.createFireGrid(grid));
         myScene = scene;

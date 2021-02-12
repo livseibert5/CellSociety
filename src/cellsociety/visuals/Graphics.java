@@ -23,10 +23,13 @@ public class Graphics {
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
-    private XMLParser view = new XMLParser("firestandard.xml");
     public GridPane gridView;
     private Color[] colorOfCell = {Color.YELLOW, Color.GREEN, Color.RED};
     private int SQUARE_DIMENSIONS = 20;
+
+    public Graphics(){
+        gridView = new GridPane();
+    }
 
     public Scene creatingLandingScreen(){
         Group root = new Group();
@@ -48,7 +51,6 @@ public class Graphics {
     }
 
     public GridPane createFireGrid(Grid grid){
-        grid = this.view.getGrid();
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
