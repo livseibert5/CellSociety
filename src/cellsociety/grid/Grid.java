@@ -5,6 +5,8 @@ import cellsociety.cells.EmptyCell;
 import cellsociety.cells.FireCell;
 import cellsociety.cells.GameOfLifeCell;
 import cellsociety.cells.PercolationCell;
+import cellsociety.cells.PredatorCell;
+import cellsociety.cells.PreyCell;
 import cellsociety.cells.SegregationCell;
 import cellsociety.cells.WatorCell;
 import java.util.ArrayList;
@@ -71,7 +73,11 @@ public class Grid {
     } else if (type == Type.PERCOLATION) {
       setCellAtLocation(row, col, new PercolationCell(cellState, row, col));
     } else if (type == Type.WATOR) {
-      setCellAtLocation(row, col, new WatorCell(cellState, row, col, params));
+      if (cellState == 1) {
+        setCellAtLocation(row, col, new PredatorCell(1, row, col, params));
+      } else if (cellState == 0) {
+        setCellAtLocation(row, col, new PreyCell(1, row, col, params));
+      }
     } else if (type == Type.SEGREGATION) {
       setCellAtLocation(row, col, new SegregationCell(cellState, row, col, params));
     } else {
