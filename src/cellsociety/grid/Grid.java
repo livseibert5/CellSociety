@@ -74,9 +74,9 @@ public class Grid {
       setCellAtLocation(row, col, new PercolationCell(cellState, row, col));
     } else if (type == Type.WATOR) {
       if (cellState == 1) {
-        setCellAtLocation(row, col, new PredatorCell(cellState, row, col, params));
+        setCellAtLocation(row, col, new PredatorCell(1, row, col, params));
       } else if (cellState == 0) {
-        setCellAtLocation(row, col, new PreyCell(cellState, row, col, params));
+        setCellAtLocation(row, col, new PreyCell(1, row, col, params));
       }
     } else if (type == Type.SEGREGATION) {
       setCellAtLocation(row, col, new SegregationCell(cellState, row, col, params));
