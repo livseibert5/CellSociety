@@ -69,6 +69,15 @@ public class WatorController extends Controller{
 
   @Override
   public boolean simulationEnded() {
-    return false;
+    Grid newGrid = super.getNewGrid();
+    int[] dims = newGrid.getSizeOfGrid();
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j < dims[1]; j++) {
+        if (newGrid.getCellAtLocation(i, j) instanceof PreyCell preyCell) {
+          if (preyCell.getState() == 1) return false;
+        }
+      }
+    }
+    return true;
   }
 }
