@@ -1,5 +1,6 @@
 package cellsociety.visuals;
 
+import cellsociety.grid.XMLParser;
 import javafx.application.Application;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
@@ -15,15 +16,17 @@ import javafx.stage.Stage;
 
 
 public class GameLoop extends Application {
+    String filename;
     private Graphics visuals = new Graphics();
-
+    //private XMLParser = new XMLParser(fileName);
     private Scene myScene;
     private static final String TITLE = "Cellular Automata";
 
     private void step(double elapsedTime){
+
     }
 
-
+//the controller will be cal
     private void updateGameState(){
 
     }
@@ -32,15 +35,23 @@ public class GameLoop extends Application {
 
     }
 
+    private void ifButtonIsClicked(Scene scene){
+
+    }
+
 //    private void parseFile(){
 //        XMLParser parser = new XMLParser();
 //    }
 
+    public void setScene(Scene scene){
+        myScene = scene;
+    }
+    //when a button is clicked then
     @Override
     public void start(Stage stage){
         myScene = visuals.creatingLandingScreen();
         stage.setScene(myScene);
-
+        stage.setTitle(TITLE);
         stage.show();
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>PERCOLATION</Type>
+  <Title>Percolation</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate percolation.</Description>
+  <Width>8</Width>
+  <Height>8</Height>
+  <LayoutFile>percolation1.txt</LayoutFile>
+</Simulation>

@@ -1,5 +1,7 @@
 package cellsociety.visuals;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,7 +11,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 
 public class Graphics {
@@ -20,7 +21,6 @@ public class Graphics {
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
 
-
 //    public Group getCurrentDisplay(Grid grid){
 //
 //    }
@@ -30,11 +30,11 @@ public class Graphics {
         Text welcome = constructText(100, 36, "Simulation Menu", FontWeight.BOLD, FONT);
         Text instructions = constructText(125, 15,
                                     "click on any simulation to start", FontWeight.NORMAL, FONT);
-        eventButton("Game of Life", 100, root);
-        eventButton("Percolation",140, root);
-        eventButton("Segregation", 180, root);
-        eventButton("Wa-tor", 220, root);
-        eventButton("Fire", 260, root);
+//        createButton("Game of Life", 100, root, event -> updateScene());
+//        createButton("Percolation",140, root, event -> updateScene());
+//        createButton("Segregation", 180, root, event -> updateScene());
+//        createButton("Wa-tor", 220, root, event -> updateScene());
+//        createButton("Fire", 260, root, event -> updateScene());
 
         root.getChildren().add(welcome);
         root.getChildren().add(instructions);
@@ -43,6 +43,23 @@ public class Graphics {
 
         return scene;
     }
+
+//    public Scene createFireScene(){
+//        return scene;
+//    }
+//
+//    public Scene createWarTorScene(){
+//        return n
+//    }
+
+
+//    public void updateScene(Scene scene){
+//        stageScene = scene;
+//    }
+//
+//    public Scene getScene(){
+//        return stageScene;
+//    }
 
     private Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
         Text text = new Text(75, 100, message);
@@ -61,7 +78,7 @@ public class Graphics {
         return text;
     }
 
-    public void eventButton(String buttonName, double baseY, Group root){
+    public void createButton(String buttonName, double baseY, Group root, EventHandler<ActionEvent> handler){
         Button button = new Button(buttonName);
 
         Bounds buttonBounds = button.getBoundsInParent();
@@ -76,7 +93,13 @@ public class Graphics {
         button.setTranslateX(xPosition);
         root.getChildren().add(button);
 
+        button.setOnAction(handler);
     }
+
+//    public Scene eventButton(){
+//
+//    }
+
 }
 
 

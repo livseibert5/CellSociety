@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>FIRE</Type>
+  <Title>Spreading of Fire</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate how fire spreads over land.</Description>
+  <ConfigParams>
+    <Param>
+      <Name>probCatch</Name>
+      <Value>.25</Value>
+    </Param>
+  </ConfigParams>
+  <Width>6</Width>
+  <Height>6</Height>
+  <LayoutFile>fireeverywhere.txt</LayoutFile>
+</Simulation>
