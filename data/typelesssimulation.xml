@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Title>Game of Life</Title>
+  <Author>Team 9</Author>
+  <Description>Simulation has no type to text XML error handling.</Description>
+  <Width>11</Width>
+  <Height>18</Height>
+  <LayoutFile>gameoflifepenta.txt</LayoutFile>
+</Simulation>

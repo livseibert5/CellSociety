@@ -21,20 +21,17 @@ public class Graphics {
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
 
-//    public Group getCurrentDisplay(Grid grid){
-//
-//    }
 
     public Scene creatingLandingScreen(){
         Group root = new Group();
         Text welcome = constructText(100, 36, "Simulation Menu", FontWeight.BOLD, FONT);
         Text instructions = constructText(125, 15,
                                     "click on any simulation to start", FontWeight.NORMAL, FONT);
-//        createButton("Game of Life", 100, root, event -> updateScene());
-//        createButton("Percolation",140, root, event -> updateScene());
-//        createButton("Segregation", 180, root, event -> updateScene());
-//        createButton("Wa-tor", 220, root, event -> updateScene());
-//        createButton("Fire", 260, root, event -> updateScene());
+        createButton("Game of Life", 100, root);
+        createButton("Percolation",140, root);
+        createButton("Segregation", 180, root);
+        createButton("Wa-tor", 220, root);
+        createButton("Fire", 260, root);
 
         root.getChildren().add(welcome);
         root.getChildren().add(instructions);
@@ -44,21 +41,8 @@ public class Graphics {
         return scene;
     }
 
-//    public Scene createFireScene(){
+//    public Scene createGrid(){
 //        return scene;
-//    }
-//
-//    public Scene createWarTorScene(){
-//        return n
-//    }
-
-
-//    public void updateScene(Scene scene){
-//        stageScene = scene;
-//    }
-//
-//    public Scene getScene(){
-//        return stageScene;
 //    }
 
     private Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
@@ -78,7 +62,7 @@ public class Graphics {
         return text;
     }
 
-    public void createButton(String buttonName, double baseY, Group root, EventHandler<ActionEvent> handler){
+    public void createButton(String buttonName, double baseY, Group root){
         Button button = new Button(buttonName);
 
         Bounds buttonBounds = button.getBoundsInParent();
@@ -92,13 +76,7 @@ public class Graphics {
         button.setTranslateY(yPosition);
         button.setTranslateX(xPosition);
         root.getChildren().add(button);
-
-        button.setOnAction(handler);
     }
-
-//    public Scene eventButton(){
-//
-//    }
 
 }
 

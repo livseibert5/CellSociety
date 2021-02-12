@@ -18,12 +18,12 @@ public class SegregationCell extends Cell {
   private boolean isSatisfied = false;
 
   /**
-   * Constructor for simulation cells, uses super constructor and sets the satisfied
-   * parameter. .30 is the default value for satisfied if no value specified.
+   * Constructor for simulation cells, uses super constructor and sets the satisfied parameter. .30
+   * is the default value for satisfied if no value specified.
    *
-   * @param state initial state of cell
-   * @param row row location of cell
-   * @param col column location of cell
+   * @param state  initial state of cell
+   * @param row    row location of cell
+   * @param col    column location of cell
    * @param params map of params needed for simulation
    */
   public SegregationCell(int state, int row, int col, Map<String, Double> params) {
@@ -51,11 +51,15 @@ public class SegregationCell extends Cell {
 
   private int countLikeNeighbors() {
     int likeNeighbors = 0;
-    for (Cell neighbor: neighbors) {
+    for (Cell neighbor : neighbors) {
       if (neighbor.getState() == state) {
         likeNeighbors++;
       }
     }
     return likeNeighbors;
+  }
+
+  public boolean getIsSatisfied()  {
+    return isSatisfied;
   }
 }

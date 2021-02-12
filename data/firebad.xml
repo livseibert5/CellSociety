@@ -3,11 +3,15 @@
   <Type>FIRE</Type>
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
-  <Description>Simulate how fire spreads over land.</Description>
+  <Description>Makes sure XML handling is robust. Misnames probCatch probFire and adds a random param.</Description>
   <ConfigParams>
     <Param>
-      <Name>probCatch</Name>
+      <Name>probFire</Name>
       <Value>.55</Value>
+    </Param>
+    <Param>
+      <Name>fake</Name>
+      <Value>0</Value>
     </Param>
   </ConfigParams>
   <Width>25</Width>

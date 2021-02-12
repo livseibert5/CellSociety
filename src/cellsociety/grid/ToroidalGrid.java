@@ -11,8 +11,8 @@ import java.util.Map;
 public class ToroidalGrid extends Grid {
 
   /**
-   * Constructor for ToroidalGrid objects, creates a new grid based on the specifications passed
-   * in from the XML file.
+   * Constructor for ToroidalGrid objects, creates a new grid based on the specifications passed in
+   * from the XML file.
    *
    * @param width    number of columns of cell
    * @param height   number of rows of cell
@@ -26,9 +26,8 @@ public class ToroidalGrid extends Grid {
   }
 
   /**
-   * ToroidalGrid objects wrap around instead of having strict boundaries.
-   * This method overrides the parent getCellAtLocation method so that neighbors
-   * can be found by wrapping around the grid.
+   * ToroidalGrid objects wrap around instead of having strict boundaries. This method overrides the
+   * parent getCellAtLocation method so that neighbors can be found by wrapping around the grid.
    *
    * @param i row of cell
    * @param j col of cell
@@ -59,7 +58,7 @@ public class ToroidalGrid extends Grid {
     return j == -1 && i >= 0 && i < grid.length;
   }
 
-  private boolean wrapsTop(int i , int j) {
+  private boolean wrapsTop(int i, int j) {
     return i == grid.length && j >= 0 && j < grid[0].length;
   }
 

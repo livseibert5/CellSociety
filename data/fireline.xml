@@ -7,7 +7,7 @@
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>
-      <Value>.25</Value>
+      <Value>.45</Value>
     </Param>
   </ConfigParams>
   <Width>11</Width>
