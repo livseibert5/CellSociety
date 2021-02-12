@@ -111,7 +111,7 @@ public class Grid {
     cell.setNeighbors(neighbors);
   }
 
-  private void initializeCells() {
+  public void initializeCells() {
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         if (grid[i][j] == null) {
