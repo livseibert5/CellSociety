@@ -2,7 +2,8 @@ package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
 import cellsociety.grid.Grid;
-import cellsociety.grid.XMLParser;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,42 +16,38 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.ResourceBundle;
+
 
 public class Graphics {
 
-    private static final String FONT = "Verdana";
+    public static final String FONT = "Verdana";
     private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
     public GridPane gridView;
     private Color[] colorOfCell = {Color.YELLOW, Color.GREEN, Color.RED};
-    private int SQUARE_DIMENSIONS = 20;
+    private int SQUARE_DIMENSIONS = 30;
+    public boolean ifSimulationButtonHit = false;
+    public static final String LANDING_SCREEN_PACKAGE = "cellsociety.visuals.resources.LandingScene";
+    public static final String FIRE_SCREEN_PACKAGE = "cellsociety.visuals.resources.FireSimulation";
+
+    public static final String DEFAULT_RESOURCE_FOLDER = "/" + LANDING_SCREEN_PACKAGE.replace(".", "/");
+    ResourceBundle myLandingSceneResources;
+    ResourceBundle myFireSimulationResources;
 
     public Graphics(){
         gridView = new GridPane();
+        myLandingSceneResources = ResourceBundle.getBundle(LANDING_SCREEN_PACKAGE);
+        myFireSimulationResources = ResourceBundle.getBundle(FIRE_SCREEN_PACKAGE);
     }
 
-    public Scene creatingLandingScreen(){
-        Group root = new Group();
-        Text welcome = constructText(100, 36, "Simulation Menu", FontWeight.BOLD, FONT);
-        Text instructions = constructText(125, 15,
-                                    "click on any simulation to start", FontWeight.NORMAL, FONT);
-        createButton("Game of Life", 100, root);
-        createButton("Percolation",140, root);
-        createButton("Segregation", 180, root);
-        createButton("Wa-tor", 220, root);
-        createButton("Fire", 260, root);
-
-        root.getChildren().add(welcome);
-        root.getChildren().add(instructions);
-
-        Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
-
-        return scene;
+    private String getFileName(String fileName){
+        return fileName;
     }
 
-    public GridPane createFireGrid(Grid grid){
+    public Scene createFireGrid(Grid grid){
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
@@ -58,18 +55,29 @@ public class Graphics {
             for(int j = 0; j < length; j++){
                Cell cell = grid.getCellAtLocation(i, j);
                 if(cell.getState() == 0){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[0]), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(myFireSimulationResources.getString("0"))), i, j);
                 }else if(cell.getState() == 1){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[1]), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(myFireSimulationResources.getString("1"))), i, j);
                 }else if(cell.getState() == 2){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, colorOfCell[2]), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(myFireSimulationResources.getString("2"))), i, j);
                 }
             }
         }
-        return gridView;
+
+        Scene scene = new Scene(gridView);
+        return scene;
     }
 
-    private Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
+    public void setIfSimulationButtonHit(){
+        ifSimulationButtonHit = !ifSimulationButtonHit;
+        System.out.println("simulation" + ifSimulationButtonHit);
+    }
+
+    public boolean getSimulationButtonStatus(){
+        return ifSimulationButtonHit;
+    }
+
+    public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
         Text text = new Text(75, 100, message);
         Font textFont = Font.font(font, fontWeight, size);
         text.setFont(textFont);
@@ -86,7 +94,7 @@ public class Graphics {
         return text;
     }
 
-    public void createButton(String buttonName, double baseY, Group root){
+    public void createButton(String buttonName, double baseY, Group root, EventHandler<ActionEvent> event){
         Button button = new Button(buttonName);
 
         Bounds buttonBounds = button.getBoundsInParent();
@@ -100,6 +108,8 @@ public class Graphics {
         button.setTranslateY(yPosition);
         button.setTranslateX(xPosition);
         root.getChildren().add(button);
+
+        button.setOnAction(event);
     }
 
 }
