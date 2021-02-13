@@ -46,15 +46,17 @@ public class Graphics {
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
     public Button exit = new Button("Exit");
-
+    public Button faster = new Button("Faster");
+    public Button slower = new Button("Slower");
     public Graphics(){
         exit.setFont(Font.font(FONT, 12));
     }
 
-    public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> event){
+    public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> eventExit){
         BorderPane outside = new BorderPane();
         GridPane gridView = new GridPane();
         outside.getChildren().clear();
+
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
@@ -70,10 +72,12 @@ public class Graphics {
                 }
             }
         }
-        exit.setOnAction(event);
+        exit.setOnAction(eventExit);
         outside.setCenter(gridView);
         outside.autosize();
         outside.setBottom(exit);
+        outside.setTop(faster);
+        outside.setLeft(slower);
         Scene scene = new Scene(outside);
         return scene;
     }

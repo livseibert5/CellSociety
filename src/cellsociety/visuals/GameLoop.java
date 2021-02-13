@@ -33,11 +33,11 @@ public class GameLoop extends Application {
     private Controller currentControllerType;
     private boolean simulationStarted = false;
     private int time = 0;
-
+    private int mod = 60;
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && (time % 60 == 0))
+        if(simulationStarted && mod != 0 && (time % mod == 0))
         setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
     }
 
@@ -112,11 +112,21 @@ public class GameLoop extends Application {
         myStage.setScene(creatingLandingScreen());
     }
 
+    public void setModToFaster(){
+        mod = 30;
+    }
+
+    public void setModToSlower(){
+        mod = 120;
+    }
+
     private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
 
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
+        visuals.faster.setOnAction(event -> setModToFaster());
+        visuals.slower.setOnAction(event -> setModToSlower());
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
         myStage.setScene(scene);
