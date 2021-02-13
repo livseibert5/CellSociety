@@ -19,13 +19,13 @@ public class PredatorCell extends WatorCell {
    * Constuctor for the Predator cell, uses the WatorCell constructor and also sets the values for
    * the predator's starting energy and offspring energy based on XML input.
    *
-   * @param state  initial state of cell
-   * @param row    row position of cell
-   * @param col    column position of cell
-   * @param params list of parameters for the simulation
+   * @param cellState intial state of cell
+   * @param row       row position of cell
+   * @param col       column position of cell
+   * @param params    list of parameters for the simulation
    */
-  public PredatorCell(int state, int row, int col, Map<String, Double> params) {
-    super(state, row, col);
+  public PredatorCell(int cellState, int row, int col, Map<String, Double> params) {
+    super(cellState, row, col);
     if (params.containsKey("startingEnergy")) {
       this.startingEnergy = params.get("startingEnergy");
     } else {
@@ -43,6 +43,7 @@ public class PredatorCell extends WatorCell {
    * Determines whether the predator spawns or dies, decrements its energy each time the simulation
    * is updated.
    */
+  @Override
   public void determineNextState() {
     if (energyCounter == offspringEnergy) {
       nextState = SPAWN;

@@ -39,6 +39,7 @@ public class SegregationCell extends Cell {
   /**
    * Determines if the cell is satisfied based on the number of like neighbors.
    */
+  @Override
   public void determineNextState() {
     double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
     isSatisfied = percentLikeNeighbors >= satisfied;

@@ -18,13 +18,13 @@ public class PreyCell extends WatorCell {
    * Constuctor for the Prey cell, uses the WatorCell constructor and also sets the values for the
    * prey's time before breeding based on XML input.
    *
-   * @param state  initial state of cell
-   * @param row    row position of cell
-   * @param col    column position of cell
-   * @param params list of parameters for the simulation
+   * @param cellState initial state of cell
+   * @param row       row position of cell
+   * @param col       column position of cell
+   * @param params    list of parameters for the simulation
    */
-  public PreyCell(int state, int row, int col, Map<String, Double> params) {
-    super(state, row, col);
+  public PreyCell(int cellState, int row, int col, Map<String, Double> params) {
+    super(cellState, row, col);
     breedTimeCounter = 0;
     if (params.containsKey("breedTime")) {
       this.breedTime = params.get("breedTime");
@@ -37,6 +37,7 @@ public class PreyCell extends WatorCell {
    * Increments the prey's breed time counter every time the simulation is updated, detects if the
    * prey is ready to spawn.
    */
+  @Override
   public void determineNextState() {
     breedTimeCounter++;
     if (breedTimeCounter == breedTime) {

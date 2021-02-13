@@ -27,6 +27,7 @@ public class PercolationCell extends Cell {
    * Cells that are BLOCKED or PERCOLATED remain BLOCKED or PERCOLATED, OPEN cells with neighbors
    * that are PERCOLATED become PERCOLATED.
    */
+  @Override
   public void determineNextState() {
     if (state == BLOCKED) {
       nextState = BLOCKED;

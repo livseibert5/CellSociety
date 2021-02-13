@@ -8,7 +8,7 @@ import cellsociety.cells.PercolationCell;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.SegregationCell;
-import cellsociety.cells.WatorCell;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +25,7 @@ public class Grid {
   private Type type;
   private int width;
   private int height;
+  private String fileName;
   private Map<String, Double> params;
 
   /**
@@ -43,12 +44,9 @@ public class Grid {
     this.width = width;
     this.height = height;
     this.params = params;
+    this.fileName = fileName;
     readFile(fileName);
     initializeCells();
-  }
-
-  private Grid() {
-    //constructor so we can get copy of grid
   }
 
   private void readFile(String fileName) {
@@ -66,23 +64,22 @@ public class Grid {
   }
 
   private void setCellWithType(int row, int col, int cellState) {
-    if (type == Type.FIRE) {
-      setCellAtLocation(row, col, new FireCell(cellState, row, col, params));
-    } else if (type == Type.LIFE) {
-      setCellAtLocation(row, col, new GameOfLifeCell(cellState, row, col));
-    } else if (type == Type.PERCOLATION) {
-      setCellAtLocation(row, col, new PercolationCell(cellState, row, col));
-    } else if (type == Type.WATOR) {
-      if (cellState == 1) {
-        setCellAtLocation(row, col, new PredatorCell(1, row, col, params));
-      } else if (cellState == 0) {
-        setCellAtLocation(row, col, new PreyCell(1, row, col, params));
-      }
-    } else if (type == Type.SEGREGATION) {
-      setCellAtLocation(row, col, new SegregationCell(cellState, row, col, params));
-    } else {
-      setCellAtLocation(row, col, new EmptyCell(0, row, col));
-    }
+    Map<Type, Cell> cellData = createDataMap(row, col, cellState);
+    setCellAtLocation(row, col, cellData.get(type));
+  }
+
+  private Map<Type, Cell> createDataMap(int row, int col, int cellState) {
+    Map<Type, Cell> data = new HashMap<>();
+    Cell wator =
+        type == Type.WATOR && cellState == 1 ? new PredatorCell(cellState, row, col, params)
+            : new PreyCell(cellState, row, col, params);
+    data.put(Type.FIRE, new FireCell(cellState, row, col, params));
+    data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col));
+    data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col));
+    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params));
+    data.put(Type.EMPTY, new EmptyCell(0, row, col));
+    data.put(Type.WATOR, wator);
+    return data;
   }
 
   /**
@@ -99,6 +96,13 @@ public class Grid {
     return null;
   }
 
+  /**
+   * Allows a cell object to be places at the specified location.
+   *
+   * @param i    row of cell
+   * @param j    col of cell
+   * @param cell Cell object to put at indicated location in  grid
+   */
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
       grid[i][j] = cell;
@@ -117,6 +121,10 @@ public class Grid {
     cell.setNeighbors(neighbors);
   }
 
+  /**
+   * When the controller moves cell objects around, they need to be re-initialized in order to have
+   * the correct neighbors.
+   */
   public void initializeCells() {
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
@@ -132,37 +140,29 @@ public class Grid {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
 
-  public int[] getSizeOfGrid()  {
+  /**
+   * Allows access to size of grid so controller can iterate over grid.
+   *
+   * @return array with width at index 0 and height at index 1
+   */
+  public int[] getSizeOfGrid() {
     return new int[]{width, height};
   }
 
+  /**
+   * Allows controller to make a deep copy of the grid to update the simulation without altering the
+   * existing values.
+   *
+   * @return newGrid deep copy of current grid
+   */
   public Grid getCopyOfGrid() {
-    Grid newGrid = new Grid();
-    setParamsOfNewGrid(newGrid);
+    Grid newGrid = new Grid(this.height, this.width, this.fileName, this.type, this.params);
     for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++)  {
+      for (int j = 0; j < grid[i].length; j++) {
         newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
         newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
       }
     }
     return newGrid;
-  }
-
-  private void setParamsOfNewGrid(Grid newGrid) {
-    newGrid.height = this.height;
-    newGrid.width = this.width;
-    newGrid.type = this.type;
-    newGrid.params = this.params;
-    newGrid.grid = new Cell[newGrid.height][newGrid.width];
-  }
-
-  public void printGrid() {
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
-        System.out.print(grid[i][j].getState());
-      }
-      System.out.println();
-    }
-    System.out.println();
   }
 }
