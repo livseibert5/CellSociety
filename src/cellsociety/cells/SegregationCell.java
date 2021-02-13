@@ -39,6 +39,7 @@ public class SegregationCell extends Cell {
   /**
    * Determines if the cell is satisfied based on the number of like neighbors.
    */
+  @Override
   public void determineNextState() {
     double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
     isSatisfied = percentLikeNeighbors >= satisfied;
@@ -59,7 +60,12 @@ public class SegregationCell extends Cell {
     return likeNeighbors;
   }
 
-  public boolean getIsSatisfied()  {
+  /**
+   * Allows access to whether or not the cell should be shuffled.
+   *
+   * @return true if cell should stay where it is, otherwise false
+   */
+  public boolean getIsSatisfied() {
     return isSatisfied;
   }
 }

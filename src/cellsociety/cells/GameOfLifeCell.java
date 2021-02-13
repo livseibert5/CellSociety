@@ -25,6 +25,7 @@ public class GameOfLifeCell extends Cell {
   /**
    * Calculates next state of cell based on the number of living neighbors the cell has.
    */
+  @Override
   public void determineNextState() {
     int livingNeighbors = countLiveNeighbors();
     if (state == ALIVE && (livingNeighbors < 2 || livingNeighbors >= 4)) {

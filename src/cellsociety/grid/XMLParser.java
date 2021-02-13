@@ -24,6 +24,12 @@ public class XMLParser {
   private Element root;
   private Grid grid;
 
+  /**
+   * Constructor for XMLParser, sets the fileName that has the information XMLParser needs to set up
+   * the simulation.
+   *
+   * @param fileName xml file to read in
+   */
   public XMLParser(String fileName) {
     this.simulationData = new HashMap<>();
     this.fileName = fileName;

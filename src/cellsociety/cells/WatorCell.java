@@ -1,9 +1,5 @@
 package cellsociety.cells;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Cell class for Wa-Tor simulation cells.
  *
@@ -20,11 +16,11 @@ public abstract class WatorCell extends Cell {
    * (time before prey can produce offspring) and offspringEnergy (energy predator needs before it
    * can breed) are specified in the XML file, otherwise it sets them to a default value of 5.0.
    *
-   * @param state initial state of Wa-Tor cell
-   * @param row   row location of cell
-   * @param col   col location of cell
+   * @param cellState initial state of cell
+   * @param row       row location of cell
+   * @param col       col location of cell
    */
-  public WatorCell(int state, int row, int col) {
-    super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
+  public WatorCell(int cellState, int row, int col) {
+    super(cellState, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
   }
 }

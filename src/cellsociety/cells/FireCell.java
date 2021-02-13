@@ -39,6 +39,7 @@ public class FireCell extends Cell {
    * EMPTY and BURNING cells always have a next state of EMPTY, TREE's next state is determined
    * based on the probCatch parameter if it has a burning neighbor.
    */
+  @Override
   public void determineNextState() {
     if (state == TREE) {
       boolean neighborIsBurning = false;
