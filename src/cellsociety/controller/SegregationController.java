@@ -39,6 +39,7 @@ public class SegregationController extends Controller{
       }
     }
     addRemovedCells(newGrid);
+    newGrid.initializeCells();
   }
   private void addRemovedCells(Grid newGrid) {
     Collections.shuffle(statesToAddAtCurrentIteration);
