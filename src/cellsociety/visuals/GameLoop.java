@@ -33,15 +33,12 @@ public class GameLoop extends Application {
     private Controller currentControllerType;
     private boolean simulationStarted = false;
     private int time = 0;
+
+
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
         if(simulationStarted && (time % 60 == 0))
-        setNewGrid(currentResourceBundle, currentControllerType, event -> creatingLandingScreen());
-        //seeIfSimulationEnded();
-    }
-
-    private void seeIfSimulationEnded() {
-        if (simulationStarted && currentControllerType.simulationEnded()) simulationStarted = false;
+        setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
     }
 
     public Scene creatingLandingScreen(){
@@ -120,7 +117,7 @@ public class GameLoop extends Application {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
-        Scene scene = visuals.createGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
         myStage.setScene(scene);
         return grid;
