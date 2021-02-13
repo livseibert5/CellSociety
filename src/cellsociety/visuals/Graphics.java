@@ -1,6 +1,7 @@
 package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
+import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -45,7 +46,6 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
-
     public Button exit = new Button("Exit");
 
     public Graphics(){
@@ -77,6 +77,12 @@ public class Graphics {
         outside.setBottom(exit);
         Scene scene = new Scene(outside);
         return scene;
+    }
+
+    public Scene updateGrid(Controller controllerType, ResourceBundle simulation, EventHandler<ActionEvent> event){
+        controllerType.updateState();
+        Grid newGrid = controllerType.getNewGrid();
+        return createGrid(newGrid, simulation, event);
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
