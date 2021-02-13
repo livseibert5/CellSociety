@@ -1,9 +1,5 @@
 package cellsociety.cells;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Cell class for Wa-Tor simulation cells.
  *

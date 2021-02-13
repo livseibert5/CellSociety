@@ -59,7 +59,12 @@ public class SegregationCell extends Cell {
     return likeNeighbors;
   }
 
-  public boolean getIsSatisfied()  {
+  /**
+   * Allows access to whether or not the cell should be shuffled.
+   *
+   * @return true if cell should stay where it is, otherwise false
+   */
+  public boolean getIsSatisfied() {
     return isSatisfied;
   }
 }

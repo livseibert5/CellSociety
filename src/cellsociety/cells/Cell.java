@@ -32,6 +32,11 @@ public abstract class Cell {
   }
 
   /**
+   * Calculate next state of cell depending on states of neighboring cells.
+   */
+  public abstract void determineNextState();
+
+  /**
    * Accesses simulation type of cell.
    *
    * @return type of cell in simulation
@@ -67,13 +72,21 @@ public abstract class Cell {
   }
 
   /**
-   * Calculate next state of cell depending on states of neighboring cells.
+   * Allows access to the next state of the cell.
+   *
+   * @return new state of cell after next update
    */
-  public abstract void determineNextState();
-
   public int getNextState() {
     return nextState;
   }
 
-  public List<Cell> getNeighbors() { return neighbors; }
+  /**
+   * Allows access to a list of the cell's neighbors so that the controller can properly handle
+   * simulation updates.
+   *
+   * @return list of cell's neighbors
+   */
+  public List<Cell> getNeighbors() {
+    return neighbors;
+  }
 }

@@ -1,5 +1,12 @@
 package cellsociety.cells;
 
+/**
+ * Class that represents an empty cell that does nothing. The purpose of an empty cell is to handle
+ * ambiguous XML data entry by putting in a block that does nothing so that no errors are thrown by
+ * the grid and controller.
+ *
+ * @author Livia Seibert
+ */
 public class EmptyCell extends Cell {
 
   /**
@@ -13,7 +20,10 @@ public class EmptyCell extends Cell {
     super(state, row, col, new int[0][0]);
   }
 
-  @Override
+  /**
+   * State never changes because this cell is just a placeholder so that the grid doesn't throw
+   * errors.
+   */
   public void determineNextState() {
     nextState = state;
   }
