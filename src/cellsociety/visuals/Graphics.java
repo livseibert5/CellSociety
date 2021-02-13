@@ -45,9 +45,11 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
-    public Button exit = new Button("Exit");
+    private Button exit = new Button("Exit");
     public Button faster = new Button("Faster");
     public Button slower = new Button("Slower");
+    public Button normal = new Button("Regular");
+
     public Graphics(){
         exit.setFont(Font.font(FONT, 12));
     }
@@ -78,6 +80,7 @@ public class Graphics {
         outside.setBottom(exit);
         outside.setTop(faster);
         outside.setLeft(slower);
+        outside.setRight(normal);
         Scene scene = new Scene(outside);
         return scene;
     }

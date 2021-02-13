@@ -120,13 +120,17 @@ public class GameLoop extends Application {
         mod = 120;
     }
 
-    private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+    public void setModToNormal(){
+        mod = 60;
+    }
 
+    private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
         visuals.faster.setOnAction(event -> setModToFaster());
         visuals.slower.setOnAction(event -> setModToSlower());
+        visuals.normal.setOnAction(event -> setModToNormal());
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
         myStage.setScene(scene);
@@ -137,10 +141,6 @@ public class GameLoop extends Application {
         Scene scene = visuals.updateGrid(controller, resourceBundle, event);
         myStage.setScene(scene);
         currentControllerType.resetController();
-    }
-
-    private void keyOrMouseInput(){
-
     }
 
     @Override
@@ -168,6 +168,5 @@ public class GameLoop extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-
     }
 }
