@@ -25,6 +25,7 @@ public class PreyCell extends WatorCell {
    */
   public PreyCell(int cellState, int row, int col, Map<String, Double> params) {
     super(cellState, row, col);
+    state = PREY;
     breedTimeCounter = 0;
     if (params.containsKey("breedTime")) {
       this.breedTime = params.get("breedTime");
@@ -34,14 +35,22 @@ public class PreyCell extends WatorCell {
   }
 
   /**
+   * A prey cell always remains a prey cell.
+   */
+  @Override
+  public void determineNextState() {
+    nextState = PREY;
+  }
+
+  /**
    * Increments the prey's breed time counter every time the simulation is updated, detects if the
    * prey is ready to spawn.
    */
   @Override
-  public void determineNextState() {
+  public void determineAction() {
     breedTimeCounter++;
     if (breedTimeCounter == breedTime) {
-      nextState = SPAWN;
+      nextAction = SPAWN;
       breedTimeCounter = 0;
     }
   }
