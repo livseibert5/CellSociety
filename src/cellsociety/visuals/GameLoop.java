@@ -33,11 +33,11 @@ public class GameLoop extends Application {
     private Controller currentControllerType;
     private boolean simulationStarted = false;
     private int time = 0;
-
+    private int mod = 60;
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && (time % 60 == 0))   {
+        if(simulationStarted && mod != 0 && (time % mod == 0)){
             setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
             checkSimulationEnded();
             currentControllerType.resetController();
@@ -119,19 +119,44 @@ public class GameLoop extends Application {
         myStage.setScene(creatingLandingScreen());
     }
 
+    public void setModToFaster(){
+        mod = 30;
+    }
+
+    public void setModToSlower(){
+        mod = 120;
+    }
+
+    public void setModToNormal(){
+        mod = 60;
+    }
+
+    public void stopAnimation(){
+        simulationStarted = false;
+    }
+
+    public void playAnimation(){
+        simulationStarted = true;
+    }
+
     private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
 
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
+        visuals.faster.setOnAction(event -> setModToFaster());
+        visuals.slower.setOnAction(event -> setModToSlower());
+        visuals.normal.setOnAction(event -> setModToNormal());
+        myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
-        myStage.setScene(scene);
+        myStage.setScene(myScene);
         return grid;
     }
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
-        Scene scene = visuals.updateGrid(controller, resourceBundle, event);
+        Grid grid = visuals.updateGrid(controller, resourceBundle, event);
+        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
         myStage.setScene(scene);
     }
 
