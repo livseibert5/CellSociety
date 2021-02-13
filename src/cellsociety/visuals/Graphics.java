@@ -59,8 +59,8 @@ public class Graphics {
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < length; j++){
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
                Cell cell = grid.getCellAtLocation(i, j);
                 if(cell.getState() == 0){
                     gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("0"))), i, j);

@@ -1,8 +1,10 @@
 package cellsociety.visuals;
 
-import cellsociety.controller.Controller;
+import cellsociety.controller.*;
 import cellsociety.grid.Grid;
 import cellsociety.grid.XMLParser;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,6 +33,7 @@ public class GameLoop extends Application {
     private Controller currentControllerType;
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
+        setNewGrid(currentResourceBundle, currentControllerType, event -> creatingLandingScreen());
     }
 
     public Scene creatingLandingScreen(){
@@ -40,7 +44,9 @@ public class GameLoop extends Application {
 
         visuals.createButton("Game of Life", 100, root, event -> {
             try {
-                setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
+
+                Grid grid = setGrid("gameoflifepenta.xml", currentResourceBundle);
+                currentControllerType = new GameOfLifeController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -48,7 +54,8 @@ public class GameLoop extends Application {
 
         visuals.createButton("Percolation", 140, root, event -> {
             try {
-                setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
+                Grid grid = setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
+                currentControllerType = new PercolationController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -56,7 +63,8 @@ public class GameLoop extends Application {
 
         visuals.createButton("Segregation", 180, root, event -> {
             try {
-                setGrid("segregation.xml", visuals.mySegregationSimulationResources);
+                Grid grid = setGrid("segregation.xml", visuals.mySegregationSimulationResources);
+                currentControllerType = new SegregationController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -64,7 +72,8 @@ public class GameLoop extends Application {
 
         visuals.createButton("Wa-Tor", 220, root, event -> {
             try {
-                setGrid("predatorprey1.xml", visuals.myWaTorSimulationResources);
+                Grid grid = setGrid("predatorprey1.xml", visuals.myWaTorSimulationResources);
+                currentControllerType = new WatorController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -72,7 +81,8 @@ public class GameLoop extends Application {
 
         visuals.createButton("Fire", 260, root, event -> {
             try {
-                setGrid("firestandard.xml", visuals.myFireSimulationResources);
+                Grid grid = setGrid("firestandard.xml", visuals.myFireSimulationResources);
+                currentControllerType = new FireController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -91,17 +101,20 @@ public class GameLoop extends Application {
         myStage.setScene(creatingLandingScreen());
     }
 
-    private void setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+    private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
         Scene scene = visuals.createGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        currentResourceBundle = resourceBundle;
         myStage.setScene(scene);
+        return grid;
     }
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Scene scene = visuals.updateGrid(controller, resourceBundle, event);
         myStage.setScene(scene);
+        currentControllerType.resetController();
     }
 
     private void keyOrMouseInput(){
@@ -117,6 +130,22 @@ public class GameLoop extends Application {
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
+
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
+            try {
+                step(SECOND_DELAY);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } catch (SAXException saxException) {
+                saxException.printStackTrace();
+            } catch (ParserConfigurationException parserConfigurationException) {
+                parserConfigurationException.printStackTrace();
+            }
+        });
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
 
     }
 }
