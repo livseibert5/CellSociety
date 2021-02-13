@@ -1,8 +1,11 @@
 package cellsociety.visuals;
 
+import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
 import cellsociety.grid.XMLParser;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.FontWeight;
@@ -23,9 +26,10 @@ public class GameLoop extends Application {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public Stage myStage;
+    private ResourceBundle currentResourceBundle;
+    private Controller currentControllerType;
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
-
     }
 
     public Scene creatingLandingScreen(){
@@ -87,15 +91,16 @@ public class GameLoop extends Application {
         myStage.setScene(creatingLandingScreen());
     }
 
-    private void updateGameState(){
-
-    }
-
     private void setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
         Scene scene = visuals.createGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        myStage.setScene(scene);
+    }
+
+    private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
+        Scene scene = visuals.updateGrid(controller, resourceBundle, event);
         myStage.setScene(scene);
     }
 
