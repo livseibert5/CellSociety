@@ -26,6 +26,7 @@ public class PredatorCell extends WatorCell {
    */
   public PredatorCell(int cellState, int row, int col, Map<String, Double> params) {
     super(cellState, row, col);
+    state = PREDATOR;
     if (params.containsKey("startingEnergy")) {
       this.startingEnergy = params.get("startingEnergy");
     } else {
@@ -40,15 +41,23 @@ public class PredatorCell extends WatorCell {
   }
 
   /**
+   * A predator cell always remains a predator.
+   */
+  @Override
+  public void determineNextState() {
+    nextState = PREDATOR;
+  }
+
+  /**
    * Determines whether the predator spawns or dies, decrements its energy each time the simulation
    * is updated.
    */
   @Override
-  public void determineNextState() {
+  public void determineAction() {
     if (energyCounter == offspringEnergy) {
-      nextState = SPAWN;
+      nextAction = SPAWN;
     } else if (energyCounter == 0) {
-      nextState = DEAD;
+      nextAction = DEAD;
     }
     energyCounter--;
   }
