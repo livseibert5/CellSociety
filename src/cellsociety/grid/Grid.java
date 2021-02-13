@@ -157,7 +157,7 @@ public class Grid {
    */
   public Grid getCopyOfGrid() {
     Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params);
-    for (int i = 0; i < grid.length -1 ; i++) {
+    for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
         newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());

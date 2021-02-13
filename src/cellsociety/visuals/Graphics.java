@@ -66,11 +66,11 @@ public class Graphics {
             for(int j = 0; j < width; j++){
                Cell cell = grid.getCellAtLocation(i, j);
                 if(cell.getState() == 0){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("0"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("0"))), j, i);
                 }else if(cell.getState() == 1){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(simulationResource.getString("1"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(simulationResource.getString("1"))), j, i);
                 }else if(cell.getState() == 2){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("2"))), i, j);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("2"))), j, i);
                 }
             }
         }
