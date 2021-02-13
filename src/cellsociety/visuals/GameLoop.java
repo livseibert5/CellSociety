@@ -3,8 +3,6 @@ package cellsociety.visuals;
 import cellsociety.grid.Grid;
 import cellsociety.grid.XMLParser;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.FontWeight;
@@ -12,7 +10,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -20,7 +17,6 @@ import java.util.ResourceBundle;
 
 public class GameLoop extends Application {
 
-    String filename;
     private Graphics visuals = new Graphics();
     private Scene myScene;
     private static final String TITLE = "Cellular Automata";
@@ -34,8 +30,8 @@ public class GameLoop extends Application {
 
     public Scene creatingLandingScreen(){
         Group root = new Group();
-        Text welcome = visuals.constructText(100, 36, "Simulation Menu", FontWeight.BOLD, visuals.FONT);
-        Text instructions = visuals.constructText(125, 15,
+        Text welcome = visuals.constructText(20, 30, "Simulation Menu", FontWeight.BOLD, visuals.FONT);
+        Text instructions = visuals.constructText(40, 15,
                 "click on any simulation to start", FontWeight.NORMAL, visuals.FONT);
 
         visuals.createButton("Game of Life", 100, root, event -> {
@@ -91,7 +87,6 @@ public class GameLoop extends Application {
         myStage.setScene(creatingLandingScreen());
     }
 
-//the controller will be cal
     private void updateGameState(){
 
     }
@@ -108,14 +103,6 @@ public class GameLoop extends Application {
 
     }
 
-    private void ifButtonIsClicked(Scene scene){
-
-    }
-
-    public void setScene(Scene scene){
-        myScene = scene;
-    }
-    //when a button is clicked then
     @Override
     public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
 

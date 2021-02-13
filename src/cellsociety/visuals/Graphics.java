@@ -24,10 +24,9 @@ import java.util.ResourceBundle;
 public class Graphics {
 
     public static final String FONT = "Verdana";
-    public static final int SCREEN_WIDTH = 800;
-    public static final int SCREEN_HEIGHT = 800;
+    public static final int SCREEN_WIDTH = 400;
+    public static final int SCREEN_HEIGHT = 400;
     public static final Paint BACKGROUND = Color.AZURE;
-    public GridPane gridView;
     private int SQUARE_DIMENSIONS = 30;
 
     //properties package
@@ -46,16 +45,17 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
-    private BorderPane outside;
+
     public Button exit = new Button("Exit");
 
     public Graphics(){
-        gridView = new GridPane();
-        outside = new BorderPane();
         exit.setFont(Font.font(FONT, 12));
     }
 
     public Scene createGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> event){
+        BorderPane outside = new BorderPane();
+        GridPane gridView = new GridPane();
+        outside.getChildren().clear();
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
@@ -73,6 +73,7 @@ public class Graphics {
         }
         exit.setOnAction(event);
         outside.setCenter(gridView);
+        outside.autosize();
         outside.setBottom(exit);
         Scene scene = new Scene(outside);
         return scene;
@@ -95,6 +96,7 @@ public class Graphics {
         return text;
     }
 
+
     public void createButton(String buttonName, double baseY, Group root, EventHandler<ActionEvent> event){
         Button button = new Button(buttonName);
 
@@ -104,7 +106,7 @@ public class Graphics {
         double width = buttonBounds.getWidth();
 
         double xPosition = ((SCREEN_WIDTH/2)-50);
-        double yPosition = baseY + 150;
+        double yPosition = baseY + 100;
 
         button.setTranslateY(yPosition);
         button.setTranslateX(xPosition);
