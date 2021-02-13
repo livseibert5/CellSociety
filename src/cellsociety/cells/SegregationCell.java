@@ -29,7 +29,7 @@ public class SegregationCell extends Cell {
   public SegregationCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
-    if (params.containsKey("satisfied")) {
+    if (params != null && params.containsKey("satisfied")) {
       this.satisfied = params.get("satisfied");
     } else {
       this.satisfied = .30;
@@ -67,5 +67,9 @@ public class SegregationCell extends Cell {
    */
   public boolean getIsSatisfied() {
     return isSatisfied;
+  }
+
+  public double getSatisfied()  {
+    return satisfied;
   }
 }
