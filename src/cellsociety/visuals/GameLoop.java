@@ -37,8 +37,15 @@ public class GameLoop extends Application {
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && mod != 0 && (time % mod == 0))
-        setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+        if(simulationStarted && mod != 0 && (time % mod == 0)){
+            setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+            checkSimulationEnded();
+            currentControllerType.resetController();
+        }
+    }
+
+    private void checkSimulationEnded() {
+        if (currentControllerType.simulationEnded()) simulationStarted = false;
     }
 
     public Scene creatingLandingScreen(){
@@ -131,7 +138,9 @@ public class GameLoop extends Application {
     public void playAnimation(){
         simulationStarted = true;
     }
+
     private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
@@ -139,6 +148,7 @@ public class GameLoop extends Application {
         visuals.slower.setOnAction(event -> setModToSlower());
         visuals.normal.setOnAction(event -> setModToNormal());
         myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
         myStage.setScene(myScene);
         return grid;
@@ -148,7 +158,10 @@ public class GameLoop extends Application {
         Grid grid = visuals.updateGrid(controller, resourceBundle, event);
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
         myStage.setScene(scene);
-        currentControllerType.resetController();
+    }
+
+    private void keyOrMouseInput(){
+
     }
 
     @Override
@@ -176,5 +189,6 @@ public class GameLoop extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
+
     }
 }

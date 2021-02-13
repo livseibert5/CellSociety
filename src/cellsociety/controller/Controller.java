@@ -5,6 +5,7 @@ public abstract class Controller {
 
   private Grid oldGrid;
   private Grid newGrid;
+  private boolean simulationEnded = true;
 
   public Controller(Grid oldGrid) {
     this.oldGrid = oldGrid;
@@ -16,8 +17,11 @@ public abstract class Controller {
     setNewGrid();
   }
   public void updateState() {
+
+    simulationEnded = true;
     int[] dims = oldGrid.getSizeOfGrid();
 
+    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j< dims[1]; j++)  {
         newGrid.getCellAtLocation(i, j).determineNextState();
@@ -25,9 +29,13 @@ public abstract class Controller {
     }
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j< dims[1]; j++)  {
+        if (newGrid.getCellAtLocation(i,j).getState() != newGrid.getCellAtLocation(i,j).getNextState()) {
+          simulationEnded = false;
+        }
         newGrid.getCellAtLocation(i, j).updateState();
       }
     }
+    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
   }
 
   /**
@@ -35,16 +43,7 @@ public abstract class Controller {
    * @returns true if state has not changed for any cell, false otherwise
    */
   public boolean simulationEnded()  {
-    int[] dims = oldGrid.getSizeOfGrid();
-
-    for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j< dims[1]; j++)  {
-        if (oldGrid.getCellAtLocation(i, j).getState() != newGrid.getCellAtLocation(i, j).getState()) {
-          return false;
-        }
-      }
-    }
-    return true;
+    return simulationEnded;
   }
 
   public Grid getNewGrid()  {
