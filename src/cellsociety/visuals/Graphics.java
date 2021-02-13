@@ -8,7 +8,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -22,14 +24,13 @@ import java.util.ResourceBundle;
 public class Graphics {
 
     public static final String FONT = "Verdana";
-    private static final Paint HIGHLIGHT = Color.OLIVEDRAB;
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 800;
     public static final Paint BACKGROUND = Color.AZURE;
     public GridPane gridView;
-    private Color[] colorOfCell = {Color.YELLOW, Color.GREEN, Color.RED};
     private int SQUARE_DIMENSIONS = 30;
-    public boolean ifSimulationButtonHit = false;
+
+    //properties package
     public static final String LANDING_SCREEN_PACKAGE = "cellsociety.visuals.resources.LandingScene";
     public static final String FIRE_SCREEN_PACKAGE = "cellsociety.visuals.resources.FireSimulation";
     public static final String GAME_OF_LIFE_SCREEN_PACKAGE = "cellsociety.visuals.resources.GameOfLifeSimulation";
@@ -37,7 +38,7 @@ public class Graphics {
     public static final String SEGREGATION_PACKAGE = "cellsociety.visuals.resources.SegregationSimulation";
     public static final String WATOR_PACKAGE = "cellsociety.visuals.resources.WaTorSimulation";
 
-    public static final String DEFAULT_RESOURCE_FOLDER = "/" + LANDING_SCREEN_PACKAGE.replace(".", "/");
+    //resource bundles for each simulation
     public static final ResourceBundle myLandingSceneResources = ResourceBundle.getBundle(LANDING_SCREEN_PACKAGE);
     public static final ResourceBundle myFireSimulationResources = ResourceBundle.getBundle(FIRE_SCREEN_PACKAGE);
     public static final ResourceBundle myGameOfLifeSimulationResources = ResourceBundle.getBundle(GAME_OF_LIFE_SCREEN_PACKAGE);
@@ -45,16 +46,16 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
+    private BorderPane outside;
+    public Button exit = new Button("Exit");
 
     public Graphics(){
         gridView = new GridPane();
+        outside = new BorderPane();
+        exit.setFont(Font.font(FONT, 12));
     }
 
-    private String getFileName(String fileName){
-        return fileName;
-    }
-
-    public Scene createGrid(Grid grid, ResourceBundle simulationResource){
+    public Scene createGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> event){
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[0];
         int length = sizeOfGrid[1];
@@ -70,8 +71,10 @@ public class Graphics {
                 }
             }
         }
-
-        Scene scene = new Scene(gridView);
+        exit.setOnAction(event);
+        outside.setCenter(gridView);
+        outside.setBottom(exit);
+        Scene scene = new Scene(outside);
         return scene;
     }
 
