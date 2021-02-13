@@ -49,7 +49,8 @@ public class Graphics {
     public Button faster = new Button("Faster");
     public Button slower = new Button("Slower");
     public Button normal = new Button("Regular");
-
+    public Button play = new Button("Play");
+    public Button pause = new Button("Pause");
     public Graphics(){
         exit.setFont(Font.font(FONT, 12));
     }
@@ -85,10 +86,11 @@ public class Graphics {
         return scene;
     }
 
-    public Scene updateGrid(Controller controllerType, ResourceBundle simulation, EventHandler<ActionEvent> event){
+    public Grid updateGrid(Controller controllerType, ResourceBundle simulation, EventHandler<ActionEvent> event){
         controllerType.updateState();
         Grid newGrid = controllerType.getNewGrid();
-        return createVisualGrid(newGrid, simulation, event);
+        return newGrid;
+        //return createVisualGrid(newGrid, simulation, event);
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {

@@ -124,6 +124,13 @@ public class GameLoop extends Application {
         mod = 60;
     }
 
+    public void stopAnimation(){
+        simulationStarted = false;
+    }
+
+    public void playAnimation(){
+        simulationStarted = true;
+    }
     private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
@@ -131,14 +138,15 @@ public class GameLoop extends Application {
         visuals.faster.setOnAction(event -> setModToFaster());
         visuals.slower.setOnAction(event -> setModToSlower());
         visuals.normal.setOnAction(event -> setModToNormal());
-        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
-        myStage.setScene(scene);
+        myStage.setScene(myScene);
         return grid;
     }
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
-        Scene scene = visuals.updateGrid(controller, resourceBundle, event);
+        Grid grid = visuals.updateGrid(controller, resourceBundle, event);
+        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
         myStage.setScene(scene);
         currentControllerType.resetController();
     }
