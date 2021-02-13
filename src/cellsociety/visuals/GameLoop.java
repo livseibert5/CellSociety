@@ -33,7 +33,6 @@ public class GameLoop extends Application {
     private Controller currentControllerType;
     private boolean simulationStarted = false;
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
-
         if(simulationStarted)
         setNewGrid(currentResourceBundle, currentControllerType, event -> creatingLandingScreen());
     }
