@@ -37,6 +37,11 @@ public class GameLoop extends Application {
         time += 1;
         if(simulationStarted && (time % 60 == 0))
         setNewGrid(currentResourceBundle, currentControllerType, event -> creatingLandingScreen());
+        seeIfSimulationEnded();
+    }
+
+    private void seeIfSimulationEnded() {
+        if (simulationStarted && currentControllerType.simulationEnded()) simulationStarted = false;
     }
 
     public Scene creatingLandingScreen(){
