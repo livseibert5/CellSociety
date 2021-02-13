@@ -146,7 +146,7 @@ public class Grid {
    * @return array with width at index 0 and height at index 1
    */
   public int[] getSizeOfGrid() {
-    return new int[]{width, height};
+    return new int[]{height, width};
   }
 
   /**

@@ -27,9 +27,9 @@ public class SegregationController extends Controller{
   public void updateState() {
     Grid oldGrid = super.getOldGrid();
     Grid newGrid = super.getNewGrid();
-    for (int i = 0; i < dims[1]; i++) {
-      for (int j = 0; j < dims[0]; j++)  {
-        System.out.println("i" + i + "j" + j);
+    updated = new boolean[dims[0]][dims[1]];
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j < dims[1]; j++)  {
         SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i,j);
         int oldState = oldCell.getState();
         oldCell.determineNextState();
@@ -48,9 +48,10 @@ public class SegregationController extends Controller{
   }
   private void addRemovedCells(Grid newGrid) {
     Collections.shuffle(statesToAddAtCurrentIteration);
-    for (int i = 0; i < dims[1]; i++) {
-      for (int j = 0; j < dims[0]; j++) {
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j < dims[1]; j++) {
         if (statesToAddAtCurrentIteration.size() == 0) return;
+        System.out.println("here");
         if (!updated[i][j]) {
           newGrid.setCellAtLocation(i, j, new SegregationCell(
               statesToAddAtCurrentIteration.remove(0), i, j, satisfiedMap));

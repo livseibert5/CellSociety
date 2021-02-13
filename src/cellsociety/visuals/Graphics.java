@@ -56,8 +56,8 @@ public class Graphics {
         GridPane gridView = new GridPane();
         outside.getChildren().clear();
         int[] sizeOfGrid = grid.getSizeOfGrid();
-        int width = sizeOfGrid[0];
-        int length = sizeOfGrid[1];
+        int width = sizeOfGrid[1];
+        int length = sizeOfGrid[0];
         for(int i = 0; i < length; i++){
             for(int j = 0; j < width; j++){
                Cell cell = grid.getCellAtLocation(i, j);
