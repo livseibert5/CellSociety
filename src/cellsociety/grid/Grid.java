@@ -48,6 +48,14 @@ public class Grid {
     readFile(fileName);
     initializeCells();
   }
+  public Grid(int width, int height, Type type, Map<String, Double> params) {
+    grid = new Cell[height][width];
+    this.type = type;
+    this.width = width;
+    this.height = height;
+    this.params = params;
+    initializeCells();
+  }
 
   private void readFile(String fileName) {
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
@@ -156,8 +164,8 @@ public class Grid {
    * @return newGrid deep copy of current grid
    */
   public Grid getCopyOfGrid() {
-    Grid newGrid = new Grid(this.height, this.width, this.fileName, this.type, this.params);
-    for (int i = 0; i < grid.length; i++) {
+    Grid newGrid = new Grid(this.width, this.height, this.type, this.params);
+    for (int i = 0; i < grid.length -1 ; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
         newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
