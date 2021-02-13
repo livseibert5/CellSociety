@@ -31,12 +31,15 @@ public class GameLoop extends Application {
     public Stage myStage;
     private ResourceBundle currentResourceBundle;
     private Controller currentControllerType;
-
+    private boolean simulationStarted = false;
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
+
+        if(simulationStarted)
         setNewGrid(currentResourceBundle, currentControllerType, event -> creatingLandingScreen());
     }
 
     public Scene creatingLandingScreen(){
+        simulationStarted = false;
         Group root = new Group();
         Text welcome = visuals.constructText(20, 30, "Simulation Menu", FontWeight.BOLD, visuals.FONT);
         Text instructions = visuals.constructText(40, 15,
@@ -44,8 +47,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Game of Life", 100, root, event -> {
             try {
-
-                Grid grid = setGrid("gameoflifepenta.xml", currentResourceBundle);
+                Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
                 currentControllerType = new GameOfLifeController(grid);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -102,6 +104,7 @@ public class GameLoop extends Application {
     }
 
     private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+        simulationStarted = true;
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
