@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -52,7 +51,7 @@ public class Graphics {
         exit.setFont(Font.font(FONT, 12));
     }
 
-    public Scene createGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> event){
+    public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> event){
         BorderPane outside = new BorderPane();
         GridPane gridView = new GridPane();
         outside.getChildren().clear();
@@ -82,7 +81,7 @@ public class Graphics {
     public Scene updateGrid(Controller controllerType, ResourceBundle simulation, EventHandler<ActionEvent> event){
         controllerType.updateState();
         Grid newGrid = controllerType.getNewGrid();
-        return createGrid(newGrid, simulation, event);
+        return createVisualGrid(newGrid, simulation, event);
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
