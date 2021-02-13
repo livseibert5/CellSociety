@@ -16,7 +16,7 @@ public class PredatorCell extends WatorCell {
   private double energyCounter;
 
   /**
-   * Constuctor for the Predator cell, uses the WatorCell constructor and also sets the values for
+   * Constructor for the Predator cell, uses the WatorCell constructor and also sets the values for
    * the predator's starting energy and offspring energy based on XML input.
    *
    * @param cellState intial state of cell
