@@ -37,8 +37,15 @@ public class GameLoop extends Application {
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && (time % 60 == 0))
-        setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+        if(simulationStarted && (time % 60 == 0))   {
+            setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+            checkSimulationEnded();
+            currentControllerType.resetController();
+        }
+    }
+
+    private void checkSimulationEnded() {
+        if (currentControllerType.simulationEnded()) simulationStarted = false;
     }
 
     public Scene creatingLandingScreen(){
@@ -126,7 +133,6 @@ public class GameLoop extends Application {
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Scene scene = visuals.updateGrid(controller, resourceBundle, event);
         myStage.setScene(scene);
-        currentControllerType.resetController();
     }
 
     private void keyOrMouseInput(){
