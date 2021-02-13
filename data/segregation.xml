@@ -6,7 +6,7 @@
   <Description>Simulate segregation.</Description>
   <ConfigParams>
     <Param>
-      <Name>isSatisfied</Name>
+      <Name>satisfied</Name>
       <Value>.3</Value>
     </Param>
   </ConfigParams>
