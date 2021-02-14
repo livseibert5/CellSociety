@@ -68,7 +68,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Percolation", 140, root, event -> {
             try {
-                Grid grid = setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
+                Grid grid = setGrid("percolationrectangle.xml", visuals.myPercolationSimulationResources);
                 currentControllerType = new PercolationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -98,7 +98,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Fire", 260, root, event -> {
             try {
-                Grid grid = setGrid("fireedges2.xml", visuals.myFireSimulationResources);
+                Grid grid = setGrid("firestandard.xml", visuals.myFireSimulationResources);
                 currentControllerType = new FireController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {

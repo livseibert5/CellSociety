@@ -5,6 +5,6 @@
   <Author>Team 9</Author>
   <Description>Simulate percolation.</Description>
   <Width>8</Width>
-  <Height>8</Height>
+  <Height>9</Height>
   <LayoutFile>percolationworstcase.txt</LayoutFile>
 </Simulation>
