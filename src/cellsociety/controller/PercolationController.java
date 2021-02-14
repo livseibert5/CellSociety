@@ -41,7 +41,10 @@ public class PercolationController extends Controller{
 
   @Override
   public void updateState() {
-    if (simulationEnded()) return;
+    if (simulationEndedByEdge(super.getOldGrid(), super.getOldGrid().getSizeOfGrid())) {
+      System.out.println("here");
+      return;
+    }
     super.updateState();
   }
 
@@ -50,21 +53,25 @@ public class PercolationController extends Controller{
     Grid grid = super.getNewGrid();
     int[] dims = grid.getSizeOfGrid();
     if (super.simulationEnded()) return true;
-      switch (startingEdge) {
-        case 0 -> {
-          return checkBottomEdge(grid, dims);
-        }
-        case 1 ->  {
-          return checkLeftEdge(grid, dims);
-        }
-        case 2 ->   {
-          return checkTopEdge(grid, dims);
-        }
-        case 3->  {
-          return checkRightEdge(grid, dims);
-        }
+    return simulationEndedByEdge(grid, dims);
+  }
 
+  private boolean simulationEndedByEdge(Grid grid, int[] dims) {
+    switch (startingEdge) {
+      case 0 -> {
+        return checkBottomEdge(grid, dims);
       }
+      case 1 ->  {
+        return checkLeftEdge(grid, dims);
+      }
+      case 2 ->   {
+        return checkTopEdge(grid, dims);
+      }
+      case 3->  {
+        return checkRightEdge(grid, dims);
+      }
+
+    }
     return false;
   }
 
