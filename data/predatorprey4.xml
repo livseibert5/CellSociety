@@ -19,6 +19,6 @@
     </Param>
   </ConfigParams>
   <Width>20</Width>
-  <Height>20</Height>
-  <LayoutFile>predatorprey1.txt</LayoutFile>
+  <Height>18</Height>
+  <LayoutFile>predatorprey4.txt</LayoutFile>
 </Simulation>

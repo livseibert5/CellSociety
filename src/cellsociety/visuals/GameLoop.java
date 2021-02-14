@@ -88,7 +88,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Wa-Tor", 220, root, event -> {
             try {
-                Grid grid = setGrid("predatorprey1.xml", visuals.myWaTorSimulationResources);
+                Grid grid = setGrid("predatorprey4.xml", visuals.myWaTorSimulationResources);
                 currentControllerType = new WatorController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
