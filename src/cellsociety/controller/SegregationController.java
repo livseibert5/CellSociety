@@ -9,6 +9,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class that controls the Segregation game,
+ * Uses the grid class and extends basic controller class
+ * Called from game loop to update segregation state
+ *
+ * @author billyluqiu
+ */
 public class SegregationController extends Controller{
 
   private List<Integer> statesToAddAtCurrentIteration = new ArrayList();
@@ -16,6 +23,11 @@ public class SegregationController extends Controller{
   private int[] dims;
   private HashMap<String, Double> satisfiedMap = new HashMap<>();
 
+  /**
+   * Constructor to create the controller and set instance variables
+   *
+   * @param grid initial grid of the simulation
+   */
   public SegregationController(Grid grid)  {
     super(grid);
     Grid oldGrid = super.getOldGrid();
@@ -25,6 +37,10 @@ public class SegregationController extends Controller{
     satisfiedMap.put("satisfied", cell.getSatisfied());
   }
 
+  /**
+   * updates state of the grid by putting new state in new grid
+   * checks to see if cells should be momved
+   */
   @Override
   public void updateState() {
     Grid oldGrid = super.getOldGrid();
@@ -36,7 +52,7 @@ public class SegregationController extends Controller{
         int oldState = oldCell.getState();
         oldCell.determineNextState();
         int newState = oldCell.getNextState();
-        if (newState == 3)  {
+        if (newState == SegregationCell.MOVE)  {
           statesToAddAtCurrentIteration.add(oldState);
           newGrid.setCellAtLocation(i,j,new EmptyCell(0, i, j));
         }
@@ -64,6 +80,10 @@ public class SegregationController extends Controller{
 
   }
 
+  /**
+   * checks to see if simulation ended by seeing if all cell states are satisifed
+   * @return true if simulation is satiisfied
+   */
   @Override
   public boolean simulationEnded() {
     Grid oldGrid = super.getOldGrid();
