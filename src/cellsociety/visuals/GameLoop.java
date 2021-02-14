@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class GameLoop extends Application {
 
-    private Graphics visuals = new Graphics();
+    private final Graphics visuals = new Graphics();
     private Scene myScene;
     private static final String TITLE = "Cellular Automata";
     public static final int FRAMES_PER_SECOND = 60;
@@ -41,6 +41,7 @@ public class GameLoop extends Application {
             setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
             checkSimulationEnded();
             currentControllerType.resetController();
+            System.out.println("simulation state: " + simulationStarted);
         }
     }
 
@@ -159,7 +160,7 @@ public class GameLoop extends Application {
     }
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
-        Grid grid = visuals.updateGrid(controller, resourceBundle, event);
+        Grid grid = visuals.updateGrid(controller);
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
         myStage.setScene(scene);
     }
