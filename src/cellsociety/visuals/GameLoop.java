@@ -72,9 +72,7 @@ public class GameLoop extends Application {
         visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 140, root, event -> {
             try {
                 currentResourceBundle = Graphics.myPercolationSimulationResources;
-                Grid grid = setGrid("percolation1.xml");
-                currentControllerType = new PercolationController(grid);
-                simulationStarted = true;
+                createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
