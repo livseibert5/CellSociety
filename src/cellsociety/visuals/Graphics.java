@@ -6,11 +6,14 @@ import cellsociety.grid.Grid;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -60,6 +63,21 @@ public class Graphics {
         GridPane gridView = new GridPane();
         outside.getChildren().clear();
 
+        HBox leftButtons = new HBox(play);
+        leftButtons.setAlignment(Pos.BOTTOM_LEFT);
+        HBox rightButtons = new HBox(pause);
+        rightButtons.setAlignment(Pos.BOTTOM_RIGHT);
+        HBox centerButtons = new HBox(exit);
+        centerButtons.setAlignment(Pos.BOTTOM_CENTER);
+        HBox bottomButtons = new HBox(leftButtons, rightButtons, centerButtons);
+        exit.setOnAction(eventExit);
+        outside.setCenter(gridView);
+        outside.autosize();
+        outside.setBottom(bottomButtons);
+        outside.setTop(faster);
+        outside.setLeft(slower);
+        outside.setRight(normal);
+
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[1];
         int length = sizeOfGrid[0];
@@ -75,13 +93,7 @@ public class Graphics {
                 }
             }
         }
-        exit.setOnAction(eventExit);
-        outside.setCenter(gridView);
-        outside.autosize();
-        outside.setBottom(exit);
-        outside.setTop(faster);
-        outside.setLeft(slower);
-        outside.setRight(normal);
+
         Scene scene = new Scene(outside);
         return scene;
     }
@@ -90,7 +102,6 @@ public class Graphics {
         controllerType.updateState();
         Grid newGrid = controllerType.getNewGrid();
         return newGrid;
-        //return createVisualGrid(newGrid, simulation, event);
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {

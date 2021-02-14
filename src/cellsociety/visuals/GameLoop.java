@@ -144,12 +144,16 @@ public class GameLoop extends Application {
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
+        myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+
         visuals.faster.setOnAction(event -> setModToFaster());
         visuals.slower.setOnAction(event -> setModToSlower());
         visuals.normal.setOnAction(event -> setModToNormal());
-        myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
-        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        visuals.play.setOnAction(event -> playAnimation());
+        visuals.pause.setOnAction(event -> stopAnimation());
+
         currentResourceBundle = resourceBundle;
+
         myStage.setScene(myScene);
         return grid;
     }
