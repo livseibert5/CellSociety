@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -30,7 +29,7 @@ public class Graphics {
     public static final int SCREEN_WIDTH = 400;
     public static final int SCREEN_HEIGHT = 400;
     public static final Paint BACKGROUND = Color.AZURE;
-    private int SQUARE_DIMENSIONS = 30;
+    private static final int SQUARE_DIMENSIONS = 30;
 
     //properties package
     public static final String LANDING_SCREEN_PACKAGE = "cellsociety.visuals.resources.LandingScene";
@@ -48,16 +47,18 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
-    private Button exit = new Button("Exit");
-    public Button faster = new Button("Faster");
-    public Button slower = new Button("Slower");
-    public Button normal = new Button("Regular");
-    public Button play = new Button("Play");
-    public Button pause = new Button("Pause");
+    private final Button exit = new Button("Exit");
+    public static final Button faster = new Button("Faster");
+    public static final Button slower = new Button("Slower");
+    public static final Button normal = new Button("Regular");
+    public static final Button play = new Button("Play");
+    public static final Button pause = new Button("Pause");
+
     private BorderPane outside;
     private Scene scene;
+
     public Graphics(){
-        exit.setFont(Font.font(FONT, 12));
+
     }
 
     public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> eventExit){
@@ -105,10 +106,10 @@ public class Graphics {
         return scene;
     }
 
-    public Grid updateGrid(Controller controllerType, ResourceBundle simulation, EventHandler<ActionEvent> event){
+    public Grid updateGrid(Controller controllerType){
         controllerType.updateState();
-        Grid newGrid = controllerType.getNewGrid();
-        return newGrid;
+
+        return controllerType.getNewGrid();
     }
 
     public Text constructText(double baseY, int size, String message, FontWeight fontWeight, String font) {
@@ -118,7 +119,6 @@ public class Graphics {
 
         Bounds textBounds = text.getBoundsInParent();
         double ascent = -textBounds.getMinY();
-        double descent = textBounds.getMinY();
         double width = textBounds.getWidth();
 
         double leftX = (SCREEN_WIDTH-width)/2;
@@ -131,11 +131,6 @@ public class Graphics {
 
     public void createButton(String buttonName, double baseY, Group root, EventHandler<ActionEvent> event){
         Button button = new Button(buttonName);
-
-        Bounds buttonBounds = button.getBoundsInParent();
-        double ascent = -buttonBounds.getMinY();
-        double descent = buttonBounds.getMinY();
-        double width = buttonBounds.getWidth();
 
         double xPosition = ((SCREEN_WIDTH/2)-50);
         double yPosition = baseY + 100;
