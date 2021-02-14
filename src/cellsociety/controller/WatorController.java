@@ -90,7 +90,6 @@ public class WatorController extends Controller{
             newGrid.setCellAtLocation(i,j,new EmptyCell(0, i, j));
           }
           else if (watorCell.getNextAction() == 0)  {
-            System.out.println("here");
             spawnCell(i, j,  oldGrid,  newGrid);
           }
         }

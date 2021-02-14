@@ -55,7 +55,6 @@ public class SegregationController extends Controller{
       for (int j = 0; j < dims[1]; j++) {
         if (statesToAddAtCurrentIteration.size() == 0) return;
         if (!updated[i][j]) {
-          System.out.println("here");
           newGrid.setCellAtLocation(i, j, new SegregationCell(
               statesToAddAtCurrentIteration.remove(0), i, j, satisfiedMap));
           updated[i][j] = true;

@@ -42,7 +42,6 @@ public class PercolationController extends Controller{
   @Override
   public void updateState() {
     if (simulationEndedByEdge(super.getOldGrid(), super.getOldGrid().getSizeOfGrid())) {
-      System.out.println("here");
       return;
     }
     super.updateState();
