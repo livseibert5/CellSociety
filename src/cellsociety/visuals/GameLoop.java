@@ -160,7 +160,7 @@ public class GameLoop extends Application {
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Grid grid = visuals.updateGrid(controller, resourceBundle, event);
-        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
+        Scene scene = visuals.setGridView(grid, resourceBundle, event);
         myStage.setScene(scene);
     }
 
