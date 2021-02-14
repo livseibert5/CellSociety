@@ -70,9 +70,12 @@ public class Grid {
 
   private Map<Type, Cell> createDataMap(int row, int col, int cellState) {
     Map<Type, Cell> data = new HashMap<>();
-    Cell wator =
-        type == Type.WATOR && cellState == 1 ? new PredatorCell(cellState, row, col, params)
-            : new PreyCell(cellState, row, col, params);
+    Cell wator = new EmptyCell(2, row, col);
+    if (type == Type.WATOR && cellState == 0) {
+      wator = new PredatorCell(cellState, row, col, params);
+    } else if (type == Type.WATOR && cellState == 1) {
+      wator = new PreyCell(cellState, row, col, params);
+    }
     data.put(Type.FIRE, new FireCell(cellState, row, col, params));
     data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col));
     data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col));
