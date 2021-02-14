@@ -1,24 +1,40 @@
 package cellsociety.controller;
 import cellsociety.grid.Grid;
 
+/**
+ * Class that is abstract and creates methods for all contrller class
+ * Uses the grid class
+ * Called from game loop to update game state
+ *
+ * @author billyluqiu
+ */
+
 public abstract class Controller {
 
   private Grid oldGrid;
   private Grid newGrid;
   private boolean simulationEnded = true;
 
+  /**
+   * Creates controller and creates copy of grid for new grid
+   * @param oldGrid initial grid state
+   */
   public Controller(Grid oldGrid) {
     this.oldGrid = oldGrid;
     setNewGrid();
   }
 
+  /**
+   * resets controller by setting dimensions correctly in grid
+   * and setting new grid to be a copy of the old grid
+   */
   public void resetController() {
     setDims();
     this.oldGrid = this.newGrid;
     setNewGrid();
   }
 
-  public void setDims() {
+  private void setDims() {
     int[] dims = oldGrid.getSizeOfGrid();
 
     for (int i = 0; i < dims[0]; i++) {
@@ -27,8 +43,12 @@ public abstract class Controller {
       }
     }
   }
-  public void updateState() {
 
+  /**
+   * updates state of grid based off nextState in cell
+   * sees if cell state changed
+   */
+  public void updateState() {
     simulationEnded = true;
     int[] dims = oldGrid.getSizeOfGrid();
 
@@ -55,15 +75,23 @@ public abstract class Controller {
     return simulationEnded;
   }
 
+  /**
+   * gets newGrid object
+   * @return newgrid
+   */
   public Grid getNewGrid()  {
     return newGrid;
   }
 
+  /**
+   * get oldgrid objecct
+   * @return oldGrid
+   */
   protected Grid getOldGrid()  {
     return oldGrid;
   }
 
-  protected void setNewGrid() {
+  private void setNewGrid() {
     newGrid = oldGrid.getCopyOfGrid();
   }
 }
