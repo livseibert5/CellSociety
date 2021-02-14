@@ -78,7 +78,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Segregation", 180, root, event -> {
             try {
-                Grid grid = setGrid("rectanglesegregation.xml", visuals.mySegregationSimulationResources);
+                Grid grid = setGrid("segregation2.xml", visuals.mySegregationSimulationResources);
                 currentControllerType = new SegregationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
