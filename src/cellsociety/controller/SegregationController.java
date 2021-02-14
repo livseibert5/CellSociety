@@ -1,6 +1,7 @@
 package cellsociety.controller;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.EmptyCell;
 import cellsociety.cells.SegregationCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class SegregationController extends Controller{
         int newState = oldCell.getNextState();
         if (newState == 3)  {
           statesToAddAtCurrentIteration.add(oldState);
+          newGrid.setCellAtLocation(i,j,new EmptyCell(0, i, j));
         }
         else  {
           newGrid.setCellAtLocation(i, j, new SegregationCell(oldState, i, j, satisfiedMap));
@@ -53,6 +55,7 @@ public class SegregationController extends Controller{
       for (int j = 0; j < dims[1]; j++) {
         if (statesToAddAtCurrentIteration.size() == 0) return;
         if (!updated[i][j]) {
+          System.out.println("here");
           newGrid.setCellAtLocation(i, j, new SegregationCell(
               statesToAddAtCurrentIteration.remove(0), i, j, satisfiedMap));
           updated[i][j] = true;
