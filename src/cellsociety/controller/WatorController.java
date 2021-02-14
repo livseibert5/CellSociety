@@ -7,15 +7,31 @@ import cellsociety.cells.PreyCell;
 import cellsociety.cells.WatorCell;
 import cellsociety.grid.Grid;
 import java.util.HashMap;
-
+/**
+ * Class that controls the Wator game,
+ * Uses the grid class and extends basic controller class
+ * Called from game loop to update Wator state
+ *
+ * @author billyluqiu
+ */
 public class WatorController extends Controller{
 
   boolean[][] updated;
+  /**
+   * Constructor to create the controller
+   * @param oldGrid initial grid of the wator gridd
+   */
   public WatorController(Grid oldGrid) {
     super(oldGrid);
   }
 
-
+  /**
+   * updates state of the grid by putting new state in new grid
+   * Uses assumed rules of the Wator game from this website
+   *
+   * https://beltoforion.de/en/wator/
+   *
+   */
   @Override
   public void updateState() {
     //if spawn do something special
@@ -76,7 +92,6 @@ public class WatorController extends Controller{
 
 
   private void moveCells() {
-
     Grid oldGrid = super.getOldGrid();
     Grid newGrid = super.getNewGrid();
     int[] dims = oldGrid.getSizeOfGrid();
@@ -112,19 +127,19 @@ public class WatorController extends Controller{
     params.put("breedTime", preyCell.getBreedTime());
     if (oldGrid.getCellAtLocation(i -1, j) == newGrid.getCellAtLocation(i -1, j) && newGrid.getCellAtLocation(
         i -1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i -1, j, new PreyCell(1, i -1, j, params));
+      newGrid.setCellAtLocation(i -1, j, new PreyCell(WatorCell.MOVE, i -1, j, params));
     }
     if (oldGrid.getCellAtLocation(i +1, j) == newGrid.getCellAtLocation(i +1, j) && newGrid.getCellAtLocation(
         i +1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i +1, j, new PreyCell(1, i +1, j, params));
+      newGrid.setCellAtLocation(i +1, j, new PreyCell(WatorCell.MOVE, i +1, j, params));
     }
     if (oldGrid.getCellAtLocation(i, j -1) == newGrid.getCellAtLocation(i, j -1) && newGrid.getCellAtLocation(
         i, j -1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j -1, new PreyCell(1, i, j -1, params));
+      newGrid.setCellAtLocation(i, j -1, new PreyCell(WatorCell.MOVE, i, j -1, params));
     }
     if (oldGrid.getCellAtLocation(i, j +1) == newGrid.getCellAtLocation(i, j +1) && newGrid.getCellAtLocation(
         i, j +1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j +1, new PreyCell(1, i, j +1, params));
+      newGrid.setCellAtLocation(i, j +1, new PreyCell(WatorCell.MOVE, i, j +1, params));
     }
   }
 
@@ -134,21 +149,22 @@ public class WatorController extends Controller{
     params.put("offspringEnergy", predatorCell.getOffspringEnergy());
     if (oldGrid.getCellAtLocation(i -1, j) == newGrid.getCellAtLocation(i -1, j) && newGrid.getCellAtLocation(
         i -1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i -1, j, new PredatorCell(1, i -1, j, params));
+      newGrid.setCellAtLocation(i -1, j, new PredatorCell(WatorCell.MOVE, i -1, j, params));
     }
     if (oldGrid.getCellAtLocation(i +1, j) == newGrid.getCellAtLocation(i +1, j) && newGrid.getCellAtLocation(
         i +1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i +1, j, new PredatorCell(1, i +1, j, params));
+      newGrid.setCellAtLocation(i +1, j, new PredatorCell(WatorCell.MOVE, i +1, j, params));
     }
     if (oldGrid.getCellAtLocation(i, j -1) == newGrid.getCellAtLocation(i, j -1) && newGrid.getCellAtLocation(
         i, j -1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j -1, new PredatorCell(1, i, j -1, params));
+      newGrid.setCellAtLocation(i, j -1, new PredatorCell(WatorCell.MOVE, i, j -1, params));
     }
     if (oldGrid.getCellAtLocation(i, j +1) == newGrid.getCellAtLocation(i, j +1) && newGrid.getCellAtLocation(
         i, j +1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j +1, new PredatorCell(1, i, j +1, params));
+      newGrid.setCellAtLocation(i, j +1, new PredatorCell(WatorCell.MOVE, i, j +1, params));
     }
   }
+
 
   private void moveCell(int i, int j, Grid oldGrid, Grid newGrid) {
     if (oldGrid.getCellAtLocation(i-1, j) == newGrid.getCellAtLocation(i-1, j) && newGrid.getCellAtLocation(
@@ -174,6 +190,10 @@ public class WatorController extends Controller{
 
   }
 
+  /**
+   * checks to see if simulation ended by seeing if cells are still moving
+   * @return true if simulation ended
+   */
   @Override
   public boolean simulationEnded() {
     Grid newGrid = super.getNewGrid();
@@ -181,7 +201,7 @@ public class WatorController extends Controller{
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
         if (newGrid.getCellAtLocation(i, j) instanceof PreyCell preyCell) {
-          if (preyCell.getState() == 1) return false;
+          if (preyCell.getState() == WatorCell.MOVE) return false;
         }
       }
     }
