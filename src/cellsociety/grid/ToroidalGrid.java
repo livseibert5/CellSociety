@@ -50,6 +50,20 @@ public class ToroidalGrid extends Grid {
     }
   }
 
+  @Override
+  public void setCellAtLocation(int i, int j, Cell cell) {
+    if (isInBounds(i, j)) {
+       grid[i][j] = cell ;
+    } else if (wrapsRight(i, j)) {
+       grid[i][0] = cell;
+    } else if (wrapsLeft(i, j)) {
+       grid[i][grid[i].length - 1] = cell;
+    } else if (wrapsTop(i, j)) {
+       grid[grid.length - 1][j] = cell;
+    } else if (wrapsBottom(i, j)) {
+       grid[0][j] = cell;
+    }
+  }
   private boolean wrapsRight(int i, int j) {
     return j == grid[0].length && i >= 0 && i < grid.length;
   }
