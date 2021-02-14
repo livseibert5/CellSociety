@@ -37,8 +37,9 @@ public class GameLoop extends Application {
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && mod != 0 && (time % mod == 0)){
-            setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+        if(simulationStarted && mod != 0 && (time % mod == 0)) {
+            setNewGrid(currentResourceBundle, currentControllerType,
+                event -> setExitButtonToLandingScreen());
             checkSimulationEnded();
             currentControllerType.resetController();
             System.out.println("simulation state: " + simulationStarted);
@@ -59,7 +60,6 @@ public class GameLoop extends Application {
         visuals.createButton("Game of Life", 100, root, event -> {
             try {
                 Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
-                System.out.println(grid.getCellAtLocation(11,0));
                 currentControllerType = new GameOfLifeController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -79,7 +79,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Segregation", 180, root, event -> {
             try {
-                Grid grid = setGrid("rectanglesegregation.xml", visuals.mySegregationSimulationResources);
+                Grid grid = setGrid("segregation2.xml", visuals.mySegregationSimulationResources);
                 currentControllerType = new SegregationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -147,11 +147,11 @@ public class GameLoop extends Application {
         Grid grid = parse.getGrid();
         myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
 
-        visuals.faster.setOnAction(event -> setModToFaster());
-        visuals.slower.setOnAction(event -> setModToSlower());
-        visuals.normal.setOnAction(event -> setModToNormal());
-        visuals.play.setOnAction(event -> playAnimation());
-        visuals.pause.setOnAction(event -> stopAnimation());
+        Graphics.faster.setOnAction(event -> setModToFaster());
+        Graphics.slower.setOnAction(event -> setModToSlower());
+        Graphics.normal.setOnAction(event -> setModToNormal());
+        Graphics.play.setOnAction(event -> playAnimation());
+        Graphics.pause.setOnAction(event -> stopAnimation());
 
         currentResourceBundle = resourceBundle;
 
@@ -161,7 +161,7 @@ public class GameLoop extends Application {
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Grid grid = visuals.updateGrid(controller);
-        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
+        Scene scene = visuals.setGridView(grid, resourceBundle, event);
         myStage.setScene(scene);
     }
 

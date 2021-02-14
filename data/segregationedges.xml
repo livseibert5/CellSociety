@@ -3,7 +3,7 @@
   <Type>SEGREGATION</Type>
   <Title>Segregation Model</Title>
   <Author>Team 9</Author>
-  <Description>Simulate segregation with no empty spaces.</Description>
+  <Description>Simulate segregation with very few empty spaces.</Description>
   <ConfigParams>
     <Param>
       <Name>satisfied</Name>
@@ -12,5 +12,5 @@
   </ConfigParams>
   <Width>15</Width>
   <Height>15</Height>
-  <LayoutFile>segregation.txt</LayoutFile>
+  <LayoutFile>segregationedges.txt</LayoutFile>
 </Simulation>
