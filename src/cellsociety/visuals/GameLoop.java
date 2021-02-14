@@ -105,9 +105,8 @@ public class GameLoop extends Application {
         visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root, event -> {
             try {
                 currentResourceBundle = Graphics.myFireSimulationResources;
-                Grid grid = setGrid("firestandard.xml");
-                currentControllerType = new FireController(grid);
-                simulationStarted = true;
+                createSecondLandingScreen();
+
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -219,9 +218,66 @@ public class GameLoop extends Application {
                         e.printStackTrace();
                     }
                 });
+
         two.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("two");
+                currentControllerType = new GameOfLifeController(grid);
+                simulationStarted = true;
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        three.setOnAction(event -> {
+            try {
+                Grid grid = setSpecifcConfigfile("three");
+                currentControllerType = new GameOfLifeController(grid);
+                simulationStarted = true;
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        four.setOnAction(event -> {
+            try {
+                Grid grid = setSpecifcConfigfile("four");
+                currentControllerType = new GameOfLifeController(grid);
+                simulationStarted = true;
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        five.setOnAction(event -> {
+            try {
+                Grid grid = setSpecifcConfigfile("five");
+                currentControllerType = new GameOfLifeController(grid);
+                simulationStarted = true;
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        six.setOnAction(event -> {
+            try {
+                Grid grid = setSpecifcConfigfile("six");
                 currentControllerType = new GameOfLifeController(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
