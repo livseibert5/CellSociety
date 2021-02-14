@@ -15,7 +15,7 @@ public class FireCell extends Cell {
   private final int BURNING = 2;
   private final double probCatch;
 
-  private Map<Type, String> typesToGraphics;
+  private final double DEFAULT_PROB_CATCH = .30;
 
   /**
    * Constructor for fire cell, uses super constructor and initializes probCatch. If no probCatch
@@ -28,11 +28,7 @@ public class FireCell extends Cell {
    */
   public FireCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
-    if (params.containsKey("probCatch")) {
-      this.probCatch = params.get("probCatch");
-    } else {
-      this.probCatch = .30;
-    }
+    this.probCatch = params.containsKey("probCatch") ? params.get("probCatch") : DEFAULT_PROB_CATCH;
   }
 
   /**
@@ -48,11 +44,7 @@ public class FireCell extends Cell {
           neighborIsBurning = true;
         }
       }
-      if (Math.random() <= probCatch && neighborIsBurning) {
-        nextState = BURNING;
-      } else {
-        nextState = TREE;
-      }
+      nextState = Math.random() < probCatch && neighborIsBurning ? BURNING : TREE;
     } else if (state == EMPTY || state == BURNING) {
       nextState = EMPTY;
     }

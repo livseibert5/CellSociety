@@ -11,12 +11,10 @@ import java.util.Map;
  */
 public class PreyCell extends WatorCell {
 
-  public double getBreedTime() {
-    return breedTime;
-  }
-
   private double breedTime;
   private double breedTimeCounter;
+
+  private final double DEFAULT_BREEDTIME = 5.0;
 
   /**
    * Constuctor for the Prey cell, uses the WatorCell constructor and also sets the values for the
@@ -31,11 +29,7 @@ public class PreyCell extends WatorCell {
     super(cellState, row, col);
     state = PREY;
     breedTimeCounter = 0;
-    if (params.containsKey("breedTime")) {
-      this.breedTime = params.get("breedTime");
-    } else {
-      this.breedTime = 5.0;
-    }
+    this.breedTime = params.containsKey("breedTime") ? params.get("breedTime") : DEFAULT_BREEDTIME;
   }
 
   /**
@@ -56,9 +50,17 @@ public class PreyCell extends WatorCell {
     if (breedTimeCounter == breedTime) {
       nextAction = SPAWN;
       breedTimeCounter = 0;
-    }
-    else    {
+    } else {
       nextAction = MOVE;
     }
+  }
+
+  /**
+   * Allows access to time until prey can spawn a child.
+   *
+   * @return time until breeding
+   */
+  public double getBreedTime() {
+    return breedTime;
   }
 }
