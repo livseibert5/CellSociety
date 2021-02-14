@@ -14,6 +14,7 @@ public class SegregationController extends Controller{
   private boolean[][] updated;
   private int[] dims;
   private HashMap<String, Double> satisfiedMap = new HashMap<>();
+
   public SegregationController(Grid grid)  {
     super(grid);
     Grid oldGrid = super.getOldGrid();

@@ -58,7 +58,6 @@ public class GameLoop extends Application {
         visuals.createButton("Game of Life", 100, root, event -> {
             try {
                 Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
-                System.out.println(grid.getCellAtLocation(11,0));
                 currentControllerType = new GameOfLifeController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
