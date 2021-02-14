@@ -69,6 +69,9 @@ public class XMLParser {
     }
   }
 
+  /**
+   * Creates map of simulation data for use in the view.
+   */
   private void parseSimulationData() {
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
@@ -95,6 +98,12 @@ public class XMLParser {
     }
   }
 
+  /**
+   * Loops through the list of parameters specified in the XML file and makes a map of their names
+   * and values.
+   *
+   * @return map of simulation parameters
+   */
   private Map<String, Double> getSimulationParameters() {
     Map<String, Double> params = new HashMap<>();
     NodeList node = root.getElementsByTagName("Param");
@@ -113,6 +122,12 @@ public class XMLParser {
     return params;
   }
 
+  /**
+   * Gets text values from the tag with the given name.
+   *
+   * @param tagName name of tag
+   * @return text value from tag
+   */
   private String retrieveTextContent(String tagName) {
     try {
       NodeList node = root.getElementsByTagName(tagName);
