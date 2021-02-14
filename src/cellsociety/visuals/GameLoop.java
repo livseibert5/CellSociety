@@ -81,9 +81,7 @@ public class GameLoop extends Application {
         visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 180, root, event -> {
             try {
                 currentResourceBundle = Graphics.mySegregationSimulationResources;
-                Grid grid = setGrid("segregation2.xml");
-                currentControllerType = new SegregationController(grid);
-                simulationStarted = true;
+                createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -92,9 +90,7 @@ public class GameLoop extends Application {
         visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 220, root, event -> {
             try {
                 currentResourceBundle = Graphics.myWaTorSimulationResources;
-                Grid grid = setGrid("predatorprey4.xml");
-                currentControllerType = new WatorController(grid);
-                simulationStarted = true;
+                createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
