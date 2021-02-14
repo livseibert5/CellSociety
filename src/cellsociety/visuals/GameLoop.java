@@ -147,6 +147,8 @@ public class GameLoop extends Application {
         visuals.faster.setOnAction(event -> setModToFaster());
         visuals.slower.setOnAction(event -> setModToSlower());
         visuals.normal.setOnAction(event -> setModToNormal());
+        visuals.play.setOnAction(event -> playAnimation());
+        visuals.pause.setOnAction(event -> stopAnimation());
         myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         Scene scene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
         currentResourceBundle = resourceBundle;
