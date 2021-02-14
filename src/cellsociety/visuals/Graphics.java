@@ -108,7 +108,6 @@ public class Graphics {
 
     public Grid updateGrid(Controller controllerType){
         controllerType.updateState();
-
         return controllerType.getNewGrid();
     }
 
@@ -138,9 +137,10 @@ public class Graphics {
         button.setTranslateY(yPosition);
         button.setTranslateX(xPosition);
         root.getChildren().add(button);
-
         button.setOnAction(event);
     }
+
+
 
 }
 

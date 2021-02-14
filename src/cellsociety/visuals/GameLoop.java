@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -34,7 +35,8 @@ public class GameLoop extends Application {
     private boolean simulationStarted = false;
     private int time = 0;
     private int mod = 60;
-
+    private String configFileName = "";
+    private String resourceBundleName = "";
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
         if(simulationStarted && mod != 0 && (time % mod == 0)) {
@@ -59,8 +61,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 100, root, event -> {
             try {
-                Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
-                currentControllerType = new GameOfLifeController(grid);
+                resourceBundleName = "myGameOfLifeSimulationResources";
+                createSecondLandingScreen(Graphics.myGameOfLifeSimulationResources);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -116,7 +118,6 @@ public class GameLoop extends Application {
     }
 
     public void setExitButtonToLandingScreen(){
-        System.out.println("button is hit");
         myStage.setScene(creatingLandingScreen());
     }
 
@@ -165,6 +166,59 @@ public class GameLoop extends Application {
         myStage.setScene(scene);
     }
 
+    public Grid setSpecifcConfigfile(String fileName) throws ParserConfigurationException, SAXException, IOException {
+        fileName = "file" + fileName;
+        configFileName = Graphics.myLandingSceneResources.getString(fileName);
+        Grid grid = setGrid(configFileName, ResourceBundle.getBundle("visuals." + resourceBundleName));
+        return grid;
+    }
+
+    public void createSecondLandingScreen(ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+
+        Button one = new Button(resourceBundle.getString("one"));
+        Button two = new Button(resourceBundle.getString("two"));
+        Button three = new Button(resourceBundle.getString("three"));
+        Button four = new Button(resourceBundle.getString("four"));
+        Button five = new Button(resourceBundle.getString("five"));
+        Button six = new Button(resourceBundle.getString("six"));
+
+        one.setTranslateX(10);
+        one.setTranslateY(100);
+
+        two.setTranslateX(10);
+        two.setTranslateY(150);
+
+        three.setTranslateX(10);
+        three.setTranslateY(200);
+
+        four.setTranslateX(10);
+        four.setTranslateY(250);
+
+        five.setTranslateX(10);
+        five.setTranslateY(300);
+
+        six.setTranslateX(10);
+        six.setTranslateY(350);
+
+        Group root = new Group();
+        root.getChildren().addAll(one, two, three, four, five, six);
+
+        one.setOnAction(event -> {
+                    try {
+                       Grid grid = setSpecifcConfigfile("one");
+                        currentControllerType = new GameOfLifeController(grid);
+                    } catch (ParserConfigurationException e) {
+                        e.printStackTrace();
+                    } catch (SAXException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+        myStage.setScene(myScene);
+    }
 
     @Override
     public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
