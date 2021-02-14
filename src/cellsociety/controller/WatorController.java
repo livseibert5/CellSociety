@@ -64,7 +64,10 @@ public class WatorController extends Controller{
     if (grid.getCellAtLocation(i,j) instanceof PreyCell preyCell)  {
       if (preyCell.getState() != 1) return false;
       for (Cell cell: preyCell.getNeighbors())  {
-        if (cell instanceof PredatorCell predatorCell && predatorCell.getState() == 1) return true;
+        if (cell instanceof PredatorCell predatorCell && predatorCell.getState() == 1) {
+          predatorCell.incrementEnergy();
+          return true;
+        }
       }
     }
     return false;
@@ -98,13 +101,13 @@ public class WatorController extends Controller{
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
         if (oldGrid.getCellAtLocation(i, j) instanceof  WatorCell watorCell)  {
-          if (watorCell.getNextAction() == 1) {
+          if (watorCell.getNextAction() == WatorCell.MOVE) {
             moveCell(i, j, oldGrid, newGrid);
           }
-          else if (watorCell.getNextAction() == 2) {
+          else if (watorCell.getNextAction() == WatorCell.DEAD) {
             newGrid.setCellAtLocation(i,j,new EmptyCell(0, i, j));
           }
-          else if (watorCell.getNextAction() == 0)  {
+          else if (watorCell.getNextAction() == WatorCell.PREY)  {
             spawnCell(i, j,  oldGrid,  newGrid);
           }
         }
