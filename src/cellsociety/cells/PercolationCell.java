@@ -7,9 +7,9 @@ package cellsociety.cells;
  */
 public class PercolationCell extends Cell {
 
-  private final int BLOCKED = 0;
-  private final int OPEN = 1;
-  private final int PERCOLATED = 2;
+  public static final int BLOCKED = 0;
+  public static final int OPEN = 1;
+  public static final int PERCOLATED = 2;
 
   /**
    * Constructor for percolation cells, uses super constructor.
