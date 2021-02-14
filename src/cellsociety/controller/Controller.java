@@ -21,7 +21,6 @@ public abstract class Controller {
   public void setDims() {
     int[] dims = oldGrid.getSizeOfGrid();
 
-    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j< dims[1]; j++)  {
         newGrid.getCellAtLocation(i, j).setDims(i, j);
@@ -46,7 +45,6 @@ public abstract class Controller {
         newGrid.getCellAtLocation(i, j).updateState();
       }
     }
-    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
   }
 
   /**

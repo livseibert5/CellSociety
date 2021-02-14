@@ -37,8 +37,9 @@ public class GameLoop extends Application {
 
     private void step(double elapsedTime) throws IOException, SAXException, ParserConfigurationException {
         time += 1;
-        if(simulationStarted && mod != 0 && (time % mod == 0)){
-            setNewGrid(currentResourceBundle, currentControllerType, event -> setExitButtonToLandingScreen());
+        if(simulationStarted && mod != 0 && (time % mod == 0)) {
+            setNewGrid(currentResourceBundle, currentControllerType,
+                event -> setExitButtonToLandingScreen());
             checkSimulationEnded();
             currentControllerType.resetController();
         }
@@ -58,7 +59,6 @@ public class GameLoop extends Application {
         visuals.createButton("Game of Life", 100, root, event -> {
             try {
                 Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
-                System.out.println(grid.getCellAtLocation(11,0));
                 currentControllerType = new GameOfLifeController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -160,7 +160,7 @@ public class GameLoop extends Application {
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Grid grid = visuals.updateGrid(controller, resourceBundle, event);
-        Scene scene = visuals.createVisualGrid(grid, resourceBundle, event);
+        Scene scene = visuals.setGridView(grid, resourceBundle, event);
         myStage.setScene(scene);
     }
 

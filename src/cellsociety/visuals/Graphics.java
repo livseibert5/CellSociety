@@ -54,13 +54,14 @@ public class Graphics {
     public Button normal = new Button("Regular");
     public Button play = new Button("Play");
     public Button pause = new Button("Pause");
+    private BorderPane outside;
+    private Scene scene;
     public Graphics(){
         exit.setFont(Font.font(FONT, 12));
     }
 
     public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> eventExit){
-        BorderPane outside = new BorderPane();
-        GridPane gridView = new GridPane();
+        outside = new BorderPane();
         outside.getChildren().clear();
 
         HBox leftButtons = new HBox(play);
@@ -71,13 +72,18 @@ public class Graphics {
         centerButtons.setAlignment(Pos.BOTTOM_CENTER);
         HBox bottomButtons = new HBox(leftButtons, rightButtons, centerButtons);
         exit.setOnAction(eventExit);
-        outside.setCenter(gridView);
         outside.autosize();
         outside.setBottom(bottomButtons);
         outside.setTop(faster);
         outside.setLeft(slower);
         outside.setRight(normal);
+        scene = new Scene(outside);
+        return setGridView(grid, simulationResource, eventExit);
+    }
 
+    public Scene setGridView(Grid grid, ResourceBundle simulationResource, EventHandler<ActionEvent> eventExit) {
+        GridPane gridView = new GridPane();
+        outside.setCenter(gridView);
         int[] sizeOfGrid = grid.getSizeOfGrid();
         int width = sizeOfGrid[1];
         int length = sizeOfGrid[0];
@@ -85,16 +91,17 @@ public class Graphics {
             for(int j = 0; j < width; j++){
                Cell cell = grid.getCellAtLocation(i, j);
                 if(cell.getState() == 0){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("0"))), j, i);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(
+                        simulationResource.getString("0"))), j, i);
                 }else if(cell.getState() == 1){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(simulationResource.getString("1"))), j, i);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS,  Color.valueOf(
+                        simulationResource.getString("1"))), j, i);
                 }else if(cell.getState() == 2){
-                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(simulationResource.getString("2"))), j, i);
+                    gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(
+                        simulationResource.getString("2"))), j, i);
                 }
             }
         }
-
-        Scene scene = new Scene(outside);
         return scene;
     }
 
