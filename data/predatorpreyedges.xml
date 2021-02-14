@@ -20,5 +20,5 @@
   </ConfigParams>
   <Width>20</Width>
   <Height>20</Height>
-  <LayoutFile>predatorprey1.txt</LayoutFile>
+  <LayoutFile>predatorpreyedges.txt</LayoutFile>
 </Simulation>

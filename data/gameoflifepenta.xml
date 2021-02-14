@@ -3,7 +3,7 @@
   <Type>LIFE</Type>
   <Title>Game of Life</Title>
   <Author>Team 9</Author>
-  <Description>Simulate life and death of cells.</Description>
+  <Description>Penta-decathlon</Description>
   <Width>11</Width>
   <Height>18</Height>
   <LayoutFile>gameoflifepenta.txt</LayoutFile>

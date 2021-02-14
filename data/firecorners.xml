@@ -3,7 +3,7 @@
   <Type>FIRE</Type>
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
-  <Description>Simulate how fire spreads over land.</Description>
+  <Description>Fires start at the corners of the grid.</Description>
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>

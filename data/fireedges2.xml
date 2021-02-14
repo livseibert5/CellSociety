@@ -3,7 +3,7 @@
   <Type>FIRE</Type>
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
-  <Description>Fire starts in the middle of the grid.</Description>
+  <Description>Fire starts on the edges of the grid.</Description>
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>
@@ -12,5 +12,5 @@
   </ConfigParams>
   <Width>21</Width>
   <Height>21</Height>
-  <LayoutFile>firestandard.txt</LayoutFile>
+  <LayoutFile>fireedges2.txt</LayoutFile>
 </Simulation>

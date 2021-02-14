@@ -7,11 +7,11 @@
   <ConfigParams>
     <Param>
       <Name>breedTime</Name>
-      <Value>4</Value>
+      <Value>8</Value>
     </Param>
     <Param>
       <Name>offspringEnergy</Name>
-      <Value>8</Value>
+      <Value>10</Value>
     </Param>
     <Param>
       <Name>startingEnergy</Name>
@@ -20,5 +20,5 @@
   </ConfigParams>
   <Width>20</Width>
   <Height>20</Height>
-  <LayoutFile>predatorprey1.txt</LayoutFile>
+  <LayoutFile>predatorprey2.txt</LayoutFile>
 </Simulation>

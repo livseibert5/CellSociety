@@ -3,8 +3,8 @@
   <Type>LIFE</Type>
   <Title>Game of Life</Title>
   <Author>Team 9</Author>
-  <Description>Beacon</Description>
+  <Description>Live cells start on the edges.</Description>
   <Width>6</Width>
-  <Height>6</Height>
-  <LayoutFile>gameoflifebeacon.txt</LayoutFile>
+  <Height>8</Height>
+  <LayoutFile>gameoflifeedges.txt</LayoutFile>
 </Simulation>

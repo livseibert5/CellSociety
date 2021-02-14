@@ -3,7 +3,7 @@
   <Type>LIFE</Type>
   <Title>Game of Life</Title>
   <Author>Team 9</Author>
-  <Description>Simulate life and death of cells.</Description>
+  <Description>Glider</Description>
   <Width>12</Width>
   <Height>12</Height>
   <LayoutFile>gameoflifeglider.txt</LayoutFile>

@@ -3,8 +3,8 @@
   <Type>PERCOLATION</Type>
   <Title>Percolation</Title>
   <Author>Team 9</Author>
-  <Description>Best case for percolation algorithm.</Description>
+  <Description>Percolation starts on both sides.</Description>
   <Width>8</Width>
   <Height>8</Height>
-  <LayoutFile>percolationbestcase.txt</LayoutFile>
+  <LayoutFile>percolationedges2.txt</LayoutFile>
 </Simulation>
