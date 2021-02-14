@@ -13,15 +13,26 @@ public abstract class Controller {
   }
 
   public void resetController() {
+    setDims();
     this.oldGrid = this.newGrid;
     setNewGrid();
+  }
+
+  public void setDims() {
+    int[] dims = oldGrid.getSizeOfGrid();
+
+    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j< dims[1]; j++)  {
+        newGrid.getCellAtLocation(i, j).setDims(i, j);
+      }
+    }
   }
   public void updateState() {
 
     simulationEnded = true;
     int[] dims = oldGrid.getSizeOfGrid();
 
-    System.out.println(oldGrid.getCellAtLocation(4,1).getState());
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j< dims[1]; j++)  {
         newGrid.getCellAtLocation(i, j).determineNextState();
