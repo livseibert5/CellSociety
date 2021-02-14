@@ -98,7 +98,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Fire", 260, root, event -> {
             try {
-                Grid grid = setGrid("firestandard.xml", visuals.myFireSimulationResources);
+                Grid grid = setGrid("fireedges2.xml", visuals.myFireSimulationResources);
                 currentControllerType = new FireController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {

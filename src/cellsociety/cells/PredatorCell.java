@@ -82,5 +82,4 @@ public class PredatorCell extends WatorCell {
   public double getOffspringEnergy() {
     return offspringEnergy;
   }
-
 }

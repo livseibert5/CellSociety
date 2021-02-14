@@ -12,5 +12,5 @@
   </ConfigParams>
   <Width>21</Width>
   <Height>21</Height>
-  <LayoutFile>firestandard.txt</LayoutFile>
+  <LayoutFile>fireedges.txt</LayoutFile>
 </Simulation>

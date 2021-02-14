@@ -11,6 +11,6 @@
     </Param>
   </ConfigParams>
   <Width>11</Width>
-  <Height>5</Height>
+  <Height>9</Height>
   <LayoutFile>fireline.txt</LayoutFile>
 </Simulation>
