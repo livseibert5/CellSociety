@@ -61,9 +61,9 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 100, root, event -> {
             try {
-                resourceBundleName = "myGameOfLifeSimulationResources";
-                createSecondLandingScreen(Graphics.myGameOfLifeSimulationResources);
-                simulationStarted = true;
+                currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
+                createSecondLandingScreen();
+
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -71,7 +71,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 140, root, event -> {
             try {
-                Grid grid = setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
+                currentResourceBundle = Graphics.myPercolationSimulationResources;
+                Grid grid = setGrid("percolation1.xml");
                 currentControllerType = new PercolationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -81,7 +82,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 180, root, event -> {
             try {
-                Grid grid = setGrid("segregation2.xml", visuals.mySegregationSimulationResources);
+                currentResourceBundle = Graphics.mySegregationSimulationResources;
+                Grid grid = setGrid("segregation2.xml");
                 currentControllerType = new SegregationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -91,7 +93,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 220, root, event -> {
             try {
-                Grid grid = setGrid("predatorprey4.xml", visuals.myWaTorSimulationResources);
+                currentResourceBundle = Graphics.myWaTorSimulationResources;
+                Grid grid = setGrid("predatorprey4.xml");
                 currentControllerType = new WatorController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -101,7 +104,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root, event -> {
             try {
-                Grid grid = setGrid("firestandard.xml", visuals.myFireSimulationResources);
+                currentResourceBundle = Graphics.myFireSimulationResources;
+                Grid grid = setGrid("firestandard.xml");
                 currentControllerType = new FireController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -141,12 +145,12 @@ public class GameLoop extends Application {
         simulationStarted = true;
     }
 
-    private Grid setGrid(String filename, ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+    private Grid setGrid(String filename) throws IOException, SAXException, ParserConfigurationException {
 
         XMLParser parse = new XMLParser(filename);
         parse.readFile();
         Grid grid = parse.getGrid();
-        myScene = visuals.createVisualGrid(grid, resourceBundle, event -> setExitButtonToLandingScreen());
+        myScene = visuals.createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());
 
         Graphics.faster.setOnAction(event -> setModToFaster());
         Graphics.slower.setOnAction(event -> setModToSlower());
@@ -154,7 +158,6 @@ public class GameLoop extends Application {
         Graphics.play.setOnAction(event -> playAnimation());
         Graphics.pause.setOnAction(event -> stopAnimation());
 
-        currentResourceBundle = resourceBundle;
 
         myStage.setScene(myScene);
         return grid;
@@ -162,25 +165,25 @@ public class GameLoop extends Application {
 
     private void setNewGrid(ResourceBundle resourceBundle, Controller controller, EventHandler<ActionEvent> event) throws IOException, SAXException, ParserConfigurationException {
         Grid grid = visuals.updateGrid(controller);
-        Scene scene = visuals.setGridView(grid, resourceBundle, event);
+        Scene scene = visuals.setGridView(grid, currentResourceBundle, event);
         myStage.setScene(scene);
     }
 
     public Grid setSpecifcConfigfile(String fileName) throws ParserConfigurationException, SAXException, IOException {
         fileName = "file" + fileName;
-        configFileName = Graphics.myLandingSceneResources.getString(fileName);
-        Grid grid = setGrid(configFileName, ResourceBundle.getBundle("visuals." + resourceBundleName));
+        String configFileName = currentResourceBundle.getString(fileName);
+        Grid grid = setGrid(configFileName);
         return grid;
     }
 
-    public void createSecondLandingScreen(ResourceBundle resourceBundle) throws IOException, SAXException, ParserConfigurationException {
+    public void createSecondLandingScreen() throws IOException, SAXException, ParserConfigurationException {
 
-        Button one = new Button(resourceBundle.getString("one"));
-        Button two = new Button(resourceBundle.getString("two"));
-        Button three = new Button(resourceBundle.getString("three"));
-        Button four = new Button(resourceBundle.getString("four"));
-        Button five = new Button(resourceBundle.getString("five"));
-        Button six = new Button(resourceBundle.getString("six"));
+        Button one = new Button(currentResourceBundle.getString("one"));
+        Button two = new Button(currentResourceBundle.getString("two"));
+        Button three = new Button(currentResourceBundle.getString("three"));
+        Button four = new Button(currentResourceBundle.getString("four"));
+        Button five = new Button(currentResourceBundle.getString("five"));
+        Button six = new Button(currentResourceBundle.getString("six"));
 
         one.setTranslateX(10);
         one.setTranslateY(100);
@@ -207,6 +210,7 @@ public class GameLoop extends Application {
                     try {
                        Grid grid = setSpecifcConfigfile("one");
                         currentControllerType = new GameOfLifeController(grid);
+                        simulationStarted = true;
                     } catch (ParserConfigurationException e) {
                         e.printStackTrace();
                     } catch (SAXException e) {
@@ -215,6 +219,19 @@ public class GameLoop extends Application {
                         e.printStackTrace();
                     }
                 });
+        two.setOnAction(event -> {
+            try {
+                Grid grid = setSpecifcConfigfile("two");
+                currentControllerType = new GameOfLifeController(grid);
+                simulationStarted = true;
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
         myStage.setScene(myScene);
