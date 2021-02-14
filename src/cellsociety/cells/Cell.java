@@ -89,4 +89,9 @@ public abstract class Cell {
   public List<Cell> getNeighbors() {
     return neighbors;
   }
+
+  public void setDims(int i, int j) {
+    this.row = i;
+    this.col = j;
+  }
 }
