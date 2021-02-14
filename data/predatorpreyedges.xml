@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>WATOR</Type>
+  <Title>Predator Prey Model</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate predation.</Description>
+  <ConfigParams>
+    <Param>
+      <Name>breedTime</Name>
+      <Value>4</Value>
+    </Param>
+    <Param>
+      <Name>offspringEnergy</Name>
+      <Value>8</Value>
+    </Param>
+    <Param>
+      <Name>startingEnergy</Name>
+      <Value>4</Value>
+    </Param>
+  </ConfigParams>
+  <Width>20</Width>
+  <Height>20</Height>
+  <LayoutFile>predatorpreyedges.txt</LayoutFile>
+</Simulation>
