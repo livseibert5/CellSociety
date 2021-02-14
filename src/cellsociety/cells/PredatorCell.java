@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class PredatorCell extends WatorCell {
 
+
+
   private double startingEnergy;
   private double offspringEnergy;
   private double energyCounter;
@@ -59,6 +61,9 @@ public class PredatorCell extends WatorCell {
     } else if (energyCounter == 0) {
       nextAction = DEAD;
     }
+    else    {
+      nextAction = MOVE;
+    }
     energyCounter--;
   }
 
@@ -69,4 +74,13 @@ public class PredatorCell extends WatorCell {
   public void incrementEnergy() {
     energyCounter++;
   }
+
+  public double getStartingEnergy() {
+    return startingEnergy;
+  }
+
+  public double getOffspringEnergy() {
+    return offspringEnergy;
+  }
+
 }

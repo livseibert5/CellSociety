@@ -11,6 +11,10 @@ import java.util.Map;
  */
 public class PreyCell extends WatorCell {
 
+  public double getBreedTime() {
+    return breedTime;
+  }
+
   private double breedTime;
   private double breedTimeCounter;
 
@@ -52,6 +56,9 @@ public class PreyCell extends WatorCell {
     if (breedTimeCounter == breedTime) {
       nextAction = SPAWN;
       breedTimeCounter = 0;
+    }
+    else    {
+      nextAction = MOVE;
     }
   }
 }
