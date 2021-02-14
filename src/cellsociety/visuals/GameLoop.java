@@ -57,7 +57,7 @@ public class GameLoop extends Application {
         Text instructions = visuals.constructText(40, 15,
                 "click on any simulation to start", FontWeight.NORMAL, visuals.FONT);
 
-        visuals.createButton("Game of Life", 100, root, event -> {
+        visuals.createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 100, root, event -> {
             try {
                 Grid grid = setGrid("gameoflifepenta.xml", visuals.myGameOfLifeSimulationResources);
                 currentControllerType = new GameOfLifeController(grid);
@@ -67,7 +67,7 @@ public class GameLoop extends Application {
             }
         });
 
-        visuals.createButton("Percolation", 140, root, event -> {
+        visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 140, root, event -> {
             try {
                 Grid grid = setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
                 currentControllerType = new PercolationController(grid);
@@ -77,7 +77,7 @@ public class GameLoop extends Application {
             }
         });
 
-        visuals.createButton("Segregation", 180, root, event -> {
+        visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 180, root, event -> {
             try {
                 Grid grid = setGrid("segregation2.xml", visuals.mySegregationSimulationResources);
                 currentControllerType = new SegregationController(grid);
@@ -87,7 +87,7 @@ public class GameLoop extends Application {
             }
         });
 
-        visuals.createButton("Wa-Tor", 220, root, event -> {
+        visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 220, root, event -> {
             try {
                 Grid grid = setGrid("predatorprey4.xml", visuals.myWaTorSimulationResources);
                 currentControllerType = new WatorController(grid);
@@ -97,7 +97,7 @@ public class GameLoop extends Application {
             }
         });
 
-        visuals.createButton("Fire", 260, root, event -> {
+        visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root, event -> {
             try {
                 Grid grid = setGrid("firestandard.xml", visuals.myFireSimulationResources);
                 currentControllerType = new FireController(grid);
@@ -165,9 +165,6 @@ public class GameLoop extends Application {
         myStage.setScene(scene);
     }
 
-    private void keyOrMouseInput(){
-
-    }
 
     @Override
     public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
