@@ -40,6 +40,12 @@ public class PercolationController extends Controller{
   }
 
   @Override
+  public void updateState() {
+    if (simulationEnded()) return;
+    super.updateState();
+  }
+
+  @Override
   public boolean simulationEnded() {
     Grid grid = super.getNewGrid();
     int[] dims = grid.getSizeOfGrid();
