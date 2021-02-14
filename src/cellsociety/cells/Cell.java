@@ -90,6 +90,12 @@ public abstract class Cell {
     return neighbors;
   }
 
+  /**
+   * Sets location of the cell.
+   *
+   * @param i row location of cell
+   * @param j column location of cell
+   */
   public void setDims(int i, int j) {
     this.row = i;
     this.col = j;

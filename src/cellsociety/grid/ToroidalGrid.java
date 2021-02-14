@@ -50,20 +50,31 @@ public class ToroidalGrid extends Grid {
     }
   }
 
+  /**
+   * Since toroidal grids wrap around, instead of doing nothing when a specified location is out of
+   * bounds, the toroidal grid needs to wrap to the other side and check the cell there. Overriding
+   * setCellAtLocation allows setNeighbors to get a cell's neighbors that are wrapped across the
+   * grid.
+   *
+   * @param i    row of cell
+   * @param j    col of cell
+   * @param cell Cell object to put at indicated location in  grid
+   */
   @Override
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
-       grid[i][j] = cell ;
+      grid[i][j] = cell;
     } else if (wrapsRight(i, j)) {
-       grid[i][0] = cell;
+      grid[i][0] = cell;
     } else if (wrapsLeft(i, j)) {
-       grid[i][grid[i].length - 1] = cell;
+      grid[i][grid[i].length - 1] = cell;
     } else if (wrapsTop(i, j)) {
-       grid[grid.length - 1][j] = cell;
+      grid[grid.length - 1][j] = cell;
     } else if (wrapsBottom(i, j)) {
-       grid[0][j] = cell;
+      grid[0][j] = cell;
     }
   }
+
   private boolean wrapsRight(int i, int j) {
     return j == grid[0].length && i >= 0 && i < grid.length;
   }
