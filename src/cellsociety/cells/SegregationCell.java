@@ -71,7 +71,7 @@ public class SegregationCell extends Cell {
 
   /**
    * Allows controller to access the game parameter.
-   * 
+   *
    * @return percentage of like neighbors needed to be satisfied
    */
   public double getSatisfied()  {
