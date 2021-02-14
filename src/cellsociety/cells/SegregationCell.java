@@ -9,10 +9,10 @@ import java.util.Map;
  */
 public class SegregationCell extends Cell {
 
-  private final int TYPEX = 0;
-  private final int TYPEO = 1;
-  private final int EMPTY = 2;
-  private final int MOVE = 3;
+  public static final int TYPEX = 0;
+  public static final int TYPEO = 1;
+  public static final int EMPTY = 2;
+  public static final int MOVE = 3;
   private final double satisfied;
 
   private boolean isSatisfied = false;

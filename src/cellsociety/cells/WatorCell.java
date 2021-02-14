@@ -7,12 +7,12 @@ package cellsociety.cells;
  */
 public abstract class WatorCell extends Cell {
 
-  protected final int SPAWN = 0;
-  protected final int MOVE = 1;
-  protected final int DEAD = 2;
+  public static final int SPAWN = 0;
+  public static final int MOVE = 1;
+  public static final int DEAD = 2;
 
-  protected final int PREDATOR = 0;
-  protected final int PREY = 1;
+  public static final int PREDATOR = 0;
+  public static final int PREY = 1;
 
   protected int nextAction;
 
