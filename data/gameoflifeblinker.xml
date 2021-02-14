@@ -3,7 +3,7 @@
   <Type>LIFE</Type>
   <Title>Game of Life</Title>
   <Author>Team 9</Author>
-  <Description>Simulate life and death of cells.</Description>
+  <Description>Blinker</Description>
   <Width>5</Width>
   <Height>5</Height>
   <LayoutFile>gameoflifeblinker.txt</LayoutFile>

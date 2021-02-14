@@ -3,7 +3,7 @@
   <Type>LIFE</Type>
   <Title>Game of Life</Title>
   <Author>Team 9</Author>
-  <Description>Simulate life and death of cells.</Description>
+  <Description>Beacon</Description>
   <Width>6</Width>
   <Height>6</Height>
   <LayoutFile>gameoflifebeacon.txt</LayoutFile>

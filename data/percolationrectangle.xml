@@ -3,7 +3,7 @@
   <Type>PERCOLATION</Type>
   <Title>Percolation</Title>
   <Author>Team 9</Author>
-  <Description>Simulate percolation.</Description>
+  <Description>Percolation in a rectangle.</Description>
   <Width>11</Width>
   <Height>5</Height>
   <LayoutFile>percolationrectangle.txt</LayoutFile>

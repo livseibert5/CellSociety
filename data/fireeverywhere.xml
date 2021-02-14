@@ -3,7 +3,7 @@
   <Type>FIRE</Type>
   <Title>Spreading of Fire</Title>
   <Author>Team 9</Author>
-  <Description>Simulate how fire spreads over land.</Description>
+  <Description>The entire grid is on fire.</Description>
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>

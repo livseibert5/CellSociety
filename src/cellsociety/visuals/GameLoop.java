@@ -68,7 +68,7 @@ public class GameLoop extends Application {
 
         visuals.createButton("Percolation", 140, root, event -> {
             try {
-                Grid grid = setGrid("percolationrectangle.xml", visuals.myPercolationSimulationResources);
+                Grid grid = setGrid("percolation1.xml", visuals.myPercolationSimulationResources);
                 currentControllerType = new PercolationController(grid);
                 simulationStarted = true;
             } catch (IOException | SAXException | ParserConfigurationException e) {

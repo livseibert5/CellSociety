@@ -5,6 +5,6 @@
   <Author>Team 9</Author>
   <Description>Worst case for percolation algorithm.</Description>
   <Width>8</Width>
-  <Height>9</Height>
-  <LayoutFile>percolationworstcase.txt</LayoutFile>
+  <Height>8</Height>
+  <LayoutFile>percolationedges.txt</LayoutFile>
 </Simulation>
