@@ -7,7 +7,7 @@
   <ConfigParams>
     <Param>
       <Name>breedTime</Name>
-      <Value>4</Value>
+      <Value>6</Value>
     </Param>
     <Param>
       <Name>offspringEnergy</Name>
@@ -15,7 +15,7 @@
     </Param>
     <Param>
       <Name>startingEnergy</Name>
-      <Value>4</Value>
+      <Value>7</Value>
     </Param>
   </ConfigParams>
   <Width>20</Width>

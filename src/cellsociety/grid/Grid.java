@@ -22,11 +22,11 @@ import java.util.Scanner;
 public class Grid {
 
   protected Cell[][] grid;
-  private Type type;
-  private int width;
-  private int height;
-  private String fileName;
-  private Map<String, Double> params;
+  protected Type type;
+  protected int width;
+  protected int height;
+  protected String fileName;
+  protected Map<String, Double> params;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -188,13 +188,18 @@ public class Grid {
    * @return newGrid deep copy of current grid
    */
   public Grid getCopyOfGrid() {
-    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params);
+    Grid newGrid = copySelf();
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
         newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
       }
     }
+    return newGrid;
+  }
+
+  protected Grid copySelf() {
+    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params);
     return newGrid;
   }
 }

@@ -15,8 +15,9 @@ public class PredatorCell extends WatorCell {
   private double offspringEnergy;
   private double energyCounter;
 
-  private final double DEFAULT_STARTING_ENERGY = 10.0;
+  private final double DEFAULT_STARTING_ENERGY = 5.0;
   private final double DEFAULT_OFFSPRING_ENERGY = 5.0;
+  private final double ENERGY_INCREMENT = 2.0;
 
   /**
    * Constructor for the Predator cell, uses the WatorCell constructor and also sets the values for
@@ -31,8 +32,8 @@ public class PredatorCell extends WatorCell {
     super(cellState, row, col);
     state = PREDATOR;
     this.startingEnergy =
-        params.containsKey("startingEnergy") ? params.get(startingEnergy) : DEFAULT_STARTING_ENERGY;
-    this.offspringEnergy = params.containsKey("offspringEnergy") ? params.get(offspringEnergy)
+        params.containsKey("startingEnergy") ? params.get("startingEnergy") : DEFAULT_STARTING_ENERGY;
+    this.offspringEnergy = params.containsKey("offspringEnergy") ? params.get("offspringEnergy")
         : DEFAULT_OFFSPRING_ENERGY;
     energyCounter = startingEnergy;
   }
@@ -58,7 +59,7 @@ public class PredatorCell extends WatorCell {
     } else {
       nextAction = MOVE;
     }
-    energyCounter--;
+    //energyCounter--;
   }
 
   /**
@@ -66,7 +67,15 @@ public class PredatorCell extends WatorCell {
    * be able to increment a shark's energy when it eats a fish.
    */
   public void incrementEnergy() {
-    energyCounter++;
+    energyCounter += ENERGY_INCREMENT;
+  }
+
+  public void decrementEnergy() {
+    energyCounter--;
+  }
+
+  public double getEnergy() {
+    return energyCounter;
   }
 
   /**

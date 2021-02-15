@@ -6,7 +6,10 @@ import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.WatorCell;
 import cellsociety.grid.Grid;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 /**
  * Class that controls the Wator game,
  * Uses the grid class and extends basic controller class
@@ -16,7 +19,8 @@ import java.util.HashMap;
  */
 public class WatorController extends Controller{
 
-  boolean[][] updated;
+  //boolean[][] updated;
+  private int[][] neighbors = {{0,1},{1,0},{-1,0},{0,-1}};
   /**
    * Constructor to create the controller
    */
@@ -40,56 +44,30 @@ public class WatorController extends Controller{
     updateCellStates();
     moveCells();
     super.resetController();
-    movePredatorAndPrey();
-    super.resetController();
     super.updateState();
-  }
-
-
-  private void movePredatorAndPrey() {
-    Grid oldGrid = super.getOldGrid();
-    Grid newGrid = super.getNewGrid();
-    int[] dims = oldGrid.getSizeOfGrid();
-    for (int i = 0; i < dims[0]; i++) {
-      for (int j = 0; j < dims[1]; j++)    {
-        if (checkPredatorAndPrey(oldGrid, i, j))  {
-          newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
-        }
-      }
-    }
-  }
-
-  private boolean checkPredatorAndPrey(Grid grid, int i, int j) {
-    if (grid.getCellAtLocation(i,j) instanceof PreyCell preyCell)  {
-      if (preyCell.getState() != 1) return false;
-      for (Cell cell: preyCell.getNeighbors())  {
-        if (cell instanceof PredatorCell predatorCell && predatorCell.getState() == 1) {
-          predatorCell.incrementEnergy();
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   private void updateCellStates() {
     Grid oldGrid = super.getOldGrid();
     int[] dims = oldGrid.getSizeOfGrid();
-    updated = new boolean[dims[0]][dims[1]];
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
         if (oldGrid.getCellAtLocation(i, j) instanceof  WatorCell watorCell)  {
           watorCell.determineAction();
-          if (watorCell.getNextAction() == 1) {
-            continue;
-          }
-          else  {
-            updated[i][j] = true;
-          }
         }
       }
     }
+  }
 
+  private void shuffleNeighbors() {
+    List<int[]> neighborList = new ArrayList<>();
+    for (int i = 0; i < neighbors.length; i++) {
+      neighborList.add(neighbors[i]);
+    }
+    Collections.shuffle(neighborList);
+    for (int i = 0; i < neighbors.length; i++) {
+      neighbors[i] = neighborList.get(i);
+    }
   }
 
 
@@ -97,99 +75,70 @@ public class WatorController extends Controller{
     Grid oldGrid = super.getOldGrid();
     Grid newGrid = super.getNewGrid();
     int[] dims = oldGrid.getSizeOfGrid();
+
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
+        if (oldGrid.getCellAtLocation(i, j) instanceof PredatorCell) {
+          ((PredatorCell) oldGrid.getCellAtLocation(i, j)).decrementEnergy();
+        }
         if (oldGrid.getCellAtLocation(i, j) instanceof  WatorCell watorCell)  {
           if (watorCell.getNextAction() == WatorCell.MOVE) {
             moveCell(i, j, oldGrid, newGrid);
+            newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
           }
           else if (watorCell.getNextAction() == WatorCell.DEAD) {
-            newGrid.setCellAtLocation(i,j,new EmptyCell(02, i, j));
+            newGrid.setCellAtLocation(i,j,new EmptyCell(2, i, j));
           }
-          else if (watorCell.getNextAction() == WatorCell.PREY)  {
-            spawnCell(i, j,  oldGrid,  newGrid);
+          else if (watorCell.getNextAction() == WatorCell.SPAWN)  {
+            moveCell(i, j, oldGrid, newGrid);
+            if (watorCell instanceof PredatorCell) {
+              HashMap<String, Double> params = new HashMap();
+              params.put("startingEnergy", ((PredatorCell) watorCell).getStartingEnergy());
+              params.put("offspringEnergy", ((PredatorCell) watorCell).getOffspringEnergy());
+              newGrid.setCellAtLocation(i, j, new PredatorCell(WatorCell.PREDATOR, i, j, params));
+            } else if (watorCell instanceof PreyCell) {
+              HashMap<String, Double> params = new HashMap();
+              params.put("breedTime", ((PreyCell) watorCell).getBreedTime());
+              newGrid.setCellAtLocation(i, j, new PreyCell(WatorCell.PREY, i, j, params));
+            }
           }
+          newGrid.initializeCells();
         }
       }
     }
   }
 
-  private void spawnCell(int i, int j, Grid oldGrid, Grid newGrid) {
-    if (oldGrid.getCellAtLocation(i,j) instanceof PredatorCell predatorCell) {
-      spawnPredatorCell(i, j, oldGrid, newGrid, predatorCell);
-    }
-    else if (oldGrid.getCellAtLocation(i,j) instanceof PreyCell preyCell) {
-      spawnPreyCell(i, j, oldGrid, newGrid, preyCell);
-    }
-
-  }
-
-  private void spawnPreyCell(int i, int j, Grid oldGrid, Grid newGrid, PreyCell preyCell) {
-    HashMap<String, Double> params = new HashMap();
-    params.put("breedTime", preyCell.getBreedTime());
-    if (oldGrid.getCellAtLocation(i -1, j) == newGrid.getCellAtLocation(i -1, j) && newGrid.getCellAtLocation(
-        i -1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i -1, j, new PreyCell(WatorCell.MOVE, i -1, j, params));
-    }
-    if (oldGrid.getCellAtLocation(i +1, j) == newGrid.getCellAtLocation(i +1, j) && newGrid.getCellAtLocation(
-        i +1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i +1, j, new PreyCell(WatorCell.MOVE, i +1, j, params));
-    }
-    if (oldGrid.getCellAtLocation(i, j -1) == newGrid.getCellAtLocation(i, j -1) && newGrid.getCellAtLocation(
-        i, j -1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j -1, new PreyCell(WatorCell.MOVE, i, j -1, params));
-    }
-    if (oldGrid.getCellAtLocation(i, j +1) == newGrid.getCellAtLocation(i, j +1) && newGrid.getCellAtLocation(
-        i, j +1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j +1, new PreyCell(WatorCell.MOVE, i, j +1, params));
-    }
-  }
-
-  private void spawnPredatorCell(int i, int j, Grid oldGrid, Grid newGrid, PredatorCell predatorCell) {
-    HashMap<String, Double> params = new HashMap();
-    params.put("startingEnergy", predatorCell.getStartingEnergy());
-    params.put("offspringEnergy", predatorCell.getOffspringEnergy());
-    if (oldGrid.getCellAtLocation(i -1, j) == newGrid.getCellAtLocation(i -1, j) && newGrid.getCellAtLocation(
-        i -1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i -1, j, new PredatorCell(WatorCell.MOVE, i -1, j, params));
-    }
-    if (oldGrid.getCellAtLocation(i +1, j) == newGrid.getCellAtLocation(i +1, j) && newGrid.getCellAtLocation(
-        i +1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i +1, j, new PredatorCell(WatorCell.MOVE, i +1, j, params));
-    }
-    if (oldGrid.getCellAtLocation(i, j -1) == newGrid.getCellAtLocation(i, j -1) && newGrid.getCellAtLocation(
-        i, j -1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j -1, new PredatorCell(WatorCell.MOVE, i, j -1, params));
-    }
-    if (oldGrid.getCellAtLocation(i, j +1) == newGrid.getCellAtLocation(i, j +1) && newGrid.getCellAtLocation(
-        i, j +1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i, j +1, new PredatorCell(WatorCell.MOVE, i, j +1, params));
-    }
-  }
-
-
   private void moveCell(int i, int j, Grid oldGrid, Grid newGrid) {
-    if (oldGrid.getCellAtLocation(i-1, j) == newGrid.getCellAtLocation(i-1, j) && newGrid.getCellAtLocation(
-        i-1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i-1,j, oldGrid.getCellAtLocation(i,j));
-      return;
+    if (oldGrid.getCellAtLocation(i, j) instanceof PredatorCell predatorCell) {
+      if (movePredator(i, j, oldGrid, newGrid)) {
+        predatorCell.incrementEnergy();
+        return;
+      }
     }
-    if (oldGrid.getCellAtLocation(i+1, j) == newGrid.getCellAtLocation(i+1, j) && newGrid.getCellAtLocation(
-        i+1, j) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i+1,j, oldGrid.getCellAtLocation(i,j));
-      return;
+    shuffleNeighbors();
+    for (int index = 0; index < neighbors.length; index++) {
+      int row = i + neighbors[index][0];
+      int col = j + neighbors[index][1];
+      if (newGrid.getCellAtLocation(
+          row, col) instanceof EmptyCell) {
+        newGrid.setCellAtLocation(row,col, oldGrid.getCellAtLocation(i,j));
+        return;
+      }
     }
-    if (oldGrid.getCellAtLocation(i, j-1) == newGrid.getCellAtLocation(i, j-1) && newGrid.getCellAtLocation(
-        i, j-1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i,j-1, oldGrid.getCellAtLocation(i,j));
-      return;
-    }
-    if (oldGrid.getCellAtLocation(i, j+1) == newGrid.getCellAtLocation(i, j+1) && newGrid.getCellAtLocation(
-        i, j+1) instanceof EmptyCell) {
-      newGrid.setCellAtLocation(i,j+1, oldGrid.getCellAtLocation(i,j));
-      return;
-    }
+  }
 
+  private boolean movePredator(int i, int j, Grid oldGrid, Grid newGrid) {
+    shuffleNeighbors();
+    for (int index = 0; index < neighbors.length; index++) {
+      int row = i + neighbors[index][0];
+      int col = j + neighbors[index][1];
+      if (newGrid.getCellAtLocation(
+          row, col) instanceof PreyCell) {
+        newGrid.setCellAtLocation(row,col, oldGrid.getCellAtLocation(i,j));
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
