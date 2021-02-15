@@ -15,8 +15,9 @@ public class PredatorCell extends WatorCell {
   private double offspringEnergy;
   private double energyCounter;
 
-  private final double DEFAULT_STARTING_ENERGY = 10.0;
+  private final double DEFAULT_STARTING_ENERGY = 5.0;
   private final double DEFAULT_OFFSPRING_ENERGY = 5.0;
+  private final double ENERGY_INCREMENT = 2.0;
 
   /**
    * Constructor for the Predator cell, uses the WatorCell constructor and also sets the values for
@@ -58,7 +59,7 @@ public class PredatorCell extends WatorCell {
     } else {
       nextAction = MOVE;
     }
-    energyCounter--;
+    //energyCounter--;
   }
 
   /**
@@ -66,7 +67,15 @@ public class PredatorCell extends WatorCell {
    * be able to increment a shark's energy when it eats a fish.
    */
   public void incrementEnergy() {
-    energyCounter++;
+    energyCounter += ENERGY_INCREMENT;
+  }
+
+  public void decrementEnergy() {
+    energyCounter--;
+  }
+
+  public double getEnergy() {
+    return energyCounter;
   }
 
   /**

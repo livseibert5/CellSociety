@@ -75,6 +75,12 @@ public class ToroidalGrid extends Grid {
     }
   }
 
+  @Override
+  protected Grid copySelf() {
+    ToroidalGrid newGrid = new ToroidalGrid(this.width, this.height, this.fileName, this.type, this.params);
+    return newGrid;
+  }
+
   private boolean wrapsRight(int i, int j) {
     return j == grid[0].length && i >= 0 && i < grid.length;
   }
