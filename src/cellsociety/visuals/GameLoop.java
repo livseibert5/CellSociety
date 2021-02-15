@@ -32,7 +32,6 @@ public class GameLoop extends Application {
     public Stage myStage;
     private ResourceBundle currentResourceBundle;
     private Controller currentControllerType;
-    private Grid currentGrid;
     private boolean simulationStarted = false;
     private int time = 0;
     private int mod = 60;
@@ -100,6 +99,7 @@ public class GameLoop extends Application {
                 e.printStackTrace();
             }
         });
+
         visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root, event -> {
             try {
                 currentControllerType = new FireController();
@@ -154,7 +154,6 @@ public class GameLoop extends Application {
         Graphics.normal.setOnAction(event -> setModToNormal());
         Graphics.play.setOnAction(event -> playAnimation());
         Graphics.pause.setOnAction(event -> stopAnimation());
-
 
         myStage.setScene(myScene);
         return grid;
@@ -272,7 +271,6 @@ public class GameLoop extends Application {
 
         myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
         myStage.setScene(myScene);
-
     }
 
     @Override
