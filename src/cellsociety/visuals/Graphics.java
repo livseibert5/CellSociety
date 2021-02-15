@@ -47,7 +47,8 @@ public class Graphics {
     public static final ResourceBundle mySegregationSimulationResources = ResourceBundle.getBundle(SEGREGATION_PACKAGE);
     public static final ResourceBundle myWaTorSimulationResources = ResourceBundle.getBundle(WATOR_PACKAGE);
 
-    private final Button exit = new Button("Exit");
+    public static final Button exit = new Button("Exit");
+    public static final Button exitSecondLandingScreen = new Button("Exit");
     public static final Button faster = new Button("Faster");
     public static final Button slower = new Button("Slower");
     public static final Button normal = new Button("Regular");

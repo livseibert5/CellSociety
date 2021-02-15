@@ -179,26 +179,32 @@ public class GameLoop extends Application {
         Button six = new Button(currentResourceBundle.getString("six"));
 
         one.setTranslateX(10);
-        one.setTranslateY(100);
+        one.setTranslateY(50);
 
         two.setTranslateX(10);
-        two.setTranslateY(150);
+        two.setTranslateY(100);
 
         three.setTranslateX(10);
-        three.setTranslateY(200);
+        three.setTranslateY(150);
 
         four.setTranslateX(10);
-        four.setTranslateY(250);
+        four.setTranslateY(200);
 
         five.setTranslateX(10);
-        five.setTranslateY(300);
+        five.setTranslateY(250);
 
         six.setTranslateX(10);
-        six.setTranslateY(350);
+        six.setTranslateY(300);
 
         Group root = new Group();
         root.getChildren().addAll(one, two, three, four, five, six);
-
+        root.getChildren().add(Graphics.exitSecondLandingScreen);
+        Graphics.exitSecondLandingScreen.setTranslateY(350);
+        Graphics.exitSecondLandingScreen.setTranslateX(10);
+        Graphics.exitSecondLandingScreen.setOnAction(event -> {
+            myScene = creatingLandingScreen();
+            myStage.setScene(myScene);
+        });
         one.setOnAction(event -> {
                     try {
                        Grid grid = setSpecifcConfigfile("one");
