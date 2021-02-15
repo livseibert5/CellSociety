@@ -53,7 +53,7 @@ public class WatorController extends Controller{
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++)    {
         if (checkPredatorAndPrey(oldGrid, i, j))  {
-          newGrid.setCellAtLocation(i, j, new EmptyCell(0, i, j));
+          newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
         }
       }
     }
@@ -104,7 +104,7 @@ public class WatorController extends Controller{
             moveCell(i, j, oldGrid, newGrid);
           }
           else if (watorCell.getNextAction() == WatorCell.DEAD) {
-            newGrid.setCellAtLocation(i,j,new EmptyCell(0, i, j));
+            newGrid.setCellAtLocation(i,j,new EmptyCell(02, i, j));
           }
           else if (watorCell.getNextAction() == WatorCell.PREY)  {
             spawnCell(i, j,  oldGrid,  newGrid);
