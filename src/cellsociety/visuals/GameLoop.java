@@ -265,7 +265,7 @@ public class GameLoop extends Application {
 
         myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
         myStage.setScene(myScene);
-        
+
     }
 
     @Override
