@@ -75,11 +75,11 @@ public class WatorController extends Controller{
     Grid oldGrid = super.getOldGrid();
     Grid newGrid = super.getNewGrid();
     int[] dims = oldGrid.getSizeOfGrid();
+
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
         if (oldGrid.getCellAtLocation(i, j) instanceof PredatorCell) {
           ((PredatorCell) oldGrid.getCellAtLocation(i, j)).decrementEnergy();
-          System.out.println(((PredatorCell) oldGrid.getCellAtLocation(i, j)).getEnergy());
         }
         if (oldGrid.getCellAtLocation(i, j) instanceof  WatorCell watorCell)  {
           if (watorCell.getNextAction() == WatorCell.MOVE) {
@@ -109,8 +109,9 @@ public class WatorController extends Controller{
   }
 
   private void moveCell(int i, int j, Grid oldGrid, Grid newGrid) {
-    if (oldGrid.getCellAtLocation(i, j) instanceof PredatorCell) {
+    if (oldGrid.getCellAtLocation(i, j) instanceof PredatorCell predatorCell) {
       if (movePredator(i, j, oldGrid, newGrid)) {
+        predatorCell.incrementEnergy();
         return;
       }
     }
@@ -118,7 +119,7 @@ public class WatorController extends Controller{
     for (int index = 0; index < neighbors.length; index++) {
       int row = i + neighbors[index][0];
       int col = j + neighbors[index][1];
-      if (oldGrid.getCellAtLocation(row, col) == newGrid.getCellAtLocation(row, col) && newGrid.getCellAtLocation(
+      if (newGrid.getCellAtLocation(
           row, col) instanceof EmptyCell) {
         newGrid.setCellAtLocation(row,col, oldGrid.getCellAtLocation(i,j));
         return;
@@ -131,14 +132,9 @@ public class WatorController extends Controller{
     for (int index = 0; index < neighbors.length; index++) {
       int row = i + neighbors[index][0];
       int col = j + neighbors[index][1];
-      if (oldGrid.getCellAtLocation(row, col) == newGrid.getCellAtLocation(row, col) && newGrid.getCellAtLocation(
+      if (newGrid.getCellAtLocation(
           row, col) instanceof PreyCell) {
-        //System.out.println("inc");
-        //System.out.println(((PredatorCell) oldGrid.getCellAtLocation(i, j)).getEnergy());
-        ((PredatorCell) oldGrid.getCellAtLocation(i, j)).incrementEnergy();
         newGrid.setCellAtLocation(row,col, oldGrid.getCellAtLocation(i,j));
-        //System.out.println(((PredatorCell) newGrid.getCellAtLocation(row, col)).getEnergy());
-        //System.out.println("end");
         return true;
       }
     }
