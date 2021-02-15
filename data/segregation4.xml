@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>SEGREGATION</Type>
+  <Title>Segregation Model</Title>
+  <Author>Team 9</Author>
+  <Description>Simulate segregation with lots of empty space.</Description>
+  <ConfigParams>
+    <Param>
+      <Name>satisfied</Name>
+      <Value>.3</Value>
+    </Param>
+  </ConfigParams>
+  <Width>15</Width>
+  <Height>15</Height>
+  <LayoutFile>segregation4.txt</LayoutFile>
+</Simulation>
