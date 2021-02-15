@@ -17,10 +17,14 @@ public class PercolationController extends Controller{
 
   /**
    * Constructor to create the controller
-   * @param oldGrid initial grid of the percolration
    */
-  public PercolationController(Grid oldGrid) {
-    super(oldGrid);
+  public PercolationController() {
+    super();
+  }
+
+  @Override
+  public void setInitialGrid(Grid oldGrid) {
+    super.setInitialGrid(oldGrid);
     findStartingEdge();
   }
 

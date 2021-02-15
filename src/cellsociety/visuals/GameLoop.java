@@ -44,7 +44,6 @@ public class GameLoop extends Application {
                 event -> setExitButtonToLandingScreen());
             checkSimulationEnded();
             currentControllerType.resetController();
-            System.out.println("simulation state: " + simulationStarted);
         }
     }
 
@@ -61,6 +60,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 100, root, event -> {
             try {
+
+                currentControllerType = new GameOfLifeController();
                 currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
                 createSecondLandingScreen();
 
@@ -71,6 +72,8 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 140, root, event -> {
             try {
+
+                currentControllerType = new PercolationController();
                 currentResourceBundle = Graphics.myPercolationSimulationResources;
                 createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -80,6 +83,7 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 180, root, event -> {
             try {
+                currentControllerType = new SegregationController();
                 currentResourceBundle = Graphics.mySegregationSimulationResources;
                 createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -89,6 +93,7 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 220, root, event -> {
             try {
+                currentControllerType = new WatorController();
                 currentResourceBundle = Graphics.myWaTorSimulationResources;
                 createSecondLandingScreen();
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -98,6 +103,7 @@ public class GameLoop extends Application {
 
         visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root, event -> {
             try {
+                currentControllerType = new FireController();
                 currentResourceBundle = Graphics.myFireSimulationResources;
                 createSecondLandingScreen();
 
@@ -208,7 +214,7 @@ public class GameLoop extends Application {
         one.setOnAction(event -> {
                     try {
                        Grid grid = setSpecifcConfigfile("one");
-                        currentControllerType = new GameOfLifeController(grid);
+                        currentControllerType.setInitialGrid(grid);
                         simulationStarted = true;
                     } catch (ParserConfigurationException e) {
                         e.printStackTrace();
@@ -222,7 +228,7 @@ public class GameLoop extends Application {
         two.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("two");
-                currentControllerType = new GameOfLifeController(grid);
+                currentControllerType.setInitialGrid(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -236,7 +242,7 @@ public class GameLoop extends Application {
         three.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("three");
-                currentControllerType = new GameOfLifeController(grid);
+                currentControllerType.setInitialGrid(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -250,7 +256,7 @@ public class GameLoop extends Application {
         four.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("four");
-                currentControllerType = new GameOfLifeController(grid);
+                currentControllerType.setInitialGrid(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -264,7 +270,7 @@ public class GameLoop extends Application {
         five.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("five");
-                currentControllerType = new GameOfLifeController(grid);
+                currentControllerType.setInitialGrid(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -278,7 +284,7 @@ public class GameLoop extends Application {
         six.setOnAction(event -> {
             try {
                 Grid grid = setSpecifcConfigfile("six");
-                currentControllerType = new GameOfLifeController(grid);
+                currentControllerType.setInitialGrid(grid);
                 simulationStarted = true;
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();

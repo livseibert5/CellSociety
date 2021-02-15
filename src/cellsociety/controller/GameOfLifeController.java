@@ -12,10 +12,9 @@ public class GameOfLifeController extends Controller{
 
   /**
    * default constructor calls super constructor
-   * @param grid intial grid
    */
-  public GameOfLifeController(Grid grid)  {
-    super(grid);
+  public GameOfLifeController()  {
+    super();
   }
 
 

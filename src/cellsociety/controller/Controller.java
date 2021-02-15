@@ -19,6 +19,15 @@ public abstract class Controller {
    * Creates controller and creates copy of grid for new grid
    * @param oldGrid initial grid state
    */
+
+  public Controller() {
+
+  }
+
+  public void setInitialGrid(Grid oldGrid)  {
+    this.oldGrid = oldGrid;
+    setNewGrid();
+  }
   public Controller(Grid oldGrid) {
     this.oldGrid = oldGrid;
     setNewGrid();

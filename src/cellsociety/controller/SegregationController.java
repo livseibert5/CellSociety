@@ -26,11 +26,15 @@ public class SegregationController extends Controller{
   /**
    * Constructor to create the controller and set instance variables
    *
-   * @param grid initial grid of the simulation
    */
-  public SegregationController(Grid grid)  {
-    super(grid);
-    Grid oldGrid = super.getOldGrid();
+  public SegregationController()  {
+    super();
+  }
+
+  @Override
+  public void setInitialGrid(Grid oldGrid) {
+    super.setInitialGrid(oldGrid);
+
     dims = oldGrid.getSizeOfGrid();
     updated = new boolean[dims[0]][dims[1]];
     SegregationCell cell = (SegregationCell) oldGrid.getCellAtLocation(0,0);
@@ -69,10 +73,12 @@ public class SegregationController extends Controller{
     Collections.shuffle(statesToAddAtCurrentIteration);
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (statesToAddAtCurrentIteration.size() == 0) return;
+        if (statesToAddAtCurrentIteration.size() == 0) {
+          return;
+        }
         if (!updated[i][j]) {
           newGrid.setCellAtLocation(i, j, new SegregationCell(
-              statesToAddAtCurrentIteration.remove(0), i, j, satisfiedMap));
+              statesToAddAtCurrentIteration.remove(0).intValue(), i, j, satisfiedMap));
           updated[i][j] = true;
         }
       }
