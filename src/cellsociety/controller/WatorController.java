@@ -19,10 +19,9 @@ public class WatorController extends Controller{
   boolean[][] updated;
   /**
    * Constructor to create the controller
-   * @param oldGrid initial grid of the wator gridd
    */
-  public WatorController(Grid oldGrid) {
-    super(oldGrid);
+  public WatorController() {
+    super();
   }
 
   /**

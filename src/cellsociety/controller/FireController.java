@@ -13,10 +13,9 @@ public class FireController extends Controller{
 
   /**
    * creates controller
-   * @param grid grid of cells
    */
-  public FireController(Grid grid)  {
-    super(grid);
+  public FireController()  {
+    super();
   }
 
 
