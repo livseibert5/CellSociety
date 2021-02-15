@@ -9,11 +9,12 @@ import java.util.Map;
  */
 public class SegregationCell extends Cell {
 
-  private final int TYPEX = 0;
-  private final int TYPEO = 1;
-  private final int EMPTY = 2;
-  private final int MOVE = 3;
+  public static final int TYPEX = 0;
+  public static final int TYPEO = 1;
+  public static final int EMPTY = 2;
+  public static final int MOVE = 3;
   private final double satisfied;
+  private final double DEFAULT_SATISFIED = .30;
 
   private boolean isSatisfied = false;
 
@@ -29,11 +30,7 @@ public class SegregationCell extends Cell {
   public SegregationCell(int state, int row, int col, Map<String, Double> params) {
     super(state, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
-    if (params != null && params.containsKey("satisfied")) {
-      this.satisfied = params.get("satisfied");
-    } else {
-      this.satisfied = .30;
-    }
+    this.satisfied = params.containsKey("satisfied") ? params.get("satisfied") : DEFAULT_SATISFIED;
   }
 
   /**
@@ -43,11 +40,7 @@ public class SegregationCell extends Cell {
   public void determineNextState() {
     double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
     isSatisfied = percentLikeNeighbors >= satisfied;
-    if (isSatisfied) {
-      nextState = state;
-    } else {
-      nextState = MOVE;
-    }
+    nextState = isSatisfied ? state : MOVE;
   }
 
   private int countLikeNeighbors() {

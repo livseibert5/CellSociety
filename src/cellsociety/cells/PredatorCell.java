@@ -11,11 +11,12 @@ import java.util.Map;
  */
 public class PredatorCell extends WatorCell {
 
-
-
   private double startingEnergy;
   private double offspringEnergy;
   private double energyCounter;
+
+  private final double DEFAULT_STARTING_ENERGY = 10.0;
+  private final double DEFAULT_OFFSPRING_ENERGY = 5.0;
 
   /**
    * Constructor for the Predator cell, uses the WatorCell constructor and also sets the values for
@@ -29,16 +30,10 @@ public class PredatorCell extends WatorCell {
   public PredatorCell(int cellState, int row, int col, Map<String, Double> params) {
     super(cellState, row, col);
     state = PREDATOR;
-    if (params.containsKey("startingEnergy")) {
-      this.startingEnergy = params.get("startingEnergy");
-    } else {
-      this.startingEnergy = 10.0;
-    }
-    if (params.containsKey("offspringEnergy")) {
-      this.offspringEnergy = params.get("offspringEnergy");
-    } else {
-      this.offspringEnergy = 5.0;
-    }
+    this.startingEnergy =
+        params.containsKey("startingEnergy") ? params.get(startingEnergy) : DEFAULT_STARTING_ENERGY;
+    this.offspringEnergy = params.containsKey("offspringEnergy") ? params.get(offspringEnergy)
+        : DEFAULT_OFFSPRING_ENERGY;
     energyCounter = startingEnergy;
   }
 
@@ -60,8 +55,7 @@ public class PredatorCell extends WatorCell {
       nextAction = SPAWN;
     } else if (energyCounter == 0) {
       nextAction = DEAD;
-    }
-    else    {
+    } else {
       nextAction = MOVE;
     }
     energyCounter--;
@@ -75,10 +69,20 @@ public class PredatorCell extends WatorCell {
     energyCounter++;
   }
 
+  /**
+   * Allows access to predator's energy level when it is first spawned.
+   *
+   * @return predator's initial energy level
+   */
   public double getStartingEnergy() {
     return startingEnergy;
   }
 
+  /**
+   * Allows access to energy level needed before shark can spawn.
+   *
+   * @return energy needed for shark to have children
+   */
   public double getOffspringEnergy() {
     return offspringEnergy;
   }

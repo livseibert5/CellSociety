@@ -49,6 +49,11 @@ public class Grid {
     initializeCells();
   }
 
+  /**
+   * Reads the .txt file passed in from the XML parser and creates the starting layout based on it.
+   *
+   * @param fileName .txt file with initial layout
+   */
   private void readFile(String fileName) {
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
     int row = 0;
@@ -63,11 +68,27 @@ public class Grid {
     }
   }
 
+  /**
+   * Creates a cell at the indicated position with the indicated state.
+   *
+   * @param row       row location for the new cell
+   * @param col       column location for the new cell
+   * @param cellState initial state for the new cell
+   */
   private void setCellWithType(int row, int col, int cellState) {
     Map<Type, Cell> cellData = createDataMap(row, col, cellState);
     setCellAtLocation(row, col, cellData.get(type));
   }
 
+  /**
+   * Eliminates need for lots of if statements to determine cell type by instead loading the cells
+   * and their type into a map to be selected with a get method.
+   *
+   * @param row       row location for the new cell
+   * @param col       column location for the new cell
+   * @param cellState initial state of the new cell
+   * @return map with types as keys and cells as values
+   */
   private Map<Type, Cell> createDataMap(int row, int col, int cellState) {
     Map<Type, Cell> data = new HashMap<>();
     Cell wator = new EmptyCell(2, row, col);
@@ -112,6 +133,14 @@ public class Grid {
     }
   }
 
+  /**
+   * Creates a list of the cell's neighbors depending on the rules specified in the cell and passes
+   * it back to the cell to be used on simulation updates.
+   *
+   * @param row  row location of the cell
+   * @param col  column location of the cell
+   * @param cell cell whose neighbors are being determined within the function
+   */
   private void setNeighbors(int row, int col, Cell cell) {
     int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
