@@ -77,7 +77,8 @@ public class ToroidalGrid extends Grid {
 
   @Override
   protected Grid copySelf() {
-    ToroidalGrid newGrid = new ToroidalGrid(this.width, this.height, this.fileName, this.type, this.params);
+    ToroidalGrid newGrid = new ToroidalGrid(this.width, this.height, this.fileName, this.type,
+        this.params);
     return newGrid;
   }
 

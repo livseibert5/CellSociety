@@ -32,7 +32,8 @@ public class PredatorCell extends WatorCell {
     super(cellState, row, col);
     state = PREDATOR;
     this.startingEnergy =
-        params.containsKey("startingEnergy") ? params.get("startingEnergy") : DEFAULT_STARTING_ENERGY;
+        params.containsKey("startingEnergy") ? params.get("startingEnergy")
+            : DEFAULT_STARTING_ENERGY;
     this.offspringEnergy = params.containsKey("offspringEnergy") ? params.get("offspringEnergy")
         : DEFAULT_OFFSPRING_ENERGY;
     energyCounter = startingEnergy;

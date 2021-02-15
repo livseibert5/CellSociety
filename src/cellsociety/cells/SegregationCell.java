@@ -67,7 +67,7 @@ public class SegregationCell extends Cell {
    *
    * @return percentage of like neighbors needed to be satisfied
    */
-  public double getSatisfied()  {
+  public double getSatisfied() {
     return satisfied;
   }
 }

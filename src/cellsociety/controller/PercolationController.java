@@ -4,13 +4,12 @@ import cellsociety.cells.PercolationCell;
 import cellsociety.grid.Grid;
 
 /**
- * Class that controls the percolration game,
- * Uses the grid class and extends basic controller class
+ * Class that controls the percolration game, Uses the grid class and extends basic controller class
  * Called from game loop to update percolation state
  *
  * @author billyluqiu
  */
-public class PercolationController extends Controller{
+public class PercolationController extends Controller {
 
   private int startingEdge;
   //0 for top, 1 for right, 2 for bottom, 3 for left
@@ -36,18 +35,16 @@ public class PercolationController extends Controller{
       if (grid.getCellAtLocation(i, 0).getState() == PercolationCell.PERCOLATED) {
         startingEdge = 3;
         return;
-      }
-      else if (grid.getCellAtLocation(i, dims[1]-1).getState() == PercolationCell.PERCOLATED)  {
+      } else if (grid.getCellAtLocation(i, dims[1] - 1).getState() == PercolationCell.PERCOLATED) {
         startingEdge = 1;
         return;
       }
     }
     for (int j = 0; j < dims[1]; j++) {
-      if (grid.getCellAtLocation(0, j).getState() == PercolationCell.PERCOLATED){
+      if (grid.getCellAtLocation(0, j).getState() == PercolationCell.PERCOLATED) {
         startingEdge = 0;
         return;
-      }
-      else if (grid.getCellAtLocation(dims[0]-1, j).getState() == PercolationCell.PERCOLATED)  {
+      } else if (grid.getCellAtLocation(dims[0] - 1, j).getState() == PercolationCell.PERCOLATED) {
         startingEdge = 2;
         return;
       }
@@ -57,7 +54,6 @@ public class PercolationController extends Controller{
 
   /**
    * updates state of the grid by putting new state in new grid
-   *
    */
   @Override
   public void updateState() {
@@ -68,15 +64,18 @@ public class PercolationController extends Controller{
   }
 
   /**
-   * checks to see if simulation ended by seeing if cell is percolrated
-   * or if state has not channged
+   * checks to see if simulation ended by seeing if cell is percolrated or if state has not
+   * channged
+   *
    * @return true if simulation ended
    */
   @Override
   public boolean simulationEnded() {
     Grid grid = super.getNewGrid();
     int[] dims = grid.getSizeOfGrid();
-    if (super.simulationEnded()) return true;
+    if (super.simulationEnded()) {
+      return true;
+    }
     return simulationEndedByEdge(grid, dims);
   }
 
@@ -85,13 +84,13 @@ public class PercolationController extends Controller{
       case 0 -> {
         return checkBottomEdge(grid, dims);
       }
-      case 1 ->  {
+      case 1 -> {
         return checkLeftEdge(grid, dims);
       }
-      case 2 ->   {
+      case 2 -> {
         return checkTopEdge(grid, dims);
       }
-      case 3->  {
+      case 3 -> {
         return checkRightEdge(grid, dims);
       }
 
@@ -110,7 +109,7 @@ public class PercolationController extends Controller{
 
   private boolean checkBottomEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[1]; i++) {
-      if (grid.getCellAtLocation(dims[0]-1, i).getState() == 2) {
+      if (grid.getCellAtLocation(dims[0] - 1, i).getState() == 2) {
         return true;
       }
     }
@@ -119,7 +118,7 @@ public class PercolationController extends Controller{
 
   private boolean checkRightEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[0]; i++) {
-      if (grid.getCellAtLocation(i, dims[1]-1).getState() == 2) {
+      if (grid.getCellAtLocation(i, dims[1] - 1).getState() == 2) {
         return true;
       }
     }
