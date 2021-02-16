@@ -141,7 +141,7 @@ public class Grid {
    * @param col  column location of the cell
    * @param cell cell whose neighbors are being determined within the function
    */
-  private void setNeighbors(int row, int col, Cell cell) {
+  private List<Cell> setNeighbors(int row, int col, Cell cell) {
     int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
     for (int i = 0; i < directions.length; i++) {
@@ -151,6 +151,7 @@ public class Grid {
       }
     }
     cell.setNeighbors(neighbors);
+    return neighbors;
   }
 
   /**

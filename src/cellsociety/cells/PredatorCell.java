@@ -60,23 +60,21 @@ public class PredatorCell extends WatorCell {
     } else {
       nextAction = MOVE;
     }
-    //energyCounter--;
   }
 
   /**
-   * Since collisions between sharks and fish are handled in the controller, the controller needs to
-   * be able to increment a shark's energy when it eats a fish.
+   * Since collisions between predators and prey are handled in the controller, the controller needs to
+   * be able to increment a predator's energy when it eats prey.
    */
   public void incrementEnergy() {
     energyCounter += ENERGY_INCREMENT;
   }
 
+  /**
+   * Allows controller to decrement the predator's energy when it moves.
+   */
   public void decrementEnergy() {
     energyCounter--;
-  }
-
-  public double getEnergy() {
-    return energyCounter;
   }
 
   /**
@@ -91,7 +89,7 @@ public class PredatorCell extends WatorCell {
   /**
    * Allows access to energy level needed before shark can spawn.
    *
-   * @return energy needed for shark to have children
+   * @return energy needed for predator to have children
    */
   public double getOffspringEnergy() {
     return offspringEnergy;

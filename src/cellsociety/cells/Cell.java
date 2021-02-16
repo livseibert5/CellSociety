@@ -100,4 +100,13 @@ public abstract class Cell {
     this.row = i;
     this.col = j;
   }
+
+  /**
+   * Allows access to row and column position of cell.
+   *
+   * @return int array with row position at 0 and column position at 1
+   */
+  public int[] getLocation() {
+    return new int[]{row, col};
+  }
 }
