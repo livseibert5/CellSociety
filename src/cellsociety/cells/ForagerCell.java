@@ -3,6 +3,11 @@ package cellsociety.cells;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cell class that represents forager objects in the ant simulation.
+ *
+ * @author Livia Seibert
+ */
 public class ForagerCell extends Cell {
 
   private boolean hasFoodItem;
@@ -10,23 +15,25 @@ public class ForagerCell extends Cell {
   private int[] nextLocation;
   private Orientation orientation;
 
+  private double foodPheromones = 0.0;
+  private double homePheromones = 0.0;
+
+  public static final int EMPTY = 0;
   public static final int FORAGER = 1;
-  public static final int FIND_FOOD = 0;
-  public static final int RETURN_TO_NEST = 1;
-  public static final int DROP_PHEROMONES = 2;
+
+  public static final int DROP_FOOD_PHEROMONES = 0;
+  public static final int DROP_HOME_PHEROMONES = 1;
 
   private List<Cell> forwardNeighbors;
-  private int[][] forwardDirections;
 
   /**
    * Cell constructor used to set basic properties of cell object.
    *
-   * @param state              initial state of cell
-   * @param row                row of cell
-   * @param col                col of cell
-   * @param neighborDirections directions to neighboring cells
+   * @param state initial state of cell
+   * @param row   row of cell
+   * @param col   col of cell
    */
-  public ForagerCell(int state, int row, int col, int[][] neighborDirections) {
+  public ForagerCell(int state, int row, int col) {
     super(state, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
     state = FORAGER;
@@ -36,28 +43,52 @@ public class ForagerCell extends Cell {
   }
 
   /**
-   *
+   * Foragers always remain foragers.
    */
   @Override
   public void determineNextState() {
     nextState = state;
   }
 
+  /**
+   * Determines whether forager should find food or return to its nest.
+   */
   public void determineNextAction() {
     setForwardNeighbors();
     if (hasFoodItem) {
-      nextAction = RETURN_TO_NEST;
       returnToNest();
     } else {
-      nextAction = FIND_FOOD;
       findFoodSource();
     }
   }
 
+  /**
+   * Directs forager towards food source.
+   */
   private void findFoodSource() {
-
+    Cell maxPheromones = checkForwardAndNeighbors("Food");
+    if (maxPheromones != null) {
+      nextAction = DROP_HOME_PHEROMONES;
+      determineOrientation(maxPheromones);
+      nextLocation = maxPheromones.getLocation();
+    }
   }
 
+  /**
+   * Directs forager towards nest.
+   */
+  private void returnToNest() {
+    Cell maxPheromones = checkForwardAndNeighbors("Home");
+    if (maxPheromones != null) {
+      nextAction = DROP_FOOD_PHEROMONES;
+      determineOrientation(maxPheromones);
+      nextLocation = maxPheromones.getLocation();
+    }
+  }
+
+  /**
+   * Sets forager's forward neighbors depending on its current orientation.
+   */
   private void setForwardNeighbors() {
     for (Cell cell : neighbors) {
       int[] location = cell.getLocation();
@@ -71,39 +102,48 @@ public class ForagerCell extends Cell {
     }
   }
 
-  private void returnToNest() {
-    determineOrientation(getMaxPheromones(neighbors, "Home"));
+  /**
+   * Determines next location of cell by finding the cell with the most amount of pheromones of the
+   * given type.
+   *
+   * @param type desired type of pheromones
+   * @return cell with the most of the given pheromone type
+   */
+  private Cell checkForwardAndNeighbors(String type) {
+    determineOrientation(getMaxPheromones(neighbors, type));
     setForwardNeighbors();
-    Cell maxPheromones = getMaxPheromones(forwardNeighbors, "Home");
+    Cell maxPheromones = getMaxPheromones(forwardNeighbors, type);
     if (maxPheromones == null) {
-      maxPheromones = getMaxPheromones(neighbors, "Home");
+      maxPheromones = getMaxPheromones(neighbors, type);
     }
-    if (maxPheromones != null) {
-      nextAction = DROP_PHEROMONES;
-      determineOrientation(maxPheromones);
-      nextLocation = maxPheromones.getLocation();
-    }
+    return maxPheromones;
   }
 
+  /**
+   * Finds the cell with most amount of pheromones of the given type.
+   *
+   * @param neighbors list of neighbors to check for pheromones
+   * @param type      desired type of pheromones
+   * @return cell with the most of the given pheromone type
+   */
   private Cell getMaxPheromones(List<Cell> neighbors, String type) {
     double maxPheromones = 0;
     Cell pheromoneCell = null;
     for (Cell cell : neighbors) {
-      if (type.equals("Food") && cell instanceof FoodPheromoneCell) {
-        if (((PheromoneCell) cell).getPheromones() > maxPheromones) {
-          maxPheromones = ((PheromoneCell) cell).getPheromones();
+        if (((ForagerCell) cell).getPheromones(type) > maxPheromones) {
+          maxPheromones = ((ForagerCell) cell).getPheromones(type);
           pheromoneCell = cell;
         }
-      } else if (type.equals("Home") && cell instanceof HomePheromoneCell) {
-        if (((PheromoneCell) cell).getPheromones() > maxPheromones) {
-          maxPheromones = ((PheromoneCell) cell).getPheromones();
-          pheromoneCell = cell;
-        }
-      }
     }
     return pheromoneCell;
   }
 
+  /**
+   * Determine the next orientation of the cell based on the location of the cell it should be
+   * facing.
+   *
+   * @param cell cell that ant should be oriented towards
+   */
   private void determineOrientation(Cell cell) {
     if (cell != null) {
       if (isFacing(cell, Orientation.NORTH)) {
@@ -132,5 +172,21 @@ public class ForagerCell extends Cell {
       }
     }
     return false;
+  }
+
+  public double getPheromones(String type) {
+    if (type.equals("Food")) {
+      return foodPheromones;
+    } else {
+      return homePheromones;
+    }
+  }
+
+  public int getNextAction() {
+    return nextAction;
+  }
+
+  public int[] getNextLocation() {
+    return nextLocation;
   }
 }
