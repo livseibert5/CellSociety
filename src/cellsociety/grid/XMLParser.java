@@ -73,6 +73,7 @@ public class XMLParser {
    * Creates map of simulation data for use in the view.
    */
   private void parseSimulationData() {
+    simulationData.put("Type", retrieveTextContent("Type"));
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));

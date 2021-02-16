@@ -203,4 +203,13 @@ public class Grid {
     Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params);
     return newGrid;
   }
+
+  /**
+   * Allows access to simulation parameters so GridToXML can put them in the new XML file.
+   *
+   * @return map of simulation parameters
+   */
+  public Map<String, Double> getParams() {
+    return params;
+  }
 }
