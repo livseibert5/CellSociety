@@ -55,7 +55,7 @@ public class Grid {
    *
    * @param fileName .txt file with initial layout
    */
-  private void readFile(String fileName) {
+  protected void readFile(String fileName) {
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
     int row = 0;
     while (reader.hasNextLine()) {
@@ -63,7 +63,7 @@ public class Grid {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         int cellState = Integer.parseInt(gridRow[col]);
-        setCellWithType(row, col, cellState);
+        setCellWithType(row, col, cellState, Neighbors.SQUARE_MOORE);
       }
       row++;
     }
@@ -76,7 +76,7 @@ public class Grid {
    * @param col       column location for the new cell
    * @param cellState initial state for the new cell
    */
-  private void setCellWithType(int row, int col, int cellState) {
+  protected void setCellWithType(int row, int col, int cellState, Neighbors neighborDirections) {
     Map<Type, Cell> cellData = createCellTypeMap(row, col, cellState);
     setCellAtLocation(row, col, cellData.get(type));
   }
