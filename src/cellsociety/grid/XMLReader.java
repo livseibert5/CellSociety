@@ -11,6 +11,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Allows for basic XML parsing ability so that StyleXMLParser and XMLParser can inherit from it and
+ * not duplicate code.
+ *
+ * @author Livia Seibert
+ */
 public abstract class XMLReader {
 
   protected Element root;
