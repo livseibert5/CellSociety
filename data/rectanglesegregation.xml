@@ -13,4 +13,5 @@
   <Width>18</Width>
   <Height>15</Height>
   <LayoutFile>rectanglesegregation.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

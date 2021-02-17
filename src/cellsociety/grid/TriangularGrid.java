@@ -24,8 +24,8 @@ public class TriangularGrid extends Grid {
    * @param params   map of parameters needed for simulation
    */
   public TriangularGrid(int width, int height, String fileName, Type type,
-      Map<String, Double> params) {
-    super(width, height, fileName, type, params);
+      Map<String, Double> params, Neighbors neighborDirections) {
+    super(width, height, fileName, type, params, neighborDirections);
   }
 
   protected void readFile(String fileName) {

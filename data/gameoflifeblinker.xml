@@ -7,4 +7,5 @@
   <Width>5</Width>
   <Height>5</Height>
   <LayoutFile>gameoflifeblinker.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

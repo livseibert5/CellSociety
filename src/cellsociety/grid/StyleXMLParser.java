@@ -8,15 +8,17 @@ import java.util.List;
 
 public class StyleXMLParser extends XMLReader {
 
-  ResourceBundle gridCellPairs = ResourceBundle.getBundle("GridCellPairs");
+  //ResourceBundle gridCellPairs = ResourceBundle.getBundle("GridCellPairs");
 
-  public StyleXMLParser(String fileName) {
+  public StyleXMLParser(String fileName)
+      throws ParserConfigurationException, SAXException, IOException {
     super(fileName);
   }
 
   public void readFile() throws IOException, SAXException, ParserConfigurationException {
     buildParser();
     simulationData.put("Language", retrieveTextContent("Language"));
+    simulationData.put("GridType", retrieveTextContent("GridType"));
     simulationData.put("CellShape", retrieveTextContent("CellShape"));
     simulationData.put("NeighborLayout", retrieveTextContent("NeighborLayout"));
     simulationData.put("CellSize", retrieveTextContent("CellSize"));
@@ -24,14 +26,11 @@ public class StyleXMLParser extends XMLReader {
     simulationData.put("CellColor", retrieveTextContent("CellColor"));
   }
 
-  private void parseGridCellPairs() {
-    if (!gridCellPairs.containsKey(simulationData.get("CellShape"))) {
-      simulationData.put("CellShape", "Square");
-    } else {
-      if (!((List) gridCellPairs.getObject(simulationData.get("CellShape"))).contains(simulationData.get("NeighborLayout"))) {
-        simulationData.put("CellShape", ((List) gridCellPairs.getObject(simulationData.get("CellShape"))).get(0).toString());
-      }
-    }
-    gridCellPairs.getObject(simulationData.get("CellShape"));
+  public String getGridType() {
+    return simulationData.get("GridType");
+  }
+
+  public String getNeighborLayout() {
+    return simulationData.get("NeighborLayout");
   }
 }

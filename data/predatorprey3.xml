@@ -21,4 +21,5 @@
   <Width>20</Width>
   <Height>20</Height>
   <LayoutFile>predatorprey3.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

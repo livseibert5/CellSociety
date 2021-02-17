@@ -1,6 +1,7 @@
 package cellsociety.grid;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.Neighbors;
 import java.util.Map;
 
 /**
@@ -21,8 +22,8 @@ public class ToroidalGrid extends Grid {
    * @param params   map of parameters needed for simulation
    */
   public ToroidalGrid(int width, int height, String fileName, Type type,
-      Map<String, Double> params) {
-    super(width, height, fileName, type, params);
+      Map<String, Double> params, Neighbors neighborDirections) {
+    super(width, height, fileName, type, params, neighborDirections);
   }
 
   /**
@@ -78,7 +79,7 @@ public class ToroidalGrid extends Grid {
   @Override
   protected Grid copySelf() {
     ToroidalGrid newGrid = new ToroidalGrid(this.width, this.height, this.fileName, this.type,
-        this.params);
+        this.params, this.neighborDirections);
     return newGrid;
   }
 

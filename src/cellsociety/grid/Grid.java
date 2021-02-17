@@ -28,6 +28,7 @@ public class Grid {
   protected int height;
   protected String fileName;
   protected Map<String, Double> params;
+  protected Neighbors neighborDirections;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -39,13 +40,14 @@ public class Grid {
    * @param type     type of simulation to run
    * @param params   map of parameters needed for simulation
    */
-  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params) {
+  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params, Neighbors neighborDirections) {
     grid = new Cell[height][width];
     this.type = type;
     this.width = width;
     this.height = height;
     this.params = params;
     this.fileName = fileName;
+    this.neighborDirections = neighborDirections;
     readFile(fileName);
     initializeCells();
   }
@@ -77,7 +79,7 @@ public class Grid {
    * @param cellState initial state for the new cell
    */
   protected void setCellWithType(int row, int col, int cellState, Neighbors neighborDirections) {
-    Map<Type, Cell> cellData = createCellTypeMap(row, col, cellState);
+    Map<Type, Cell> cellData = createCellTypeMap(row, col, cellState, neighborDirections);
     setCellAtLocation(row, col, cellData.get(type));
   }
 
@@ -90,18 +92,18 @@ public class Grid {
    * @param cellState initial state of the new cell
    * @return map with types as keys and cells as values
    */
-  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState) {
+  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState, Neighbors neighborDirections) {
     Map<Type, Cell> data = new HashMap<>();
     Cell wator = new EmptyCell(2, row, col);
     if (type == Type.WATOR && cellState == 0) {
-      wator = new PredatorCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN);
+      wator = new PredatorCell(cellState, row, col, params, neighborDirections);
     } else if (type == Type.WATOR && cellState == 1) {
-      wator = new PreyCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN);
+      wator = new PreyCell(cellState, row, col, params, neighborDirections);
     }
-    data.put(Type.FIRE, new FireCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN));
-    data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col, Neighbors.SQUARE_MOORE));
-    data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col, Neighbors.SQUARE_MOORE));
-    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params, Neighbors.SQUARE_MOORE));
+    data.put(Type.FIRE, new FireCell(cellState, row, col, params, neighborDirections));
+    data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col, neighborDirections));
+    data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col, neighborDirections));
+    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params, neighborDirections));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
     return data;
@@ -201,7 +203,7 @@ public class Grid {
   }
 
   protected Grid copySelf() {
-    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params);
+    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params, this.neighborDirections);
     return newGrid;
   }
 

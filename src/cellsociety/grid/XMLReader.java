@@ -23,9 +23,10 @@ public abstract class XMLReader {
   protected Map<String, String> simulationData;
   protected String fileName;
 
-  public XMLReader(String fileName) {
+  public XMLReader(String fileName) throws IOException, SAXException, ParserConfigurationException {
     this.simulationData = new HashMap<>();
     this.fileName = fileName;
+    buildParser();
   }
 
   public abstract void readFile() throws ParserConfigurationException, SAXException, IOException;

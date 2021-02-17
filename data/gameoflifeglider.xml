@@ -7,4 +7,5 @@
   <Width>12</Width>
   <Height>12</Height>
   <LayoutFile>gameoflifeglider.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>
