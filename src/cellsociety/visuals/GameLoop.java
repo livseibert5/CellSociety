@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class GameLoop extends Application {
   private boolean simulationStarted = false;
   private int time = 0;
   private int mod = 60;
+
+  private Map<String, String> simulationData;
 
   private void step(double elapsedTime)
       throws IOException, SAXException, ParserConfigurationException {
@@ -156,6 +159,7 @@ public class GameLoop extends Application {
 
     XMLParser parse = new XMLParser(filename);
     parse.readFile();
+    simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());

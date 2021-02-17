@@ -17,11 +17,11 @@ import org.xml.sax.SAXException;
  *
  * @author Livia Seibert
  */
-public class XMLParser {
+public class XMLParser extends XMLReader {
 
-  private Map<String, String> simulationData;
+  protected Map<String, String> simulationData;
   private String fileName;
-  private Element root;
+  protected Element root;
   private Grid grid;
 
   /**
@@ -31,15 +31,7 @@ public class XMLParser {
    * @param fileName xml file to read in
    */
   public XMLParser(String fileName) {
-    this.simulationData = new HashMap<>();
-    this.fileName = fileName;
-  }
-
-  private void buildParser() throws ParserConfigurationException, SAXException, IOException {
-    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    DocumentBuilder db = dbf.newDocumentBuilder();
-    Document doc = db.parse(this.getClass().getClassLoader().getResourceAsStream(fileName));
-    root = doc.getDocumentElement();
+    super(fileName);
   }
 
   /**
@@ -73,6 +65,7 @@ public class XMLParser {
    * Creates map of simulation data for use in the view.
    */
   private void parseSimulationData() {
+    simulationData.put("Type", retrieveTextContent("Type"));
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));
@@ -123,35 +116,11 @@ public class XMLParser {
   }
 
   /**
-   * Gets text values from the tag with the given name.
-   *
-   * @param tagName name of tag
-   * @return text value from tag
-   */
-  private String retrieveTextContent(String tagName) {
-    try {
-      NodeList node = root.getElementsByTagName(tagName);
-      return node.item(0).getTextContent();
-    } catch (NullPointerException e) {
-      return tagName;
-    }
-  }
-
-  /**
    * Accesses grid created by this class.
    *
    * @return new grid object
    */
   public Grid getGrid() {
     return grid;
-  }
-
-  /**
-   * Accesses simulation info parsed from XML file.
-   *
-   * @return simulationData HashMap with xml data
-   */
-  public Map<String, String> getInfo() {
-    return simulationData;
   }
 }
