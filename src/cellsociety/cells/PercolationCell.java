@@ -18,10 +18,9 @@ public class PercolationCell extends Cell {
    * @param row   row location of cell
    * @param col   column location of cell
    */
-  public PercolationCell(int state, int row, int col) {
-    super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
-  }
+  public PercolationCell(int state, int row, int col, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
+}
 
   /**
    * Cells that are BLOCKED or PERCOLATED remain BLOCKED or PERCOLATED, OPEN cells with neighbors

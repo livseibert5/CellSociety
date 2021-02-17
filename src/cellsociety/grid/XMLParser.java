@@ -19,9 +19,8 @@ import org.xml.sax.SAXException;
  */
 public class XMLParser extends XMLReader {
 
-  protected Map<String, String> simulationData;
   private String fileName;
-  protected Element root;
+  private Element root;
   private Grid grid;
 
   /**

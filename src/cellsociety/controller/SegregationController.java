@@ -2,6 +2,7 @@ package cellsociety.controller;
 
 import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
+import cellsociety.cells.Neighbors;
 import cellsociety.cells.SegregationCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class SegregationController extends Controller {
       }
       newGrid.setCellAtLocation(loc.get(0), loc.get(1), new SegregationCell(
           statesToAddAtCurrentIteration.remove(0).intValue(), loc.get(0), loc.get(1),
-          satisfiedMap));
+          satisfiedMap, Neighbors.SQUARE_MOORE));
     }
 
   }

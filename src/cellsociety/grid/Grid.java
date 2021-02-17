@@ -4,6 +4,7 @@ import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
 import cellsociety.cells.FireCell;
 import cellsociety.cells.GameOfLifeCell;
+import cellsociety.cells.Neighbors;
 import cellsociety.cells.PercolationCell;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
@@ -76,7 +77,7 @@ public class Grid {
    * @param cellState initial state for the new cell
    */
   private void setCellWithType(int row, int col, int cellState) {
-    Map<Type, Cell> cellData = createDataMap(row, col, cellState);
+    Map<Type, Cell> cellData = createCellTypeMap(row, col, cellState);
     setCellAtLocation(row, col, cellData.get(type));
   }
 
@@ -89,18 +90,18 @@ public class Grid {
    * @param cellState initial state of the new cell
    * @return map with types as keys and cells as values
    */
-  private Map<Type, Cell> createDataMap(int row, int col, int cellState) {
+  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState) {
     Map<Type, Cell> data = new HashMap<>();
     Cell wator = new EmptyCell(2, row, col);
     if (type == Type.WATOR && cellState == 0) {
-      wator = new PredatorCell(cellState, row, col, params);
+      wator = new PredatorCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN);
     } else if (type == Type.WATOR && cellState == 1) {
-      wator = new PreyCell(cellState, row, col, params);
+      wator = new PreyCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN);
     }
-    data.put(Type.FIRE, new FireCell(cellState, row, col, params));
-    data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col));
-    data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col));
-    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params));
+    data.put(Type.FIRE, new FireCell(cellState, row, col, params, Neighbors.SQUARE_NEUMANN));
+    data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col, Neighbors.SQUARE_MOORE));
+    data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col, Neighbors.SQUARE_MOORE));
+    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params, Neighbors.SQUARE_MOORE));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
     return data;
@@ -109,13 +110,13 @@ public class Grid {
   /**
    * Allows access to cell objects at specific locations.
    *
-   * @param i row of cell
-   * @param j col of cell
+   * @param row row of cell
+   * @param col col of cell
    * @return Cell object located at indicated position in grid
    */
-  public Cell getCellAtLocation(int i, int j) {
-    if (isInBounds(i, j)) {
-      return grid[i][j];
+  public Cell getCellAtLocation(int row, int col) {
+    if (isInBounds(row, col)) {
+      return grid[row][col];
     }
     return null;
   }
@@ -123,13 +124,13 @@ public class Grid {
   /**
    * Allows a cell object to be places at the specified location.
    *
-   * @param i    row of cell
-   * @param j    col of cell
+   * @param row    row of cell
+   * @param col    col of cell
    * @param cell Cell object to put at indicated location in  grid
    */
-  public void setCellAtLocation(int i, int j, Cell cell) {
-    if (isInBounds(i, j)) {
-      grid[i][j] = cell;
+  public void setCellAtLocation(int row, int col, Cell cell) {
+    if (isInBounds(row, col)) {
+      grid[row][col] = cell;
     }
   }
 

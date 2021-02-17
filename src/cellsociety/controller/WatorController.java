@@ -2,6 +2,7 @@ package cellsociety.controller;
 
 import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
+import cellsociety.cells.Neighbors;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.WatorCell;
@@ -93,11 +94,12 @@ public class WatorController extends Controller {
               HashMap<String, Double> params = new HashMap();
               params.put("startingEnergy", ((PredatorCell) watorCell).getStartingEnergy());
               params.put("offspringEnergy", ((PredatorCell) watorCell).getOffspringEnergy());
-              newGrid.setCellAtLocation(i, j, new PredatorCell(WatorCell.PREDATOR, i, j, params));
+              newGrid.setCellAtLocation(i, j, new PredatorCell(WatorCell.PREDATOR, i, j, params,
+                  Neighbors.SQUARE_NEUMANN));
             } else if (watorCell instanceof PreyCell) {
               HashMap<String, Double> params = new HashMap();
               params.put("breedTime", ((PreyCell) watorCell).getBreedTime());
-              newGrid.setCellAtLocation(i, j, new PreyCell(WatorCell.PREY, i, j, params));
+              newGrid.setCellAtLocation(i, j, new PreyCell(WatorCell.PREY, i, j, params, Neighbors.SQUARE_NEUMANN));
             }
           }
           newGrid.initializeCells();
