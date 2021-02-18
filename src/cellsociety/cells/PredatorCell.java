@@ -15,9 +15,9 @@ public class PredatorCell extends WatorCell {
   private double offspringEnergy;
   private double energyCounter;
 
-  private final double DEFAULT_STARTING_ENERGY = 5.0;
-  private final double DEFAULT_OFFSPRING_ENERGY = 5.0;
-  private final double ENERGY_INCREMENT = 2.0;
+  public static final double DEFAULT_STARTING_ENERGY = 5.0;
+  public static final double DEFAULT_OFFSPRING_ENERGY = 5.0;
+  public static final double ENERGY_INCREMENT = 2.0;
 
   /**
    * Constructor for the Predator cell, uses the WatorCell constructor and also sets the values for

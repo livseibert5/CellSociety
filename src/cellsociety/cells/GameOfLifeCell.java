@@ -7,8 +7,8 @@ package cellsociety.cells;
  */
 public class GameOfLifeCell extends Cell {
 
-  private final int ALIVE = 1;
-  private final int DEAD = 0;
+  public static final int ALIVE = 1;
+  public static final int DEAD = 0;
 
   /**
    * Constructor for game of life cell, uses super constructor.
