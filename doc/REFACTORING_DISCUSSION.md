@@ -8,16 +8,32 @@ Lola Maglione
 ### Issues in Current Code
 
 
+#### Method or Class GameLoop
+* Very long createSecondLandingScreen method, and we decided to 
+create new methods to reduce duplication in tasks by creating
+  a separate method to set the button layouts.
+  
+
+* We currently list out all the XML files, but will create a file
+chooser to reduce duplication in the code 
+
 #### Method or Class
 * Design issues
 
 * Design issue
 
-#### Method or Class
-* Design issues
+#### Other issues
+* Final variables were being declared as private, so we changed them to public
+static final variables
+  
+* We removed unnecessary import statements
 
-* Design issue
+* We went through the local variables should not be declared and then returned
+and provided justification in the javadoc comments for why we felt they were appropriate
+  
+* Changed methods for isEmpty checking if array list is empty
 
+* 
 
 ### Refactoring Plan
 
