@@ -1,6 +1,5 @@
 package cellsociety.controller;
 
-import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
 import cellsociety.cells.Neighbors;
 import cellsociety.cells.SegregationCell;

@@ -65,7 +65,7 @@ public class PercolationController extends Controller {
 
   /**
    * checks to see if simulation ended by seeing if cell is percolrated or if state has not
-   * channged
+   * changed
    *
    * @return true if simulation ended
    */

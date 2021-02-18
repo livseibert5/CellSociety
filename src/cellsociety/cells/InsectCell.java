@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Class that represents ants, a list of InsectCell objects is present in every ForagerCell.
