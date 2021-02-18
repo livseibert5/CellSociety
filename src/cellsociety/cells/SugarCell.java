@@ -1,8 +1,10 @@
 package cellsociety.cells;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Class represents cells that make up the grid for the SugarScape simulation.
+ *
+ * @author Livia Seibert
+ */
 public class SugarCell extends Cell {
 
   private double sugar;
@@ -27,23 +29,53 @@ public class SugarCell extends Cell {
     sugarGrowBackIntervalCounter = 0;
   }
 
+  /**
+   * Handles sugar grow back over time intervals.
+   */
   @Override
   public void determineNextState() {
     sugarGrowBackIntervalCounter++;
     if (sugarGrowBackIntervalCounter == sugarGrowBackInterval) {
       sugarGrowBackIntervalCounter = 0;
       if (sugar + sugarGrowBackRate > maxSugarCapacity) {
-        sugar = maxSugarCapacity
+        sugar = maxSugarCapacity;
       } else {
         sugar += sugarGrowBackRate;
       }
     }
   }
 
+  /**
+   * Returns whether the cell has an agent on it or not.
+   *
+   * @return true if cell has an agent
+   */
   public boolean getHasAgent() {
     return hasAgent;
   }
 
+  /**
+   * Allows controller to remove agent when moving it to a new cell.
+   */
+  public void removeAgent() {
+    hasAgent = false;
+  }
+
+  /**
+   * Allows controller to set the agent of a cell so that it can move an agent to a new cell.
+   *
+   * @param agent new agent inhabitant
+   */
+  public void setAgent(AgentCell agent) {
+    this.agent = agent;
+    hasAgent = true;
+  }
+
+  /**
+   * Allows controller to access sugar level on cell so that agent can acquire this sugar.
+   *
+   * @return current sugar amount on cell
+   */
   public double getSugar() {
     return sugar;
   }

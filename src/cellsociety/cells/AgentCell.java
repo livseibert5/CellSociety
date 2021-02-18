@@ -1,8 +1,12 @@
 package cellsociety.cells;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for cell that represents agents that live on SugarCell objects.
+ *
+ * @author Livia Seibert
+ */
 public class AgentCell extends Cell {
 
   private double sugar;
@@ -12,8 +16,8 @@ public class AgentCell extends Cell {
   private List<int[][]> visionLocations;
   private int[] nextLocation;
 
-  public static final int MOVE = 0;
   public static final int SUGAR_CELL = 1;
+  public static final int DEAD = 2;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -30,17 +34,25 @@ public class AgentCell extends Cell {
     setNeighborDirections();
   }
 
+  /**
+   * Next state stays the same unless it is updated in incrementSugar.
+   */
   @Override
   public void determineNextState() {
     nextState = state;
   }
 
-  public void determineNextAction() {
+  /**
+   * Determines location for agent to move to.
+   */
+  public void determineNextLocation() {
     SugarCell maxSugar = findMaxSugar();
     nextLocation = maxSugar.getLocation();
-    nextAction = MOVE;
   }
 
+  /**
+   * Gets all of the locations in the four directions up to vision blocks away.
+   */
   private void getNeighborLocations() {
     visionLocations.add(neighborDirections);
     if (vision > 1) {
@@ -55,6 +67,10 @@ public class AgentCell extends Cell {
     }
   }
 
+  /**
+   * Sets the locations up to vision blocks away as the new neighborDirections array so that all of
+   * these locations can be accessed.
+   */
   private void setNeighborDirections() {
     int[][] newDirections = new int[visionLocations.size() * visionLocations.get(0).length][2];
     int newDirectionIndex = 0;
@@ -68,15 +84,45 @@ public class AgentCell extends Cell {
     neighborDirections = newDirections;
   }
 
+  /**
+   * Finds the neighboring cell with the maxmimum amount of sugar.
+   *
+   * @return neighbor with most sugar
+   */
   private SugarCell findMaxSugar() {
     SugarCell maxSugarCell = null;
     double maxSugarVal = 0;
-    for (Cell neighbor: neighbors) {
-      if (!((SugarCell) neighbor).getHasAgent() && ((SugarCell) neighbor).getSugar() > maxSugarVal) {
+    for (Cell neighbor : neighbors) {
+      if (!((SugarCell) neighbor).getHasAgent()
+          && ((SugarCell) neighbor).getSugar() > maxSugarVal) {
         maxSugarVal = ((SugarCell) neighbor).getSugar();
         maxSugarCell = (SugarCell) neighbor;
       }
     }
     return maxSugarCell;
+  }
+
+  /**
+   * Allows controller to access next location of the agent so it can move the agent there.
+   *
+   * @return int array where 0 is next row of the cell and 0 is the next column
+   */
+  public int[] getNextLocation() {
+    return nextLocation;
+  }
+
+  /**
+   * Increments sugar amount when agent moves to a new cell.
+   *
+   * @param sugar amount to increment sugar by.
+   */
+  public void incrementSugar(double sugar) {
+    this.sugar += sugar;
+    this.sugar -= sugarMetabolism;
+    if (this.sugar <= 0) {
+      nextState = DEAD;
+    } else {
+      nextState = SUGAR_CELL;
+    }
   }
 }
