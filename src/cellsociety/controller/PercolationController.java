@@ -65,7 +65,7 @@ public class PercolationController extends Controller {
 
   /**
    * checks to see if simulation ended by seeing if cell is percolrated or if state has not
-   * channged
+   * changed
    *
    * @return true if simulation ended
    */
@@ -81,18 +81,18 @@ public class PercolationController extends Controller {
 
   private boolean simulationEndedByEdge(Grid grid, int[] dims) {
     switch (startingEdge) {
-      case 0 -> {
+      case 0:
         return checkBottomEdge(grid, dims);
-      }
-      case 1 -> {
+
+      case 1:
         return checkLeftEdge(grid, dims);
-      }
-      case 2 -> {
+
+      case 2:
         return checkTopEdge(grid, dims);
-      }
-      case 3 -> {
+
+      case 3:
         return checkRightEdge(grid, dims);
-      }
+
 
     }
     return false;
