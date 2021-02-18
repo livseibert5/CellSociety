@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SegregationController extends Controller {
 
-  private List<Integer> statesToAddAtCurrentIteration = new ArrayList();
+  private List<Integer> statesToAddAtCurrentIteration = new ArrayList<>();
   private int[] dims;
   private HashMap<String, Double> satisfiedMap = new HashMap<>();
   private ArrayList<ArrayList<Integer>> emptyLocs = new ArrayList<>();
@@ -63,26 +63,29 @@ public class SegregationController extends Controller {
     statesToAddAtCurrentIteration.clear();
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (!(oldGrid.getCellAtLocation(i, j) instanceof SegregationCell)) {
-          emptyLocs.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+        if (!(oldGrid.getCellAtLocation(i, j) instanceof SegregationCell oldCell)) {
+          emptyLocs.add(new ArrayList<>(Arrays.asList(i, j)));
           continue;
         }
-        SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i, j);
         int oldState = oldCell.getState();
         oldCell.determineNextState();
         int newState = oldCell.getNextState();
-        if (newState == SegregationCell.MOVE) {
-          statesToAddAtCurrentIteration.add(oldState);
-          newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
-          emptyLocs.add(new ArrayList<Integer>(Arrays.asList(i, j)));
-        } else if (newState == SegregationCell.EMPTY) {
-          newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
-          emptyLocs.add(new ArrayList<Integer>(Arrays.asList(i, j)));
-        }
+        setNewCellStateAndAddToEmptyLocations(newGrid, i, j, oldState, newState);
       }
     }
     addRemovedCells(newGrid);
     newGrid.initializeCells();
+  }
+
+  private void setNewCellStateAndAddToEmptyLocations(Grid newGrid, int i, int j, int oldState, int newState) {
+    if (newState == SegregationCell.MOVE) {
+      statesToAddAtCurrentIteration.add(oldState);
+      newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
+      emptyLocs.add(new ArrayList<>(Arrays.asList(i, j)));
+    } else if (newState == SegregationCell.EMPTY) {
+      newGrid.setCellAtLocation(i, j, new EmptyCell(2, i, j));
+      emptyLocs.add(new ArrayList<>(Arrays.asList(i, j)));
+    }
   }
 
   private void addRemovedCells(Grid newGrid) {
@@ -93,7 +96,7 @@ public class SegregationController extends Controller {
         return;
       }
       newGrid.setCellAtLocation(loc.get(0), loc.get(1), new SegregationCell(
-          statesToAddAtCurrentIteration.remove(0).intValue(), loc.get(0), loc.get(1),
+          statesToAddAtCurrentIteration.remove(0), loc.get(0), loc.get(1),
           satisfiedMap, Neighbors.SQUARE_MOORE));
     }
 
@@ -119,13 +122,20 @@ public class SegregationController extends Controller {
             .getCellAtLocation(i, j) instanceof EmptyCell) {
           return false;
         }
-        SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i, j);
-        SegregationCell newCell = (SegregationCell) newGrid.getCellAtLocation(i, j);
-        if (oldCell.getIsSatisfied() != newCell.getIsSatisfied()) {
+        if (checkIfCellStateHasChanged(oldGrid, newGrid, i, j)) {
           return false;
         }
       }
     }
     return true;
+  }
+
+  private boolean checkIfCellStateHasChanged(Grid oldGrid, Grid newGrid, int i, int j) {
+    SegregationCell oldCell = (SegregationCell) oldGrid.getCellAtLocation(i, j);
+    SegregationCell newCell = (SegregationCell) newGrid.getCellAtLocation(i, j);
+    if (oldCell.getIsSatisfied() != newCell.getIsSatisfied()) {
+      return true;
+    }
+    return false;
   }
 }
