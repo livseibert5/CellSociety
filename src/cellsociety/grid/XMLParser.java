@@ -1,14 +1,12 @@
 package cellsociety.grid;
 
+import cellsociety.cells.Neighbors;
 import org.w3c.dom.Node;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -19,10 +17,10 @@ import org.xml.sax.SAXException;
  */
 public class XMLParser extends XMLReader {
 
-  protected Map<String, String> simulationData;
+  private StyleXMLParser styler;
   private String fileName;
-  protected Element root;
   private Grid grid;
+  Map<String, Grid> typeGridPairs;
 
   /**
    * Constructor for XMLParser, sets the fileName that has the information XMLParser needs to set up
@@ -30,7 +28,7 @@ public class XMLParser extends XMLReader {
    *
    * @param fileName xml file to read in
    */
-  public XMLParser(String fileName) {
+  public XMLParser(String fileName) throws ParserConfigurationException, SAXException, IOException {
     super(fileName);
   }
 
@@ -54,11 +52,34 @@ public class XMLParser extends XMLReader {
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();
     }
-    if (type == Type.WATOR) {
-      createToroidalGrid(type, params);
-    } else {
-      createGrid(type, params);
+    createGrid(type, params);
+  }
+
+  private void createGrid(Type type, Map<String, Double> params)
+      throws ParserConfigurationException, SAXException, IOException {
+    styler = new StyleXMLParser(retrieveTextContent("Style"));
+    styler.readFile();
+    Neighbors neighborType = Neighbors.valueOf(styler.getNeighborLayout());
+    String gridShape = styler.getGridType();
+    typeGridPairs(type, params, neighborType);
+    try {
+      grid = typeGridPairs.get(gridShape);
+    } catch (Exception e) {
+      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType);
     }
+  }
+
+  private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType) {
+    typeGridPairs = new HashMap<>();
+    typeGridPairs.put("Square", grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
+        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        type, params, neighborType));
+    typeGridPairs.put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        type, params, neighborType));
+    typeGridPairs.put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
+        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        type, params, neighborType));
   }
 
   /**
@@ -69,26 +90,6 @@ public class XMLParser extends XMLReader {
     simulationData.put("Title", retrieveTextContent("Title"));
     simulationData.put("Author", retrieveTextContent("Author"));
     simulationData.put("Description", retrieveTextContent("Description"));
-  }
-
-  private void createGrid(Type type, Map<String, Double> params) {
-    try {
-      grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-          type, params);
-    } catch (NumberFormatException e) {
-      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params);
-    }
-  }
-
-  private void createToroidalGrid(Type type, Map<String, Double> params) {
-    try {
-      grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-          Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-          type, params);
-    } catch (NumberFormatException e) {
-      grid = new ToroidalGrid(8, 8, retrieveTextContent("LayoutFile"), type, params);
-    }
   }
 
   /**

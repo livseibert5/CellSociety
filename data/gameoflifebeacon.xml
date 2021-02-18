@@ -7,4 +7,5 @@
   <Width>6</Width>
   <Height>6</Height>
   <LayoutFile>gameoflifebeacon.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

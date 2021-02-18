@@ -7,4 +7,5 @@
   <Width>6</Width>
   <Height>8</Height>
   <LayoutFile>gameoflifeedges2.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

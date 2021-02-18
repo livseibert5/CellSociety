@@ -11,15 +11,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Allows for basic XML parsing ability so that StyleXMLParser and XMLParser can inherit from it and
+ * not duplicate code.
+ *
+ * @author Livia Seibert
+ */
 public abstract class XMLReader {
 
   protected Element root;
   protected Map<String, String> simulationData;
   protected String fileName;
 
-  public XMLReader(String fileName) {
+  public XMLReader(String fileName) throws IOException, SAXException, ParserConfigurationException {
     this.simulationData = new HashMap<>();
     this.fileName = fileName;
+    buildParser();
   }
 
   public abstract void readFile() throws ParserConfigurationException, SAXException, IOException;

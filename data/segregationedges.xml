@@ -13,4 +13,5 @@
   <Width>15</Width>
   <Height>15</Height>
   <LayoutFile>segregationedges.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

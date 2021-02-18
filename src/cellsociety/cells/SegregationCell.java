@@ -27,9 +27,9 @@ public class SegregationCell extends Cell {
    * @param col    column location of cell
    * @param params map of params needed for simulation
    */
-  public SegregationCell(int state, int row, int col, Map<String, Double> params) {
+  public SegregationCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
     super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
+        neighborDirections.directions());
     this.satisfied = params.containsKey("satisfied") ? params.get("satisfied") : DEFAULT_SATISFIED;
   }
 

@@ -2,6 +2,9 @@ package cellsociety.cells;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Class that represents ants, a list of InsectCell objects is present in every ForagerCell.
@@ -18,6 +21,8 @@ public class InsectCell extends Cell {
 
   public static final int DROP_FOOD_PHEROMONES = 0;
   public static final int DROP_HOME_PHEROMONES = 1;
+  private final double K = .001;
+  private final double N = 10.0;
 
   private List<Cell> forwardNeighbors;
 
@@ -49,15 +54,19 @@ public class InsectCell extends Cell {
    */
   public void findFoodSource() {
     getForagerCell();
-    Cell maxPheromones = checkForwardAndNeighbors("Food");
     if (foragerCell.getState() == ForagerCell.NEST) {
+      Cell maxPheromones = getMaxPheromones(neighbors, "Food");
       determineOrientation(maxPheromones);
     }
-    maxPheromones = checkForwardAndNeighbors("Food");
-    if (maxPheromones != null) {
+    setForwardNeighbors();
+    Cell location = selectLocation(forwardNeighbors);
+    if (location == null) {
+      location = selectLocation(neighbors);
+    }
+    if (location != null) {
       nextAction = DROP_HOME_PHEROMONES;
-      determineOrientation(maxPheromones);
-      nextLocation = maxPheromones.getLocation();
+      determineOrientation(location);
+      nextLocation = location.getLocation();
     }
   }
 
@@ -66,16 +75,47 @@ public class InsectCell extends Cell {
    */
   public void returnToNest() {
     getForagerCell();
-    Cell maxPheromones = checkForwardAndNeighbors("Home");
+    Cell maxPheromones = getMaxPheromones(neighbors, "Home");
     if (foragerCell.getState() == ForagerCell.NEST) {
       determineOrientation(maxPheromones);
     }
-    maxPheromones = checkForwardAndNeighbors("Home");
+    maxPheromones = getMaxPheromones(forwardNeighbors, "Home");
+    if (maxPheromones == null) {
+      maxPheromones = getMaxPheromones(neighbors, "Home");
+    }
     if (maxPheromones != null) {
       nextAction = DROP_FOOD_PHEROMONES;
       determineOrientation(maxPheromones);
       nextLocation = maxPheromones.getLocation();
     }
+  }
+
+  private Cell selectLocation(List<Cell> cells) {
+    List<Cell> idealLocation = new ArrayList<>();
+    for (Cell cell: cells) {
+      if (!isCurrentCell(cell.getLocation()) && ((ForagerCell) cell).getAnts().size() < 10 && cell.getState() != ForagerCell.OBSTACLE) {
+        idealLocation.add(cell);
+      }
+    }
+    if (idealLocation.size() == 0) {
+      return null;
+    } else {
+      Map<Cell, Double> weights = new HashMap<>();
+      double random = Math.random();
+      double cumulativeProb = 0.0;
+      for (Cell cell: idealLocation) {
+        weights.put(cell, getWeight((ForagerCell) cell));
+        cumulativeProb += getWeight((ForagerCell) cell);
+        if (random <= cumulativeProb) {
+          return cell;
+        }
+      }
+    }
+    return idealLocation.get(0);
+  }
+
+  private double getWeight(ForagerCell cell) {
+    return Math.pow((K + cell.getPheromones("Food")), N);
   }
 
   /**
@@ -107,23 +147,6 @@ public class InsectCell extends Cell {
 
   private boolean isCurrentCell(int[] location) {
     return this.row == location[0] && this.col == location[1];
-  }
-
-  /**
-   * Determines next location of cell by finding the cell with the most amount of pheromones of the
-   * given type.
-   *
-   * @param type desired type of pheromones
-   * @return cell with the most of the given pheromone type
-   */
-  private Cell checkForwardAndNeighbors(String type) {
-    determineOrientation(getMaxPheromones(neighbors, type));
-    setForwardNeighbors();
-    Cell maxPheromones = getMaxPheromones(forwardNeighbors, type);
-    if (maxPheromones == null) {
-      maxPheromones = getMaxPheromones(neighbors, type);
-    }
-    return maxPheromones;
   }
 
   /**

@@ -7,4 +7,5 @@
   <Width>8</Width>
   <Height>8</Height>
   <LayoutFile>percolationbestcase.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

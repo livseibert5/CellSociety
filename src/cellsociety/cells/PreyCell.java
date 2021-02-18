@@ -25,8 +25,9 @@ public class PreyCell extends WatorCell {
    * @param col       column position of cell
    * @param params    list of parameters for the simulation
    */
-  public PreyCell(int cellState, int row, int col, Map<String, Double> params) {
-    super(cellState, row, col);
+  public PreyCell(int cellState, int row, int col, Map<String, Double> params,
+      Neighbors neighborDirections) {
+    super(cellState, row, col, neighborDirections);
     state = PREY;
     breedTimeCounter = 0;
     this.breedTime = params.containsKey("breedTime") ? params.get("breedTime") : DEFAULT_BREEDTIME;

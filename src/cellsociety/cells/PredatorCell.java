@@ -28,8 +28,9 @@ public class PredatorCell extends WatorCell {
    * @param col       column position of cell
    * @param params    list of parameters for the simulation
    */
-  public PredatorCell(int cellState, int row, int col, Map<String, Double> params) {
-    super(cellState, row, col);
+  public PredatorCell(int cellState, int row, int col, Map<String, Double> params,
+      Neighbors neighborDirections) {
+    super(cellState, row, col, neighborDirections);
     state = PREDATOR;
     this.startingEnergy =
         params.containsKey("startingEnergy") ? params.get("startingEnergy")
@@ -63,8 +64,8 @@ public class PredatorCell extends WatorCell {
   }
 
   /**
-   * Since collisions between predators and prey are handled in the controller, the controller needs to
-   * be able to increment a predator's energy when it eats prey.
+   * Since collisions between predators and prey are handled in the controller, the controller needs
+   * to be able to increment a predator's energy when it eats prey.
    */
   public void incrementEnergy() {
     energyCounter += ENERGY_INCREMENT;

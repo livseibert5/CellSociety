@@ -13,4 +13,5 @@
   <Width>11</Width>
   <Height>11</Height>
   <LayoutFile>firecorners.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

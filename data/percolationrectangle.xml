@@ -7,4 +7,5 @@
   <Width>11</Width>
   <Height>5</Height>
   <LayoutFile>percolationrectangle.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

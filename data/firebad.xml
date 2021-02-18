@@ -17,4 +17,5 @@
   <Width>25</Width>
   <Height>25</Height>
   <LayoutFile>firestandard.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

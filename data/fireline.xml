@@ -13,4 +13,5 @@
   <Width>11</Width>
   <Height>9</Height>
   <LayoutFile>fireline.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

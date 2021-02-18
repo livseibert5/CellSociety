@@ -7,4 +7,5 @@
   <Width>11</Width>
   <Height>18</Height>
   <LayoutFile>gameoflifepenta.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

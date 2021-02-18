@@ -13,4 +13,5 @@
   <Width>21</Width>
   <Height>21</Height>
   <LayoutFile>fireedges2.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

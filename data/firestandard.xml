@@ -7,10 +7,11 @@
   <ConfigParams>
     <Param>
       <Name>probCatch</Name>
-      <Value>.55</Value>
+      <Value>.35</Value>
     </Param>
   </ConfigParams>
   <Width>21</Width>
   <Height>21</Height>
   <LayoutFile>firestandard.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

@@ -17,9 +17,8 @@ public class GameOfLifeCell extends Cell {
    * @param row   row location of cell
    * @param col   col location of cell
    */
-  public GameOfLifeCell(int state, int row, int col) {
-    super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
+  public GameOfLifeCell(int state, int row, int col, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
   }
 
   /**

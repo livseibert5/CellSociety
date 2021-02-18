@@ -13,4 +13,5 @@
   <Width>6</Width>
   <Height>6</Height>
   <LayoutFile>fireeverywhere.txt</LayoutFile>
+  <Style>squareneumann.xml</Style>
 </Simulation>

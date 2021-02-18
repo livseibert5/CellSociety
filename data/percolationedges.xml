@@ -7,4 +7,5 @@
   <Width>8</Width>
   <Height>8</Height>
   <LayoutFile>percolationedges.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
 </Simulation>

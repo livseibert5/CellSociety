@@ -25,8 +25,8 @@ public abstract class WatorCell extends Cell {
    * @param row       row location of cell
    * @param col       col location of cell
    */
-  public WatorCell(int cellState, int row, int col) {
-    super(cellState, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
+  public WatorCell(int cellState, int row, int col, Neighbors neighborDirections) {
+    super(cellState, row, col, neighborDirections.directions());
   }
 
   /**

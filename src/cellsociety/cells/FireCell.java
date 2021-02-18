@@ -26,8 +26,8 @@ public class FireCell extends Cell {
    * @param col    col of cell
    * @param params map of params needed for simulation
    */
-  public FireCell(int state, int row, int col, Map<String, Double> params) {
-    super(state, row, col, new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}});
+  public FireCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
     this.probCatch = params.containsKey("probCatch") ? params.get("probCatch") : DEFAULT_PROB_CATCH;
   }
 
