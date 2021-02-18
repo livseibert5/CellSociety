@@ -134,24 +134,8 @@ public class GameLoop extends Application {
     myStage.setScene(creatingLandingScreen());
   }
 
-  public void setModToFaster() {
-    mod = 30;
-  }
-
-  public void setModToSlower() {
-    mod = 120;
-  }
-
-  public void setModToNormal() {
-    mod = 60;
-  }
-
-  public void stopAnimation() {
-    simulationStarted = false;
-  }
-
-  public void playAnimation() {
-    simulationStarted = true;
+  private void setMod(int mod) {
+    this.mod = mod;
   }
 
   private Grid setGrid(String filename)
@@ -164,11 +148,11 @@ public class GameLoop extends Application {
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());
 
-    Graphics.faster.setOnAction(event -> setModToFaster());
-    Graphics.slower.setOnAction(event -> setModToSlower());
-    Graphics.normal.setOnAction(event -> setModToNormal());
-    Graphics.play.setOnAction(event -> playAnimation());
-    Graphics.pause.setOnAction(event -> stopAnimation());
+    Graphics.faster.setOnAction(event -> setMod(30));
+    Graphics.slower.setOnAction(event -> setMod(120));
+    Graphics.normal.setOnAction(event -> setMod(60));
+    Graphics.play.setOnAction(event -> simulationStarted = true);
+    Graphics.pause.setOnAction(event -> simulationStarted = false);
 
     myStage.setScene(myScene);
     return grid;
@@ -199,23 +183,7 @@ public class GameLoop extends Application {
     Button five = new Button(currentResourceBundle.getString("five"));
     Button six = new Button(currentResourceBundle.getString("six"));
 
-    one.setTranslateX(10);
-    one.setTranslateY(50);
-
-    two.setTranslateX(10);
-    two.setTranslateY(100);
-
-    three.setTranslateX(10);
-    three.setTranslateY(150);
-
-    four.setTranslateX(10);
-    four.setTranslateY(200);
-
-    five.setTranslateX(10);
-    five.setTranslateY(250);
-
-    six.setTranslateX(10);
-    six.setTranslateY(300);
+    changeButtonLayout(one, two, three, four, five, six);
 
     Group root = new Group();
     root.getChildren().addAll(one, two, three, four, five, six);
@@ -288,6 +256,21 @@ public class GameLoop extends Application {
 
     myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     myStage.setScene(myScene);
+  }
+
+  private void changeButtonLayout(Button one, Button two, Button three, Button four, Button five,
+      Button six) {
+    setButtonLocation(one, 10, 50);
+    setButtonLocation(two, 10, 100);
+    setButtonLocation(three, 10, 150);
+    setButtonLocation(four, 10, 200);
+    setButtonLocation(five, 10, 250);
+    setButtonLocation(six, 10, 300);
+  }
+
+  private void setButtonLocation(Button button, double x, double y) {
+    button.setTranslateX(x);
+    button.setTranslateY(y);
   }
 
   @Override
