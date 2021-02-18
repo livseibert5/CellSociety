@@ -1,5 +1,6 @@
 package cellsociety.controller;
 
+import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
 import cellsociety.cells.Neighbors;
 import cellsociety.cells.SegregationCell;
@@ -63,7 +64,8 @@ public class SegregationController extends Controller {
     statesToAddAtCurrentIteration.clear();
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (!(oldGrid.getCellAtLocation(i, j) instanceof SegregationCell oldCell)) {
+        Cell oldCell = oldGrid.getCellAtLocation(i, j);
+        if (oldCell.getState() == SegregationCell.EMPTY) {
           emptyLocs.add(new ArrayList<>(Arrays.asList(i, j)));
           continue;
         }
@@ -115,11 +117,11 @@ public class SegregationController extends Controller {
 
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (oldGrid.getCellAtLocation(i, j) instanceof EmptyCell && newGrid
-            .getCellAtLocation(i, j) instanceof EmptyCell) {
+        if (oldGrid.getCellAtLocation(i, j).getState() == SegregationCell.EMPTY && newGrid
+            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY ) {
           continue;
-        } else if (oldGrid.getCellAtLocation(i, j) instanceof EmptyCell || newGrid
-            .getCellAtLocation(i, j) instanceof EmptyCell) {
+        } else if (oldGrid.getCellAtLocation(i, j).getState() == SegregationCell.EMPTY  || newGrid
+            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY ) {
           return false;
         }
         if (checkIfCellStateHasChanged(oldGrid, newGrid, i, j)) {

@@ -33,7 +33,9 @@ and provided justification in the javadoc comments for why we felt they were app
   
 * Changed methods for isEmpty checking if array list is empty
 
-* 
+* Extracted lines of code from method to make shorter methods
+
+* We also refactored our classes to remove all instanceof methods
 
 ### Refactoring Plan
 
