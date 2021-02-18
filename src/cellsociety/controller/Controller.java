@@ -27,12 +27,12 @@ public abstract class Controller {
 
   public void setInitialGrid(Grid oldGrid) {
     this.oldGrid = oldGrid;
-    setNewGrid();
+    createNewGridAsCopy();
   }
 
   public Controller(Grid oldGrid) {
     this.oldGrid = oldGrid;
-    setNewGrid();
+    createNewGridAsCopy();
   }
 
   /**
@@ -42,7 +42,7 @@ public abstract class Controller {
   public void resetController() {
     setDims();
     this.oldGrid = this.newGrid;
-    setNewGrid();
+    createNewGridAsCopy();
   }
 
   private void setDims() {
@@ -105,7 +105,7 @@ public abstract class Controller {
     return oldGrid;
   }
 
-  private void setNewGrid() {
+  private void createNewGridAsCopy() {
     newGrid = oldGrid.getCopyOfGrid();
   }
 }
