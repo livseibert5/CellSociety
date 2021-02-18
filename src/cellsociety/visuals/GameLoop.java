@@ -185,8 +185,7 @@ public class GameLoop extends Application {
       throws ParserConfigurationException, SAXException, IOException {
     fileName = "file" + fileName;
     String configFileName = currentResourceBundle.getString(fileName);
-    Grid grid = setGrid(configFileName);
-    return grid;
+    return setGrid(configFileName);
   }
 
 
