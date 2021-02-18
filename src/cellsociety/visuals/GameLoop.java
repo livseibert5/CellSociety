@@ -30,7 +30,7 @@ public class GameLoop extends Application {
   private static final String TITLE = "Cellular Automata";
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  public Stage myStage;
+  private Stage myStage;
   private ResourceBundle currentResourceBundle;
   private Controller currentControllerType;
   private boolean simulationStarted = false;
