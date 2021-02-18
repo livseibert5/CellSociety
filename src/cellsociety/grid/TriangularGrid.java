@@ -15,6 +15,9 @@ import java.util.Scanner;
  */
 public class TriangularGrid extends Grid {
 
+  Neighbors up;
+  Neighbors down;
+
   /**
    * Constructor for a TriangularGrid object that extends grid's functionality to create a grid with
    * triangular cells.
@@ -28,6 +31,17 @@ public class TriangularGrid extends Grid {
   public TriangularGrid(int width, int height, String fileName, Type type,
       Map<String, Double> params, Neighbors neighborDirections) {
     super(width, height, fileName, type, params, neighborDirections);
+    setDirections();
+  }
+
+  private void setDirections() {
+    if (neighborDirections == Neighbors.TRIANGLE_MOORE_DOWN || neighborDirections == Neighbors.TRIANGLE_MOORE_UP) {
+      up = Neighbors.TRIANGLE_MOORE_UP;
+      down = Neighbors.TRIANGLE_MOORE_DOWN;
+    } else {
+      up = Neighbors.TRIANGLE_NEUMANN_UP;
+      down = Neighbors.TRIANGLE_NEUMANN_DOWN;
+    }
   }
 
   protected void readFile(String fileName) {
@@ -40,15 +54,15 @@ public class TriangularGrid extends Grid {
         int cellState = Integer.parseInt(gridRow[col]);
         if (row % 2 == 0) {
           if (col % 2 == 0) {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_DOWN);
+            setCellWithType(row, col, cellState, down);
           } else {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_UP);
+            setCellWithType(row, col, cellState, up);
           }
         } else {
           if (col % 2 == 0) {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_UP);
+            setCellWithType(row, col, cellState, up);
           } else {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_DOWN);
+            setCellWithType(row, col, cellState, down);
           }
         }
       }
