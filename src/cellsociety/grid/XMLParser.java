@@ -18,7 +18,6 @@ import org.xml.sax.SAXException;
 public class XMLParser extends XMLReader {
 
   private StyleXMLParser styler;
-  private String fileName;
   private Grid grid;
   Map<String, Grid> typeGridPairs;
 
