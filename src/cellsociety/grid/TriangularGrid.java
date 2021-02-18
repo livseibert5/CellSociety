@@ -1,6 +1,8 @@
 package cellsociety.grid;
 
 import cellsociety.cells.Neighbors;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -52,5 +54,47 @@ public class TriangularGrid extends Grid {
       }
       row++;
     }
+  }
+
+  public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight, int triangleWidth) {
+    List<Double> coordinates = new ArrayList();
+    if (row % 2 == 0) {
+      if (col % 2 == 0) {
+        //Triangle Down
+        generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
+      } else {
+        //Triangle Up
+        generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
+      }
+    } else {
+      if (col % 2 == 0) {
+        //Triangle UP
+        generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
+      } else {
+        generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
+
+      }
+    }
+    return coordinates;
+  }
+
+  private void generateTriangleUpCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+      List<Double> coordinates) {
+    coordinates.add((col +0.5) * triangleWidth);
+    coordinates.add((double) (row * triangleHeight));
+    coordinates.add((double) col * triangleWidth);
+    coordinates.add((row +1.0) * triangleHeight);
+    coordinates.add((col +1.0) * triangleWidth);
+    coordinates.add((row +1.0) * triangleHeight);
+  }
+
+  private void generateTriangleDownCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+      List<Double> coordinates) {
+    coordinates.add((double) (col * triangleWidth));
+    coordinates.add((double) (row * triangleHeight));
+    coordinates.add((col +1.0) * triangleWidth);
+    coordinates.add((double) row * triangleHeight);
+    coordinates.add((col +0.5) * triangleWidth);
+    coordinates.add((row +1.0) * triangleHeight);
   }
 }
