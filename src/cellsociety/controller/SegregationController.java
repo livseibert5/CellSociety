@@ -89,7 +89,7 @@ public class SegregationController extends Controller {
     Collections.shuffle(statesToAddAtCurrentIteration);
     Collections.shuffle(emptyLocs);
     for (ArrayList<Integer> loc : emptyLocs) {
-      if (statesToAddAtCurrentIteration.size() == 0) {
+      if (statesToAddAtCurrentIteration.isEmpty()) {
         return;
       }
       newGrid.setCellAtLocation(loc.get(0), loc.get(1), new SegregationCell(
