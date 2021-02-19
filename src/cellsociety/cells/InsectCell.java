@@ -52,13 +52,13 @@ public class InsectCell extends Cell {
   public void findFoodSource() {
     getForagerCell();
     if (foragerCell.getState() == ForagerCell.NEST) {
-      Cell maxPheromones = getMaxPheromones(neighbors, "Food");
+      Cell maxPheromones = getMaxPheromones(getNeighbors(), "Food");
       determineOrientation(maxPheromones);
     }
     setForwardNeighbors();
     Cell location = selectLocation(forwardNeighbors);
     if (location == null) {
-      location = selectLocation(neighbors);
+      location = selectLocation(getNeighbors());
     }
     if (location != null) {
       nextAction = DROP_HOME_PHEROMONES;
@@ -72,13 +72,13 @@ public class InsectCell extends Cell {
    */
   public void returnToNest() {
     getForagerCell();
-    Cell maxPheromones = getMaxPheromones(neighbors, "Home");
+    Cell maxPheromones = getMaxPheromones(getNeighbors(), "Home");
     if (foragerCell.getState() == ForagerCell.NEST) {
       determineOrientation(maxPheromones);
     }
     maxPheromones = getMaxPheromones(forwardNeighbors, "Home");
     if (maxPheromones == null) {
-      maxPheromones = getMaxPheromones(neighbors, "Home");
+      maxPheromones = getMaxPheromones(getNeighbors(), "Home");
     }
     if (maxPheromones != null) {
       nextAction = DROP_FOOD_PHEROMONES;
@@ -117,7 +117,7 @@ public class InsectCell extends Cell {
    * Determine which cell the ant lives on so that it's state can be used.
    */
   private void getForagerCell() {
-    neighbors.forEach(cell -> {
+    getNeighbors().forEach(cell -> {
       if (cell.getLocation()[0] == this.getLocation()[0] && cell.getLocation()[1] == this.getLocation()[1]) {
         foragerCell = (ForagerCell) cell;
       }
@@ -128,7 +128,7 @@ public class InsectCell extends Cell {
    * Sets forager's forward neighbors depending on its current orientation.
    */
   private void setForwardNeighbors() {
-    for (Cell cell : neighbors) {
+    for (Cell cell : getNeighbors()) {
       int[] location = cell.getLocation();
       int[][] directions = orientation.directions();
       for (int[] direction: directions) {

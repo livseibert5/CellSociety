@@ -36,14 +36,14 @@ public class SegregationCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
+    double percentLikeNeighbors = (double) countLikeNeighbors() / this.getNeighbors().size();
     isSatisfied = percentLikeNeighbors >= satisfied;
     setNextState(isSatisfied ? getState() : MOVE);
   }
 
   private int countLikeNeighbors() {
     int likeNeighbors = 0;
-    for (Cell neighbor : neighbors) {
+    for (Cell neighbor : this.getNeighbors()) {
       if (neighbor.getState() == this.getState()) {
         likeNeighbors++;
       }

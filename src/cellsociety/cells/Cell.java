@@ -13,8 +13,8 @@ public abstract class Cell {
   private int nextState;
   private int row;
   private int col;
-  protected List<Cell> neighbors;
-  protected int[][] neighborDirections;
+  private List<Cell> neighbors;
+  private int[][] neighborDirections;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -116,5 +116,9 @@ public abstract class Cell {
 
   protected void setState(int state) {
     this.state = state;
+  }
+
+  protected void setNeighborDirections(int[][] neighborDirections) {
+    this.neighborDirections = neighborDirections;
   }
 }

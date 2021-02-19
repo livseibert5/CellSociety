@@ -33,7 +33,7 @@ public class PercolationCell extends Cell {
     } else if (getState() == PERCOLATED) {
       setNextState(PERCOLATED);
     } else if (getState() == OPEN) {
-      for (Cell neighbor : neighbors) {
+      for (Cell neighbor : getNeighbors()) {
         if (neighbor.getState() == PERCOLATED) {
           setNextState(PERCOLATED);
           return;

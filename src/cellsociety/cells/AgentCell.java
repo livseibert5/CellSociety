@@ -61,13 +61,13 @@ public class AgentCell extends Cell {
    * Gets all of the locations in the four directions up to vision blocks away.
    */
   private void getNeighborLocations() {
-    visionLocations.add(neighborDirections);
+    visionLocations.add(getNeighborDirections());
     if (vision > 1) {
       for (int i = (int) vision; i > 1; i--) {
-        int[][] newDirections = new int[neighborDirections.length][neighborDirections[0].length];
-        for (int j = 0; j < neighborDirections.length; j++) {
-          newDirections[j][0] = neighborDirections[j][0] * (int) vision;
-          newDirections[j][1] = neighborDirections[j][1] * (int) vision;
+        int[][] newDirections = new int[getNeighborDirections().length][getNeighborDirections()[0].length];
+        for (int j = 0; j < getNeighborDirections().length; j++) {
+          newDirections[j][0] = getNeighborDirections()[j][0] * (int) vision;
+          newDirections[j][1] = getNeighborDirections()[j][1] * (int) vision;
         }
         visionLocations.add(newDirections);
       }
@@ -88,7 +88,7 @@ public class AgentCell extends Cell {
         newDirectionIndex++;
       }
     }
-    neighborDirections = newDirections;
+    setNeighborDirections(newDirections);
   }
 
   /**
@@ -99,7 +99,7 @@ public class AgentCell extends Cell {
   private SugarCell findMaxSugar() {
     SugarCell maxSugarCell = null;
     double maxSugarVal = 0;
-    for (Cell neighbor : neighbors) {
+    for (Cell neighbor : this.getNeighbors()) {
       if (!((SugarCell) neighbor).getHasAgent()
           && ((SugarCell) neighbor).getSugar() > maxSugarVal) {
         maxSugarVal = ((SugarCell) neighbor).getSugar();

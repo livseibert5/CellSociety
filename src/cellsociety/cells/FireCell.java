@@ -38,8 +38,8 @@ public class FireCell extends Cell {
   public void determineNextState() {
     if (getState() == TREE) {
       boolean neighborIsBurning = false;
-      for (int i = 0; i < neighbors.size(); i++) {
-        if (neighbors.get(i).getState() == BURNING) {
+      for (int i = 0; i < getNeighbors().size(); i++) {
+        if (getNeighbors().get(i).getState() == BURNING) {
           neighborIsBurning = true;
           break;
         }
