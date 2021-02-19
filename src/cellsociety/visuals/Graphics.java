@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 
@@ -64,8 +66,16 @@ public class Graphics {
   private BorderPane outside;
   private Scene scene;
 
-  public Graphics() {
-
+  private Controller controllerType;
+  private HashMap<Integer, String> stateColor;
+  public Graphics(Controller controllerType, ResourceBundle currentResourceBundle) {
+    this.controllerType = controllerType;
+    this.stateColor = new HashMap<>();
+    int amountOfStates = Integer.parseInt(currentResourceBundle.getString("amountOfStates"));
+    for (int i =0 ; i < amountOfStates; i++){
+      String color = currentResourceBundle.getString("" + i);
+      stateColor.put(i, color);
+    }
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
@@ -87,6 +97,7 @@ public class Graphics {
     outside.setLeft(slower);
     outside.setRight(normal);
     scene = new Scene(outside);
+
     return setGridView(grid, simulationResource, eventExit);
   }
 
@@ -100,28 +111,16 @@ public class Graphics {
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < width; j++) {
         Cell cell = grid.getCellAtLocation(i, j);
-        if (cell.getState() == 0) {
-          gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(
-              simulationResource.getString("0"))), j, i);
-        } else if (cell.getState() == 1) {
-          gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(
-              simulationResource.getString("1"))), j, i);
-        } else if (cell.getState() == 2) {
-          gridView.add(new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(
-              simulationResource.getString("2"))), j, i);
-        }
+        String cellColor = stateColor.get(cell.getState());
+        Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
+        gridView.add(cellRectangle, j, i);
       }
     }
     return scene;
   }
 
-  public Grid updateGrid(Controller controllerType) {
-    controllerType.updateState();
-    return controllerType.getNewGrid();
-  }
-
-  public Text constructText(double baseY, int size, String message, FontWeight fontWeight,
-      String font) {
+  public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
+                            String font) {
     Text text = new Text(75, 100, message);
     Font textFont = Font.font(font, fontWeight, size);
     text.setFont(textFont);
@@ -138,8 +137,18 @@ public class Graphics {
   }
 
 
-  public void createButton(String buttonName, double baseY, Group root,
-      EventHandler<ActionEvent> event) {
+  public Grid updateGrid(Controller controllerType) {
+    controllerType.updateState();
+    return controllerType.getNewGrid();
+  }
+
+
+
+
+
+
+  public static void createButton(String buttonName, double baseY, Group root,
+                           EventHandler<ActionEvent> event) {
     Button button = new Button(buttonName);
 
     double xPosition = ((SCREEN_WIDTH / 2) - 50);
