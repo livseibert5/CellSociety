@@ -18,7 +18,6 @@ public abstract class Controller {
   /**
    * Creates controller and creates copy of grid for new grid
    *
-   * @param oldGrid initial grid state
    */
 
   public Controller() {

@@ -1,7 +1,5 @@
 package cellsociety.controller;
 
-import cellsociety.grid.Grid;
-import cellsociety.cells.FireCell;
 
 /**
  * Class that controls the fire game, Uses the grid class and extends basic controller class Called
