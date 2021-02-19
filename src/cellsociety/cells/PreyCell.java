@@ -14,7 +14,7 @@ public class PreyCell extends WatorCell {
   private double breedTime;
   private double breedTimeCounter;
 
-  private final double DEFAULT_BREEDTIME = 5.0;
+  public static final double DEFAULT_BREEDTIME = 5.0;
 
   /**
    * Constuctor for the Prey cell, uses the WatorCell constructor and also sets the values for the

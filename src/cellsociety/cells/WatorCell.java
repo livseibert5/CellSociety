@@ -13,7 +13,7 @@ public abstract class WatorCell extends Cell {
 
   public static final int PREDATOR = 0;
   public static final int PREY = 1;
-
+  public static final int EMPTY = 2;
   protected int nextAction;
 
   /**

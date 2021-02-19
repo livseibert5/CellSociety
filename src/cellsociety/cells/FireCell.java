@@ -10,12 +10,12 @@ import java.util.Map;
  */
 public class FireCell extends Cell {
 
-  private final int EMPTY = 0;
-  private final int TREE = 1;
-  private final int BURNING = 2;
-  private final double probCatch;
+  public static final int EMPTY = 0;
+  public static final int TREE = 1;
+  public static final int BURNING = 2;
+  private double probCatch;
 
-  private final double DEFAULT_PROB_CATCH = .30;
+  public static final double DEFAULT_PROB_CATCH = .30;
 
   /**
    * Constructor for fire cell, uses super constructor and initializes probCatch. If no probCatch
