@@ -28,7 +28,7 @@ public class PreyCell extends WatorCell {
   public PreyCell(int cellState, int row, int col, Map<String, Double> params,
       Neighbors neighborDirections) {
     super(cellState, row, col, neighborDirections);
-    state = PREY;
+    setState(PREY);
     breedTimeCounter = 0;
     this.breedTime = params.getOrDefault("breedTime", DEFAULT_BREEDTIME);
   }
@@ -38,7 +38,7 @@ public class PreyCell extends WatorCell {
    */
   @Override
   public void determineNextState() {
-    nextState = PREY;
+    setNextState(PREY);
   }
 
   /**

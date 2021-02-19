@@ -38,7 +38,7 @@ public class ForagerCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 
   /**
@@ -88,9 +88,9 @@ public class ForagerCell extends Cell {
    * @param ant InsectCell object to be added to ants list
    */
   public void addAnt(InsectCell ant) {
-    if (state == NEST) {
+    if (getState() == NEST) {
       ant.dropFoodItem();
-    } else if (state == FOOD_SOURCE) {
+    } else if (getState() == FOOD_SOURCE) {
       ant.findFoodSource();
     }
     ants.add(ant);

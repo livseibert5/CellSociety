@@ -46,7 +46,7 @@ public class AgentCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 
   /**
@@ -127,9 +127,9 @@ public class AgentCell extends Cell {
     this.sugar += sugar;
     this.sugar -= sugarMetabolism;
     if (this.sugar <= 0) {
-      nextState = DEAD;
+      setNextState(DEAD);
     } else {
-      nextState = SUGAR_CELL;
+      setNextState(SUGAR_CELL);
     }
   }
 }

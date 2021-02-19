@@ -9,10 +9,10 @@ import java.util.List;
  */
 public abstract class Cell {
 
-  protected int state;
-  protected int nextState;
-  protected int row;
-  protected int col;
+  private int state;
+  private int nextState;
+  private int row;
+  private int col;
   protected List<Cell> neighbors;
   protected int[][] neighborDirections;
 
@@ -112,5 +112,9 @@ public abstract class Cell {
 
   protected void setNextState(int nextState) {
     this.nextState = nextState;
+  }
+
+  protected void setState(int state) {
+    this.state = state;
   }
 }

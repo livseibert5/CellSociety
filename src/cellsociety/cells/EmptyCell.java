@@ -26,6 +26,6 @@ public class EmptyCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 }

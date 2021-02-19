@@ -38,13 +38,13 @@ public class SegregationCell extends Cell {
   public void determineNextState() {
     double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
     isSatisfied = percentLikeNeighbors >= satisfied;
-    nextState = isSatisfied ? state : MOVE;
+    setNextState(isSatisfied ? getState() : MOVE);
   }
 
   private int countLikeNeighbors() {
     int likeNeighbors = 0;
     for (Cell neighbor : neighbors) {
-      if (neighbor.getState() == state) {
+      if (neighbor.getState() == this.getState()) {
         likeNeighbors++;
       }
     }

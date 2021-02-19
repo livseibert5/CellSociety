@@ -31,7 +31,7 @@ public class PredatorCell extends WatorCell {
   public PredatorCell(int cellState, int row, int col, Map<String, Double> params,
       Neighbors neighborDirections) {
     super(cellState, row, col, neighborDirections);
-    state = PREDATOR;
+    setState(PREDATOR);
     this.startingEnergy = params.getOrDefault("startingEnergy", DEFAULT_STARTING_ENERGY);
     this.offspringEnergy = params.getOrDefault("offspringEnergy", DEFAULT_OFFSPRING_ENERGY);
     energyCounter = startingEnergy;
@@ -42,7 +42,7 @@ public class PredatorCell extends WatorCell {
    */
   @Override
   public void determineNextState() {
-    nextState = PREDATOR;
+    setNextState(PREDATOR);
   }
 
   /**

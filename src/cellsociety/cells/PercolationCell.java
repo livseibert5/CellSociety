@@ -28,18 +28,18 @@ public class PercolationCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    if (state == BLOCKED) {
-      nextState = BLOCKED;
-    } else if (state == PERCOLATED) {
-      nextState = PERCOLATED;
-    } else if (state == OPEN) {
+    if (getState() == BLOCKED) {
+      setNextState(BLOCKED);
+    } else if (getState() == PERCOLATED) {
+      setNextState(PERCOLATED);
+    } else if (getState() == OPEN) {
       for (Cell neighbor : neighbors) {
         if (neighbor.getState() == PERCOLATED) {
-          nextState = PERCOLATED;
+          setNextState(PERCOLATED);
           return;
         }
       }
-      nextState = OPEN;
+      setNextState(OPEN);
     }
   }
 }

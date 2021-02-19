@@ -43,7 +43,7 @@ public class InsectCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    setNextState(state);
+    setNextState(getState());
   }
 
   /**
@@ -118,7 +118,7 @@ public class InsectCell extends Cell {
    */
   private void getForagerCell() {
     neighbors.forEach(cell -> {
-      if (cell.getLocation()[0] == this.row && cell.getLocation()[1] == this.col) {
+      if (cell.getLocation()[0] == this.getLocation()[0] && cell.getLocation()[1] == this.getLocation()[1]) {
         foragerCell = (ForagerCell) cell;
       }
     });
@@ -132,8 +132,8 @@ public class InsectCell extends Cell {
       int[] location = cell.getLocation();
       int[][] directions = orientation.directions();
       for (int[] direction: directions) {
-        if (location[0] == this.row + direction[0]
-            && location[1] == this.col + direction[1] && !isCurrentCell(location)) {
+        if (location[0] == this.getLocation()[0] + direction[0]
+            && location[1] == this.getLocation()[1] + direction[1] && !isCurrentCell(location)) {
           forwardNeighbors.add(cell);
         }
       }
@@ -141,7 +141,7 @@ public class InsectCell extends Cell {
   }
 
   private boolean isCurrentCell(int[] location) {
-    return this.row == location[0] && this.col == location[1];
+    return this.getLocation()[0] == location[0] && this.getLocation()[1] == location[1];
   }
 
   /**
@@ -192,8 +192,8 @@ public class InsectCell extends Cell {
 
   private boolean checkCoordinates(int[] location, int[][] directions) {
     for (int[] direction: directions) {
-      if (location[0] == this.row + direction[0]
-          && location[1] == this.col + direction[1] && !isCurrentCell(location)) {
+      if (location[0] == this.getLocation()[0] + direction[0]
+          && location[1] == this.getLocation()[1] + direction[1] && !isCurrentCell(location)) {
         return true;
       }
     }
