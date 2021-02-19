@@ -24,6 +24,7 @@ public class StyleXMLParser extends XMLReader {
     getInfo().put("CellSize", retrieveTextContent("CellSize"));
     getInfo().put("CellOutline", retrieveTextContent("CellOutline"));
     getInfo().put("CellColor", retrieveTextContent("CellColor"));
+    getInfo().put("GridPopulate", retrieveTextContent("GridPopulate"));
   }
 
   public String getGridType() {
@@ -32,5 +33,9 @@ public class StyleXMLParser extends XMLReader {
 
   public String getNeighborLayout() {
     return getInfo().get("NeighborLayout");
+  }
+
+  public String getPopulateType() {
+    return getInfo().get("GridPopulate");
   }
 }

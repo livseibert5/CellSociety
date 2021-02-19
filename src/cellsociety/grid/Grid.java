@@ -30,6 +30,7 @@ public class Grid {
   private String fileName;
   private Map<String, Double> params;
   private Neighbors neighborDirections;
+  private String populateType;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -42,7 +43,7 @@ public class Grid {
    * @param params   map of parameters needed for simulation
    */
   public Grid(int width, int height, String fileName, Type type, Map<String, Double> params,
-      Neighbors neighborDirections) {
+      Neighbors neighborDirections, String populateType) {
     grid = new Cell[height][width];
     this.type = type;
     this.width = width;
@@ -50,7 +51,12 @@ public class Grid {
     this.params = params;
     this.fileName = fileName;
     this.neighborDirections = neighborDirections;
-    readFile(fileName);
+    this.populateType = populateType;
+    if (populateType.equals("RANDOM")) {
+      populateRandomly();
+    } else {
+      readFile(fileName);
+    }
     initializeCells();
   }
 
@@ -220,7 +226,7 @@ public class Grid {
 
   protected Grid copySelf() {
     return new Grid(this.width, this.height, this.fileName, this.type, this.params,
-        this.neighborDirections);
+        this.neighborDirections, this.populateType);
   }
 
   /**
@@ -242,5 +248,9 @@ public class Grid {
 
   protected String getFileName() {
     return fileName;
+  }
+
+  protected String getPopulateType() {
+    return populateType;
   }
 }

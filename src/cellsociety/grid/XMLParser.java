@@ -59,27 +59,30 @@ public class XMLParser extends XMLReader {
     styler.readFile();
     Neighbors neighborType = Neighbors.valueOf(styler.getNeighborLayout());
     String gridShape = styler.getGridType();
-    typeGridPairs(type, params, neighborType);
+    String populateType = styler.getPopulateType();
+    typeGridPairs(type, params, neighborType, populateType);
     try {
       grid = typeGridPairs.get(gridShape);
     } catch (Exception e) {
-      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType);
+      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType,
+          populateType);
     }
   }
 
-  private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType) {
+  private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType,
+      String populateType) {
     typeGridPairs = new HashMap<>();
     typeGridPairs.put("Square", grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
+        type, params, neighborType, populateType));
     typeGridPairs
         .put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
             Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-            type, params, neighborType));
+            type, params, neighborType, populateType));
     typeGridPairs
         .put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
             Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-            type, params, neighborType));
+            type, params, neighborType, populateType));
   }
 
   /**

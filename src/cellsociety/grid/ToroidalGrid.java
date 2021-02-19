@@ -22,8 +22,8 @@ public class ToroidalGrid extends Grid {
    * @param params   map of parameters needed for simulation
    */
   public ToroidalGrid(int width, int height, String fileName, Type type,
-      Map<String, Double> params, Neighbors neighborDirections) {
-    super(width, height, fileName, type, params, neighborDirections);
+      Map<String, Double> params, Neighbors neighborDirections, String populateType) {
+    super(width, height, fileName, type, params, neighborDirections, populateType);
   }
 
   /**
@@ -79,7 +79,7 @@ public class ToroidalGrid extends Grid {
   @Override
   protected Grid copySelf() {
     return new ToroidalGrid(getSizeOfGrid()[1], getSizeOfGrid()[0], getFileName(), getType(),
-        getParams(), getNeighborDirections());
+        getParams(), getNeighborDirections(), getPopulateType());
   }
 
   private boolean wrapsRight(int i, int j) {
