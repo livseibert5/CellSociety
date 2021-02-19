@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * Class that holds cell in proper formation for simulation.
@@ -69,6 +70,16 @@ public class Grid {
         setCellWithType(row, col, cellState, neighborDirections);
       }
       row++;
+    }
+  }
+
+  protected void populateRandomly() {
+    Random rand = new Random();
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        setCellWithType(i, j, type.getStates().get(rand.nextInt(type.getStates().size())),
+            neighborDirections);
+      }
     }
   }
 
@@ -150,7 +161,7 @@ public class Grid {
   private void setNeighbors(int row, int col, Cell cell) {
     int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
-    for (int[] direction: directions) {
+    for (int[] direction : directions) {
       Cell neighbor = getCellAtLocation(row + direction[0], col + direction[1]);
       if (neighbor != null) {
         neighbors.add(neighbor);
