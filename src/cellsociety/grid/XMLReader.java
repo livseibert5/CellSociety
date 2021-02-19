@@ -19,9 +19,9 @@ import org.xml.sax.SAXException;
  */
 public abstract class XMLReader {
 
-  protected Element root;
-  protected Map<String, String> simulationData;
-  protected String fileName;
+  private Element root;
+  private Map<String, String> simulationData;
+  private String fileName;
 
   public XMLReader(String fileName) throws IOException, SAXException, ParserConfigurationException {
     this.simulationData = new HashMap<>();
@@ -59,5 +59,9 @@ public abstract class XMLReader {
    */
   public Map<String, String> getInfo() {
     return simulationData;
+  }
+
+  protected Element getRoot() {
+    return root;
   }
 }

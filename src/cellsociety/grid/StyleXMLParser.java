@@ -17,20 +17,20 @@ public class StyleXMLParser extends XMLReader {
 
   public void readFile() throws IOException, SAXException, ParserConfigurationException {
     buildParser();
-    simulationData.put("Language", retrieveTextContent("Language"));
-    simulationData.put("GridType", retrieveTextContent("GridType"));
-    simulationData.put("CellShape", retrieveTextContent("CellShape"));
-    simulationData.put("NeighborLayout", retrieveTextContent("NeighborLayout"));
-    simulationData.put("CellSize", retrieveTextContent("CellSize"));
-    simulationData.put("CellOutline", retrieveTextContent("CellOutline"));
-    simulationData.put("CellColor", retrieveTextContent("CellColor"));
+    getInfo().put("Language", retrieveTextContent("Language"));
+    getInfo().put("GridType", retrieveTextContent("GridType"));
+    getInfo().put("CellShape", retrieveTextContent("CellShape"));
+    getInfo().put("NeighborLayout", retrieveTextContent("NeighborLayout"));
+    getInfo().put("CellSize", retrieveTextContent("CellSize"));
+    getInfo().put("CellOutline", retrieveTextContent("CellOutline"));
+    getInfo().put("CellColor", retrieveTextContent("CellColor"));
   }
 
   public String getGridType() {
-    return simulationData.get("GridType");
+    return getInfo().get("GridType");
   }
 
   public String getNeighborLayout() {
-    return simulationData.get("NeighborLayout");
+    return getInfo().get("NeighborLayout");
   }
 }

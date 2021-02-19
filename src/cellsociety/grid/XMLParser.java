@@ -86,10 +86,10 @@ public class XMLParser extends XMLReader {
    * Creates map of simulation data for use in the view.
    */
   private void parseSimulationData() {
-    simulationData.put("Type", retrieveTextContent("Type"));
-    simulationData.put("Title", retrieveTextContent("Title"));
-    simulationData.put("Author", retrieveTextContent("Author"));
-    simulationData.put("Description", retrieveTextContent("Description"));
+    getInfo().put("Type", retrieveTextContent("Type"));
+    getInfo().put("Title", retrieveTextContent("Title"));
+    getInfo().put("Author", retrieveTextContent("Author"));
+    getInfo().put("Description", retrieveTextContent("Description"));
   }
 
   /**
@@ -100,7 +100,7 @@ public class XMLParser extends XMLReader {
    */
   private Map<String, Double> getSimulationParameters() {
     Map<String, Double> params = new HashMap<>();
-    NodeList node = root.getElementsByTagName("Param");
+    NodeList node = getRoot().getElementsByTagName("Param");
     for (int i = 0; i < node.getLength(); i++) {
       Node currNode = node.item(i);
       Element nodeElement = (Element) currNode;
