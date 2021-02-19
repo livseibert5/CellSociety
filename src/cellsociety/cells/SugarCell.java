@@ -1,5 +1,7 @@
 package cellsociety.cells;
 
+import java.util.Map;
+
 /**
  * Class represents cells that make up the grid for the SugarScape simulation.
  *
@@ -9,11 +11,13 @@ public class SugarCell extends Cell {
 
   private double sugar;
   private double maxSugarCapacity;
-  private double sugarGrowBackRate;
-  private double sugarGrowBackInterval;
   private double sugarGrowBackIntervalCounter;
   private AgentCell agent;
   private boolean hasAgent;
+
+  private final double SUGAR_GROWBACK_RATE = 1;
+  private final double SUGAR_GROWBACK_INTERVAL = 1;
+  private final double DEFAULT_MAX_SUGAR = 8.0;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -23,10 +27,12 @@ public class SugarCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public SugarCell(int state, int row, int col, int[][] neighborDirections) {
+  public SugarCell(int state, int row, int col, Map<String, Double> params, int[][] neighborDirections) {
     super(state, row, col, neighborDirections);
+    this.maxSugarCapacity = params.getOrDefault("maxSugarCapacity", DEFAULT_MAX_SUGAR);
     hasAgent = false;
     sugarGrowBackIntervalCounter = 0;
+    sugar = 0;
   }
 
   /**
@@ -35,12 +41,12 @@ public class SugarCell extends Cell {
   @Override
   public void determineNextState() {
     sugarGrowBackIntervalCounter++;
-    if (sugarGrowBackIntervalCounter == sugarGrowBackInterval) {
+    if (sugarGrowBackIntervalCounter == SUGAR_GROWBACK_INTERVAL) {
       sugarGrowBackIntervalCounter = 0;
-      if (sugar + sugarGrowBackRate > maxSugarCapacity) {
+      if (sugar + SUGAR_GROWBACK_RATE > maxSugarCapacity) {
         sugar = maxSugarCapacity;
       } else {
-        sugar += sugarGrowBackRate;
+        sugar += SUGAR_GROWBACK_RATE;
       }
     }
   }

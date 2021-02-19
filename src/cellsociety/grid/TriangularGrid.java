@@ -72,7 +72,7 @@ public class TriangularGrid extends Grid {
   }
 
   public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight, int triangleWidth) {
-    List<Double> coordinates = new ArrayList();
+    List<Double> coordinates = new ArrayList<>();
     if (row % 2 == 0) {
       if (col % 2 == 0) {
         //Triangle Down

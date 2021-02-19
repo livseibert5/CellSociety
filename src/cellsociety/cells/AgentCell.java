@@ -1,6 +1,7 @@
 package cellsociety.cells;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for cell that represents agents that live on SugarCell objects.
@@ -18,6 +19,9 @@ public class AgentCell extends Cell {
 
   public static final int SUGAR_CELL = 1;
   public static final int DEAD = 2;
+  private final double DEFAULT_SUGAR = 10.0;
+  private final double DEFAULT_VISION = 3.0;
+  private final double DEFAULT_METABOLISM = 2.0;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -27,8 +31,11 @@ public class AgentCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public AgentCell(int state, int row, int col, int[][] neighborDirections) {
+  public AgentCell(int state, int row, int col, Map<String, Double> params, int[][] neighborDirections) {
     super(state, row, col, neighborDirections);
+    sugar = params.getOrDefault("sugar", DEFAULT_SUGAR);
+    vision = params.getOrDefault("vision", DEFAULT_VISION);
+    sugarMetabolism = params.getOrDefault("metabolism", DEFAULT_METABOLISM);
     state = SUGAR_CELL;
     getNeighborLocations();
     setNeighborDirections();

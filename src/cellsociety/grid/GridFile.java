@@ -28,7 +28,12 @@ public class GridFile {
     newFile = new File(fileName);
   }
 
-  private void writeGridToFile() throws IOException {
+  /**
+   * Writes grid layout to a .txt file
+   *
+   * @throws IOException error writing to new .txt file
+   */
+  public void writeGridToFile() throws IOException {
     newFile.createNewFile();
     FileWriter writer = new FileWriter(fileName);
     for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {

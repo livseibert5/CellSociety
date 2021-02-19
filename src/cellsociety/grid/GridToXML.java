@@ -1,6 +1,7 @@
 package cellsociety.grid;
 
 import cellsociety.controller.Controller;
+import java.io.IOException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,8 +25,8 @@ public class GridToXML {
   private Document doc;
   private Element rootElement;
   private Element paramsElement;
-  private Map<String, String> simulationData;
-  private Controller controller;
+  private final Map<String, String> simulationData;
+  private final Controller controller;
   private String fileName;
 
   /**
@@ -35,10 +36,11 @@ public class GridToXML {
    * @param controller     current controller for simulation
    * @param simulationData map with data about the simulation
    * @throws ParserConfigurationException error for XML parser library
-   * @throws TransformerException error writing to new file
+   * @throws TransformerException error writing to new xml file
+   * @throws IOException error writing grid to new .txt file
    */
   public GridToXML(Controller controller, Map<String, String> simulationData)
-      throws ParserConfigurationException, TransformerException {
+      throws ParserConfigurationException, TransformerException, IOException {
     this.controller = controller;
     this.simulationData = simulationData;
     initializeDocumentBuilder();
@@ -66,7 +68,7 @@ public class GridToXML {
     doc = dBuilder.newDocument();
   }
 
-  private void createDocument() {
+  private void createDocument() throws IOException {
     rootElement = doc.createElement("Simulation");
     doc.appendChild(rootElement);
 
@@ -92,9 +94,10 @@ public class GridToXML {
    *
    * @param fileName name for new .txt file
    */
-  private void createGridFile(String fileName) {
+  private void createGridFile(String fileName) throws IOException {
     Element layout = doc.createElement("LayoutFile");
     GridFile gridFile = new GridFile(fileName, controller.getNewGrid());
+    gridFile.writeGridToFile();
     layout.appendChild(doc.createTextNode(fileName + ".txt"));
     rootElement.appendChild(layout);
   }

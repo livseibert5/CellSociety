@@ -1,3 +1,3 @@
 package cellsociety.grid;
 
-public enum Type {FIRE, SEGREGATION, PERCOLATION, WATOR, LIFE, EMPTY}
+public enum Type {FIRE, SEGREGATION, PERCOLATION, WATOR, LIFE, EMPTY, ANTS, SUGARSCAPE}
