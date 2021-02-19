@@ -41,11 +41,7 @@ public class XMLParser extends XMLReader {
     buildParser();
     parseSimulationData();
     Type type;
-    try {
-      type = Type.valueOf(retrieveTextContent("Type"));
-    } catch (IllegalArgumentException e) {
-      type = Type.EMPTY;
-    }
+    type = Type.valueOf(retrieveTextContent("Type"));
     Map<String, Double> params = new HashMap<>();
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();

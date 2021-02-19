@@ -1,14 +1,10 @@
 package cellsociety.grid;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import java.util.List;
 
 public class StyleXMLParser extends XMLReader {
-
-  //ResourceBundle gridCellPairs = ResourceBundle.getBundle("GridCellPairs");
 
   public StyleXMLParser(String fileName)
       throws ParserConfigurationException, SAXException, IOException {

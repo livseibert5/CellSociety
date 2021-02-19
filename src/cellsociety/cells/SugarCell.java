@@ -40,6 +40,7 @@ public class SugarCell extends Cell {
    */
   @Override
   public void determineNextState() {
+    setNextState(getState());
     sugarGrowBackIntervalCounter++;
     if (sugarGrowBackIntervalCounter == SUGAR_GROWBACK_INTERVAL) {
       sugarGrowBackIntervalCounter = 0;

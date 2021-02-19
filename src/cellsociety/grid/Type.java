@@ -14,7 +14,6 @@ public enum Type {
   PERCOLATION(new ArrayList<>(List.of(PercolationCell.BLOCKED, PercolationCell.PERCOLATED, PercolationCell.OPEN))),
   WATOR(new ArrayList<>(List.of(WatorCell.PREDATOR, WatorCell.PREY, WatorCell.DEAD))),
   LIFE(new ArrayList<>(List.of(GameOfLifeCell.ALIVE, GameOfLifeCell.DEAD))),
-  EMPTY(new ArrayList<>()),
   ANTS(new ArrayList<>()),
   SUGARSCAPE(new ArrayList<>());
 
