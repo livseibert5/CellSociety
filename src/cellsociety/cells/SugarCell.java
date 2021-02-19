@@ -54,6 +54,9 @@ public class SugarCell extends Cell {
     return hasAgent;
   }
 
+  public AgentCell getAgent() {
+    return this.agent;
+  }
   /**
    * Allows controller to remove agent when moving it to a new cell.
    */
