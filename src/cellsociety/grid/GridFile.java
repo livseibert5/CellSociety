@@ -11,9 +11,9 @@ import java.io.FileWriter;
  */
 public class GridFile {
 
-  private String fileName;
+  private final String fileName;
   private final File newFile;
-  private Grid grid;
+  private final Grid grid;
 
   /**
    * Constructor for a GridFile object that takes a name and a grid and creates
@@ -23,6 +23,7 @@ public class GridFile {
    * @param grid grid state to be written to the file
    */
   public GridFile(String name, Grid grid) {
+    this.grid = grid;
     fileName = name;
     newFile = new File(fileName);
   }

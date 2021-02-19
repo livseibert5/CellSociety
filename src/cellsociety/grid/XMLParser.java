@@ -17,7 +17,6 @@ import org.xml.sax.SAXException;
  */
 public class XMLParser extends XMLReader {
 
-  private StyleXMLParser styler;
   private Grid grid;
   Map<String, Grid> typeGridPairs;
 
@@ -34,9 +33,9 @@ public class XMLParser extends XMLReader {
   /**
    * Parses the data from the XML file into appropriate data structures.
    *
-   * @throws ParserConfigurationException
-   * @throws SAXException
-   * @throws IOException
+   * @throws ParserConfigurationException error with xml parsing library
+   * @throws SAXException error with xml parsing library
+   * @throws IOException error reading file
    */
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
@@ -56,7 +55,7 @@ public class XMLParser extends XMLReader {
 
   private void createGrid(Type type, Map<String, Double> params)
       throws ParserConfigurationException, SAXException, IOException {
-    styler = new StyleXMLParser(retrieveTextContent("Style"));
+    StyleXMLParser styler = new StyleXMLParser(retrieveTextContent("Style"));
     styler.readFile();
     Neighbors neighborType = Neighbors.valueOf(styler.getNeighborLayout());
     String gridShape = styler.getGridType();

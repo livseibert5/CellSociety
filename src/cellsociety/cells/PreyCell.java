@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class PreyCell extends WatorCell {
 
-  private double breedTime;
+  private final double breedTime;
   private double breedTimeCounter;
 
   public static final double DEFAULT_BREEDTIME = 5.0;
@@ -30,7 +30,7 @@ public class PreyCell extends WatorCell {
     super(cellState, row, col, neighborDirections);
     state = PREY;
     breedTimeCounter = 0;
-    this.breedTime = params.containsKey("breedTime") ? params.get("breedTime") : DEFAULT_BREEDTIME;
+    this.breedTime = params.getOrDefault("breedTime", DEFAULT_BREEDTIME);
   }
 
   /**

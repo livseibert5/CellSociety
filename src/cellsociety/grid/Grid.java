@@ -40,7 +40,8 @@ public class Grid {
    * @param type     type of simulation to run
    * @param params   map of parameters needed for simulation
    */
-  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params, Neighbors neighborDirections) {
+  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params,
+      Neighbors neighborDirections) {
     grid = new Cell[height][width];
     this.type = type;
     this.width = width;
@@ -65,7 +66,7 @@ public class Grid {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         int cellState = Integer.parseInt(gridRow[col]);
-        setCellWithType(row, col, cellState, Neighbors.SQUARE_MOORE);
+        setCellWithType(row, col, cellState, neighborDirections);
       }
       row++;
     }
@@ -92,7 +93,8 @@ public class Grid {
    * @param cellState initial state of the new cell
    * @return map with types as keys and cells as values
    */
-  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState, Neighbors neighborDirections) {
+  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState,
+      Neighbors neighborDirections) {
     Map<Type, Cell> data = new HashMap<>();
     Cell wator = new EmptyCell(2, row, col);
     if (type == Type.WATOR && cellState == 0) {
@@ -103,7 +105,8 @@ public class Grid {
     data.put(Type.FIRE, new FireCell(cellState, row, col, params, neighborDirections));
     data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col, neighborDirections));
     data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col, neighborDirections));
-    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params, neighborDirections));
+    data.put(Type.SEGREGATION,
+        new SegregationCell(cellState, row, col, params, neighborDirections));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
     return data;
@@ -126,8 +129,8 @@ public class Grid {
   /**
    * Allows a cell object to be places at the specified location.
    *
-   * @param row    row of cell
-   * @param col    col of cell
+   * @param row  row of cell
+   * @param col  col of cell
    * @param cell Cell object to put at indicated location in  grid
    */
   public void setCellAtLocation(int row, int col, Cell cell) {
@@ -144,17 +147,16 @@ public class Grid {
    * @param col  column location of the cell
    * @param cell cell whose neighbors are being determined within the function
    */
-  private List<Cell> setNeighbors(int row, int col, Cell cell) {
+  private void setNeighbors(int row, int col, Cell cell) {
     int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
-    for (int i = 0; i < directions.length; i++) {
-      Cell neighbor = getCellAtLocation(row + directions[i][0], col + directions[i][1]);
+    for (int[] direction: directions) {
+      Cell neighbor = getCellAtLocation(row + direction[0], col + direction[1]);
       if (neighbor != null) {
         neighbors.add(neighbor);
       }
     }
     cell.setNeighbors(neighbors);
-    return neighbors;
   }
 
   /**
@@ -188,7 +190,7 @@ public class Grid {
   /**
    * Allows controller to make a deep copy of the grid to update the simulation without altering the
    * existing values.
-   *
+   * <p>
    * This gave a flag on design coach, but we believe it is necessary as we need to create a copy of
    * the new grid and then return it, so there is no other way to write the method
    *
@@ -206,8 +208,8 @@ public class Grid {
   }
 
   protected Grid copySelf() {
-    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params, this.neighborDirections);
-    return newGrid;
+    return new Grid(this.width, this.height, this.fileName, this.type, this.params,
+        this.neighborDirections);
   }
 
   /**

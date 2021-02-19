@@ -1,12 +1,10 @@
 package cellsociety.grid;
 
 import cellsociety.controller.Controller;
-import java.io.IOException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -14,7 +12,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
-import org.xml.sax.SAXException;
 import java.util.Map;
 
 /**
@@ -37,7 +34,8 @@ public class GridToXML {
    *
    * @param controller     current controller for simulation
    * @param simulationData map with data about the simulation
-   * @throws ParserConfigurationException
+   * @throws ParserConfigurationException error for XML parser library
+   * @throws TransformerException error writing to new file
    */
   public GridToXML(Controller controller, Map<String, String> simulationData)
       throws ParserConfigurationException, TransformerException {
@@ -51,7 +49,7 @@ public class GridToXML {
   /**
    * Exports completed XML file so it can be used.
    *
-   * @throws TransformerException
+   * @throws TransformerException error writing to new file
    */
   private void exportNewFile() throws TransformerException {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();

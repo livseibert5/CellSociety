@@ -2,8 +2,6 @@ package cellsociety.cells;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Class that represents ants, a list of InsectCell objects is present in every ForagerCell.
@@ -23,7 +21,7 @@ public class InsectCell extends Cell {
   private final double K = .001;
   private final double N = 10.0;
 
-  private List<Cell> forwardNeighbors;
+  private final List<Cell> forwardNeighbors;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -99,11 +97,9 @@ public class InsectCell extends Cell {
     if (idealLocation.size() == 0) {
       return null;
     } else {
-      Map<Cell, Double> weights = new HashMap<>();
       double random = Math.random();
       double cumulativeProb = 0.0;
       for (Cell cell: idealLocation) {
-        weights.put(cell, getWeight((ForagerCell) cell));
         cumulativeProb += getWeight((ForagerCell) cell);
         if (random <= cumulativeProb) {
           return cell;
@@ -135,9 +131,9 @@ public class InsectCell extends Cell {
     for (Cell cell : neighbors) {
       int[] location = cell.getLocation();
       int[][] directions = orientation.directions();
-      for (int i = 0; i < directions.length; i++) {
-        if (location[0] == this.row + directions[i][0]
-            && location[1] == this.col + directions[i][1] && !isCurrentCell(location)) {
+      for (int[] direction: directions) {
+        if (location[0] == this.row + direction[0]
+            && location[1] == this.col + direction[1] && !isCurrentCell(location)) {
           forwardNeighbors.add(cell);
         }
       }
@@ -195,9 +191,9 @@ public class InsectCell extends Cell {
   }
 
   private boolean checkCoordinates(int[] location, int[][] directions) {
-    for (int i = 0; i < directions.length; i++) {
-      if (location[0] == this.row + directions[i][0]
-          && location[1] == this.col + directions[i][1] && !isCurrentCell(location)) {
+    for (int[] direction: directions) {
+      if (location[0] == this.row + direction[0]
+          && location[1] == this.col + direction[1] && !isCurrentCell(location)) {
         return true;
       }
     }

@@ -31,7 +31,6 @@ public class TriangularGrid extends Grid {
   public TriangularGrid(int width, int height, String fileName, Type type,
       Map<String, Double> params, Neighbors neighborDirections) {
     super(width, height, fileName, type, params, neighborDirections);
-    setDirections();
   }
 
   private void setDirections() {
@@ -44,7 +43,9 @@ public class TriangularGrid extends Grid {
     }
   }
 
+  @Override
   protected void readFile(String fileName) {
+    setDirections();
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
     int row = 0;
     while (reader.hasNextLine()) {

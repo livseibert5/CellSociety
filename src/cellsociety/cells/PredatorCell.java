@@ -11,8 +11,8 @@ import java.util.Map;
  */
 public class PredatorCell extends WatorCell {
 
-  private double startingEnergy;
-  private double offspringEnergy;
+  private final double startingEnergy;
+  private final double offspringEnergy;
   private double energyCounter;
 
   public static final double DEFAULT_STARTING_ENERGY = 5.0;
@@ -32,11 +32,8 @@ public class PredatorCell extends WatorCell {
       Neighbors neighborDirections) {
     super(cellState, row, col, neighborDirections);
     state = PREDATOR;
-    this.startingEnergy =
-        params.containsKey("startingEnergy") ? params.get("startingEnergy")
-            : DEFAULT_STARTING_ENERGY;
-    this.offspringEnergy = params.containsKey("offspringEnergy") ? params.get("offspringEnergy")
-        : DEFAULT_OFFSPRING_ENERGY;
+    this.startingEnergy = params.getOrDefault("startingEnergy", DEFAULT_STARTING_ENERGY);
+    this.offspringEnergy = params.getOrDefault("offspringEnergy", DEFAULT_OFFSPRING_ENERGY);
     energyCounter = startingEnergy;
   }
 

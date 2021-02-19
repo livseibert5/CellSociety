@@ -67,7 +67,7 @@ public enum Neighbors {
     this.directions = directions;
   }
 
-  int[][] directions() {
+  public int[][] directions() {
     return directions;
   }
 }

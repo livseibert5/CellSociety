@@ -9,8 +9,6 @@ import java.util.Map;
  */
 public class SegregationCell extends Cell {
 
-  public static final int TYPEX = 0;
-  public static final int TYPEO = 1;
   public static final int EMPTY = 2;
   public static final int MOVE = 3;
   private final double satisfied;
@@ -30,7 +28,7 @@ public class SegregationCell extends Cell {
   public SegregationCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
     super(state, row, col,
         neighborDirections.directions());
-    this.satisfied = params.containsKey("satisfied") ? params.get("satisfied") : DEFAULT_SATISFIED;
+    this.satisfied = params.getOrDefault("satisfied", DEFAULT_SATISFIED);
   }
 
   /**
