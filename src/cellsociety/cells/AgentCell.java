@@ -31,7 +31,8 @@ public class AgentCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public AgentCell(int state, int row, int col, Map<String, Double> params, int[][] neighborDirections) {
+  public AgentCell(int state, int row, int col, Map<String, Double> params,
+      int[][] neighborDirections) {
     super(state, row, col, neighborDirections);
     sugar = params.getOrDefault("sugar", DEFAULT_SUGAR);
     vision = params.getOrDefault("vision", DEFAULT_VISION);

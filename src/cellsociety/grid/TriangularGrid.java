@@ -34,7 +34,8 @@ public class TriangularGrid extends Grid {
   }
 
   private void setDirections() {
-    if (neighborDirections == Neighbors.TRIANGLE_MOORE_DOWN || neighborDirections == Neighbors.TRIANGLE_MOORE_UP) {
+    if (getNeighborDirections() == Neighbors.TRIANGLE_MOORE_DOWN
+        || getNeighborDirections() == Neighbors.TRIANGLE_MOORE_UP) {
       up = Neighbors.TRIANGLE_MOORE_UP;
       down = Neighbors.TRIANGLE_MOORE_DOWN;
     } else {
@@ -71,7 +72,8 @@ public class TriangularGrid extends Grid {
     }
   }
 
-  public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight, int triangleWidth) {
+  public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight,
+      int triangleWidth) {
     List<Double> coordinates = new ArrayList<>();
     if (row % 2 == 0) {
       if (col % 2 == 0) {
@@ -93,23 +95,25 @@ public class TriangularGrid extends Grid {
     return coordinates;
   }
 
-  private void generateTriangleUpCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+  private void generateTriangleUpCoordinates(int row, int col, int triangleHeight,
+      int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((col +0.5) * triangleWidth);
+    coordinates.add((col + 0.5) * triangleWidth);
     coordinates.add((double) (row * triangleHeight));
     coordinates.add((double) col * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
-    coordinates.add((col +1.0) * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
+    coordinates.add((row + 1.0) * triangleHeight);
+    coordinates.add((col + 1.0) * triangleWidth);
+    coordinates.add((row + 1.0) * triangleHeight);
   }
 
-  private void generateTriangleDownCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+  private void generateTriangleDownCoordinates(int row, int col, int triangleHeight,
+      int triangleWidth,
       List<Double> coordinates) {
     coordinates.add((double) (col * triangleWidth));
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((col +1.0) * triangleWidth);
+    coordinates.add((col + 1.0) * triangleWidth);
     coordinates.add((double) row * triangleHeight);
-    coordinates.add((col +0.5) * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
+    coordinates.add((col + 0.5) * triangleWidth);
+    coordinates.add((row + 1.0) * triangleHeight);
   }
 }

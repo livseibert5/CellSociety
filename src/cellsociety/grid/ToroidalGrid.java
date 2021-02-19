@@ -78,8 +78,8 @@ public class ToroidalGrid extends Grid {
 
   @Override
   protected Grid copySelf() {
-    return new ToroidalGrid(getSizeOfGrid()[1], getSizeOfGrid()[0], this.fileName, this.type,
-        getParams(), this.neighborDirections);
+    return new ToroidalGrid(getSizeOfGrid()[1], getSizeOfGrid()[0], getFileName(), getType(),
+        getParams(), getNeighborDirections());
   }
 
   private boolean wrapsRight(int i, int j) {

@@ -23,12 +23,12 @@ import java.util.Scanner;
 public class Grid {
 
   private Cell[][] grid;
-  protected Type type;
+  private Type type;
   private int width;
   private int height;
-  protected String fileName;
+  private String fileName;
   private Map<String, Double> params;
-  protected Neighbors neighborDirections;
+  private Neighbors neighborDirections;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -219,5 +219,17 @@ public class Grid {
    */
   public Map<String, Double> getParams() {
     return params;
+  }
+
+  protected Type getType() {
+    return type;
+  }
+
+  protected Neighbors getNeighborDirections() {
+    return neighborDirections;
+  }
+
+  protected String getFileName() {
+    return fileName;
   }
 }
