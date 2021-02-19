@@ -36,7 +36,7 @@ public class FireCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    if (state == TREE) {
+    if (getState() == TREE) {
       boolean neighborIsBurning = false;
       for (int i = 0; i < neighbors.size(); i++) {
         if (neighbors.get(i).getState() == BURNING) {
@@ -44,9 +44,9 @@ public class FireCell extends Cell {
           break;
         }
       }
-      nextState = Math.random() < probCatch && neighborIsBurning ? BURNING : TREE;
-    } else if (state == EMPTY || state == BURNING) {
-      nextState = EMPTY;
+      setNextState(Math.random() < probCatch && neighborIsBurning ? BURNING : TREE);
+    } else if (getState() == EMPTY || getState() == BURNING) {
+      setNextState(EMPTY);
     }
   }
 }

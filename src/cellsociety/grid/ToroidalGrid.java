@@ -37,15 +37,15 @@ public class ToroidalGrid extends Grid {
   @Override
   public Cell getCellAtLocation(int i, int j) {
     if (isInBounds(i, j)) {
-      return getCellAtLocation(i, j);
+      return super.getCellAtLocation(i, j);
     } else if (wrapsRight(i, j)) {
-      return getCellAtLocation(i, 0);
+      return super.getCellAtLocation(i, 0);
     } else if (wrapsLeft(i, j)) {
-      return getCellAtLocation(i, getSizeOfGrid()[1] - 1);
+      return super.getCellAtLocation(i, getSizeOfGrid()[1] - 1);
     } else if (wrapsTop(i, j)) {
-      return getCellAtLocation(getSizeOfGrid()[0] - 1, j);
+      return super.getCellAtLocation(getSizeOfGrid()[0] - 1, j);
     } else if (wrapsBottom(i, j)) {
-      return getCellAtLocation(0, j);
+      return super.getCellAtLocation(0, j);
     } else {
       return null;
     }
@@ -64,15 +64,15 @@ public class ToroidalGrid extends Grid {
   @Override
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
-      setCellAtLocation(i, j, cell);
+      super.setCellAtLocation(i, j, cell);
     } else if (wrapsRight(i, j)) {
-      setCellAtLocation(i, 0, cell);
+      super.setCellAtLocation(i, 0, cell);
     } else if (wrapsLeft(i, j)) {
-      setCellAtLocation(i, getSizeOfGrid()[1] - 1, cell);
+      super.setCellAtLocation(i, getSizeOfGrid()[1] - 1, cell);
     } else if (wrapsTop(i, j)) {
-      setCellAtLocation(getSizeOfGrid()[0] - 1, j, cell);
+      super.setCellAtLocation(getSizeOfGrid()[0] - 1, j, cell);
     } else if (wrapsBottom(i, j)) {
-      setCellAtLocation(0, j, cell);
+      super.setCellAtLocation(0, j, cell);
     }
   }
 

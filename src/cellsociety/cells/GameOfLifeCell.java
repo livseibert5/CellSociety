@@ -27,12 +27,12 @@ public class GameOfLifeCell extends Cell {
   @Override
   public void determineNextState() {
     int livingNeighbors = countLiveNeighbors();
-    if (state == ALIVE && (livingNeighbors < 2 || livingNeighbors >= 4)) {
-      nextState = DEAD;
-    } else if (state == ALIVE || (state == DEAD && livingNeighbors == 3)) {
-      nextState = ALIVE;
-    } else if (state == DEAD) {
-      nextState = DEAD;
+    if (getState() == ALIVE && (livingNeighbors < 2 || livingNeighbors >= 4)) {
+      setNextState(DEAD);
+    } else if (getState() == ALIVE || (getState() == DEAD && livingNeighbors == 3)) {
+      setNextState(ALIVE);
+    } else if (getState()== DEAD) {
+      setNextState(DEAD);
     }
   }
 

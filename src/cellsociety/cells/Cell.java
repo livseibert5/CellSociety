@@ -109,4 +109,8 @@ public abstract class Cell {
   public int[] getLocation() {
     return new int[]{row, col};
   }
+
+  protected void setNextState(int nextState) {
+    this.nextState = nextState;
+  }
 }

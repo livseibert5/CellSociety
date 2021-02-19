@@ -43,7 +43,7 @@ public class InsectCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(state);
   }
 
   /**
