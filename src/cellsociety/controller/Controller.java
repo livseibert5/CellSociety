@@ -1,6 +1,7 @@
 package cellsociety.controller;
 
 import cellsociety.grid.Grid;
+import java.util.HashMap;
 
 /**
  * Class that is abstract and creates methods for all contrller class Uses the grid class Called
@@ -106,5 +107,26 @@ public abstract class Controller {
 
   private void createNewGridAsCopy() {
     newGrid = oldGrid.getCopyOfGrid();
+  }
+
+  /**
+   * Calculates the numbers of each type of cell
+   * @returns HashMap where the key is the type of cell and the value is the number of cells
+   * of that type in the newGrid at the time
+   */
+  public HashMap<Integer, Integer> calculateNumberOfEachCell()  {
+    HashMap<Integer, Integer> counts = new HashMap();
+    int[] dims = oldGrid.getSizeOfGrid();
+
+    for (int i = 0; i < dims[0]; i++) {
+      for (int j = 0; j < dims[1]; j++) {
+        int type = newGrid.getCellAtLocation(i, j).getState();
+        counts.putIfAbsent(type, 0);
+        counts.put(type, counts.get(type) + 1);
+
+      }
+    }
+    return counts;
+
   }
 }
