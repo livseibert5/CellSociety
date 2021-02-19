@@ -40,6 +40,8 @@ public class Graphics {
   public static final String PERCOLATION_PACKAGE = "cellsociety.visuals.resources.PercolationSimulation";
   public static final String SEGREGATION_PACKAGE = "cellsociety.visuals.resources.SegregationSimulation";
   public static final String WATOR_PACKAGE = "cellsociety.visuals.resources.WaTorSimulation";
+  public static final String ANT_PACKAGE = "cellsociety.visuals.resources.AntSimulation";
+  public static final String SUGAR_SIMULATION = "cellsociety.visuals.resources.SugarSimulation";
 
   //resource bundles for each simulation
   public static final ResourceBundle myLandingSceneResources = ResourceBundle
@@ -54,6 +56,10 @@ public class Graphics {
       .getBundle(SEGREGATION_PACKAGE);
   public static final ResourceBundle myWaTorSimulationResources = ResourceBundle
       .getBundle(WATOR_PACKAGE);
+  public static final ResourceBundle myAntSimulation = ResourceBundle
+          .getBundle(ANT_PACKAGE);
+  public static final ResourceBundle mySugarSimulation = ResourceBundle
+          .getBundle(SUGAR_SIMULATION);
 
   public static final Button exit = new Button("Exit");
   public static final Button exitSecondLandingScreen = new Button("Exit");

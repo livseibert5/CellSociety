@@ -59,14 +59,15 @@ public class GameLoop extends Application {
   }
 
   public Scene creatingLandingScreen() {
+    int baseY = 0;
     simulationStarted = false;
     Group root = new Group();
-    Text welcome = visuals.constructText(20, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
-    Text instructions = visuals.constructText(40, 15,
+    Text welcome = visuals.constructText(baseY, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
+    Text instructions = visuals.constructText(baseY + 20, 15,
         "click on any simulation to start", FontWeight.NORMAL, Graphics.FONT);
 
     visuals
-        .createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 100, root,
+        .createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 25, root,
             event -> {
               try {
                 currentControllerType = new GameOfLifeController();
@@ -78,7 +79,7 @@ public class GameLoop extends Application {
               }
             });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 140,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 65,
         root, event -> {
           try {
 
@@ -90,7 +91,7 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 180,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 105,
         root, event -> {
           try {
             currentControllerType = new SegregationController();
@@ -101,7 +102,7 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 220, root,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 145, root,
         event -> {
           try {
             currentControllerType = new WatorController();
@@ -112,7 +113,7 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 260, root,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 185, root,
         event -> {
           try {
             currentControllerType = new FireController();
@@ -123,6 +124,32 @@ public class GameLoop extends Application {
             e.printStackTrace();
           }
         });
+
+    visuals
+            .createButton(Graphics.myLandingSceneResources.getString("AntSimulation"), 225, root,
+                    event -> {
+                      try {
+                        currentControllerType = new AntController();
+                        currentResourceBundle = Graphics.myAntSimulation;
+                        createSecondLandingScreen(currentControllerType, currentResourceBundle);
+
+                      } catch (IOException | SAXException | ParserConfigurationException e) {
+                        e.printStackTrace();
+                      }
+                    });
+
+    visuals
+            .createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 265, root,
+                    event -> {
+                      try {
+                        currentControllerType = new AntController();
+                        currentResourceBundle = Graphics.mySugarSimulation;
+                        createSecondLandingScreen(currentControllerType, currentResourceBundle);
+
+                      } catch (IOException | SAXException | ParserConfigurationException e) {
+                        e.printStackTrace();
+                      }
+                    });
 
     root.getChildren().add(welcome);
     root.getChildren().add(instructions);
@@ -177,10 +204,7 @@ public class GameLoop extends Application {
       throws IOException, SAXException, ParserConfigurationException {
 
     Group root = new Group();
-    // TODO: MAKE THIS A METHOD
     addExitButton(root);
-    ///////
-    // add file chooser
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
@@ -188,8 +212,6 @@ public class GameLoop extends Application {
       String fileName = selectedFile.getName();
       setSpecificConfigFile(fileName, currentControllerType, currentResourceBundle);
     }
-    // events-> setSpecificConfigFile(filename)
-    //
 
     myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     myStage.setScene(myScene);
