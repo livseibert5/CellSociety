@@ -22,12 +22,12 @@ import java.util.Scanner;
  */
 public class Grid {
 
-  protected Cell[][] grid;
+  private Cell[][] grid;
   protected Type type;
-  protected int width;
-  protected int height;
+  private int width;
+  private int height;
   protected String fileName;
-  protected Map<String, Double> params;
+  private Map<String, Double> params;
   protected Neighbors neighborDirections;
 
   /**

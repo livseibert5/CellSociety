@@ -34,8 +34,8 @@ public class XMLParser extends XMLReader {
    * Parses the data from the XML file into appropriate data structures.
    *
    * @throws ParserConfigurationException error with xml parsing library
-   * @throws SAXException error with xml parsing library
-   * @throws IOException error reading file
+   * @throws SAXException                 error with xml parsing library
+   * @throws IOException                  error reading file
    */
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
@@ -72,12 +72,14 @@ public class XMLParser extends XMLReader {
     typeGridPairs.put("Square", grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
         type, params, neighborType));
-    typeGridPairs.put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
-    typeGridPairs.put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
+    typeGridPairs
+        .put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+            type, params, neighborType));
+    typeGridPairs
+        .put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
+            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+            type, params, neighborType));
   }
 
   /**
