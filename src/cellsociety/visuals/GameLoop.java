@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -168,9 +167,8 @@ public class GameLoop extends Application {
     myStage.setScene(scene);
   }
 
-  public Grid setSpecifcConfigfile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
+  public Grid setSpecificConfigFile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
       throws ParserConfigurationException, SAXException, IOException {
-    //fileName = "file" + fileName;
     return setGrid(fileName, currentControllerType, currentResourceBundle);
   }
 
@@ -180,13 +178,7 @@ public class GameLoop extends Application {
 
     Group root = new Group();
     // TODO: MAKE THIS A METHOD
-    root.getChildren().add(Graphics.exitSecondLandingScreen);
-    Graphics.exitSecondLandingScreen.setTranslateY(350);
-    Graphics.exitSecondLandingScreen.setTranslateX(10);
-    Graphics.exitSecondLandingScreen.setOnAction(event -> {
-      myScene = creatingLandingScreen();
-      myStage.setScene(myScene);
-    });
+    addExitButton(root);
     ///////
     // add file chooser
     FileChooser chooser = new FileChooser();
@@ -194,7 +186,7 @@ public class GameLoop extends Application {
     if (selectedFile != null){
       simulationStarted = true;
       String fileName = selectedFile.getName();
-      setSpecifcConfigfile(fileName, currentControllerType, currentResourceBundle);
+      setSpecificConfigFile(fileName, currentControllerType, currentResourceBundle);
     }
     // events-> setSpecificConfigFile(filename)
     //
@@ -203,10 +195,14 @@ public class GameLoop extends Application {
     myStage.setScene(myScene);
   }
 
-
-  private void setButtonLocation(Button button, double x, double y) {
-    button.setTranslateX(x);
-    button.setTranslateY(y);
+  private void addExitButton(Group root) {
+    root.getChildren().add(Graphics.exitSecondLandingScreen);
+    Graphics.exitSecondLandingScreen.setTranslateY(350);
+    Graphics.exitSecondLandingScreen.setTranslateX(10);
+    Graphics.exitSecondLandingScreen.setOnAction(event -> {
+      myScene = creatingLandingScreen();
+      myStage.setScene(myScene);
+    });
   }
 
   @Override
