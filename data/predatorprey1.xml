@@ -21,5 +21,5 @@
   <Width>20</Width>
   <Height>20</Height>
   <LayoutFile>predatorprey1.txt</LayoutFile>
-  <Style>squareneumann.xml</Style>
+  <Style>toroidalmoore.xml</Style>
 </Simulation>
