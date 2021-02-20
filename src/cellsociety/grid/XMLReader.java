@@ -23,13 +23,36 @@ public abstract class XMLReader {
   private Map<String, String> simulationData;
   private String fileName;
 
+  /**
+   * Constructor for XMLReader class, is never called because class is abstract but it is used by
+   * subclasses.
+   *
+   * @param fileName name of XML file to parse
+   * @throws ParserConfigurationException issue with DocumentBuilder creation
+   * @throws SAXException                 issue parsing XML file
+   * @throws IOException                  issue reading XML file
+   */
   public XMLReader(String fileName) throws IOException, SAXException, ParserConfigurationException {
     this.simulationData = new HashMap<>();
     this.fileName = fileName;
   }
 
+  /**
+   * Allows XMLReader subclasses to read from their specific file layouts.
+   *
+   * @throws ParserConfigurationException issue with DocumentBuilder creation
+   * @throws SAXException                 issue parsing XML file
+   * @throws IOException                  issue reading XML file
+   */
   public abstract void readFile() throws ParserConfigurationException, SAXException, IOException;
 
+  /**
+   * Creates DocumentBuilder and DocumentBuilderFactory to read XML doc.
+   *
+   * @throws ParserConfigurationException issue with DocumentBuilder creation
+   * @throws SAXException                 issue parsing XML file
+   * @throws IOException                  issue reading XML file
+   */
   protected void buildParser() throws ParserConfigurationException, SAXException, IOException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
@@ -61,6 +84,11 @@ public abstract class XMLReader {
     return simulationData;
   }
 
+  /**
+   * Allows XMLReader subclasses to get the root element of the document.
+   *
+   * @return root element of doc
+   */
   protected Element getRoot() {
     return root;
   }

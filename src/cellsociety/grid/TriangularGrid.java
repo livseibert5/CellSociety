@@ -33,6 +33,10 @@ public class TriangularGrid extends Grid {
     super(width, height, fileName, type, params, neighborDirections, populateType);
   }
 
+  /**
+   * For a triangular grid, triangles that point upward and triangles that point downward will have
+   * different coordinates for where their neighbors are.
+   */
   private void setDirections() {
     if (getNeighborDirections() == Neighbors.TRIANGLE_MOORE_DOWN
         || getNeighborDirections() == Neighbors.TRIANGLE_MOORE_UP) {
@@ -44,6 +48,12 @@ public class TriangularGrid extends Grid {
     }
   }
 
+  /**
+   * Reads in initial grid layout from .txt file and specifies whether triangles should point
+   * up or down.
+   *
+   * @param fileName .txt file with initial layout
+   */
   @Override
   protected void readFile(String fileName) {
     setDirections();
@@ -72,20 +82,26 @@ public class TriangularGrid extends Grid {
     }
   }
 
+  /**
+   * Determines coordinates of all points of the triangle so view can display them.
+   *
+   * @param row row location of triangle
+   * @param col column location of triangle
+   * @param triangleHeight height of triangle
+   * @param triangleWidth width of triangle
+   * @return coordinates of points of triangles
+   */
   public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight,
       int triangleWidth) {
     List<Double> coordinates = new ArrayList<>();
     if (row % 2 == 0) {
       if (col % 2 == 0) {
-        //Triangle Down
         generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
       } else {
-        //Triangle Up
         generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
       }
     } else {
       if (col % 2 == 0) {
-        //Triangle UP
         generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
       } else {
         generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
