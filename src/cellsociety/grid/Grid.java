@@ -3,17 +3,20 @@ package cellsociety.grid;
 import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
 import cellsociety.cells.FireCell;
+import cellsociety.cells.ForagerCell;
 import cellsociety.cells.GameOfLifeCell;
 import cellsociety.cells.Neighbors;
 import cellsociety.cells.PercolationCell;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.SegregationCell;
+import cellsociety.cells.SugarCell;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * Class that holds cell in proper formation for simulation.
@@ -22,13 +25,14 @@ import java.util.Scanner;
  */
 public class Grid {
 
-  protected Cell[][] grid;
-  protected Type type;
-  protected int width;
-  protected int height;
-  protected String fileName;
-  protected Map<String, Double> params;
-  protected Neighbors neighborDirections;
+  private Cell[][] grid;
+  private Type type;
+  private int width;
+  private int height;
+  private String fileName;
+  private Map<String, Double> params;
+  private Neighbors neighborDirections;
+  private String populateType;
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -40,7 +44,8 @@ public class Grid {
    * @param type     type of simulation to run
    * @param params   map of parameters needed for simulation
    */
-  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params, Neighbors neighborDirections) {
+  public Grid(int width, int height, String fileName, Type type, Map<String, Double> params,
+      Neighbors neighborDirections, String populateType) {
     grid = new Cell[height][width];
     this.type = type;
     this.width = width;
@@ -48,7 +53,12 @@ public class Grid {
     this.params = params;
     this.fileName = fileName;
     this.neighborDirections = neighborDirections;
-    readFile(fileName);
+    this.populateType = populateType;
+    if (populateType.equals("RANDOM")) {
+      populateRandomly();
+    } else {
+      readFile(fileName);
+    }
     initializeCells();
   }
 
@@ -65,9 +75,19 @@ public class Grid {
       String[] gridRow = line.split("");
       for (int col = 0; col < gridRow.length; col++) {
         int cellState = Integer.parseInt(gridRow[col]);
-        setCellWithType(row, col, cellState, Neighbors.SQUARE_MOORE);
+        setCellWithType(row, col, cellState, neighborDirections);
       }
       row++;
+    }
+  }
+
+  protected void populateRandomly() {
+    Random rand = new Random();
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        setCellWithType(i, j, type.getStates().get(rand.nextInt(type.getStates().size())),
+            neighborDirections);
+      }
     }
   }
 
@@ -92,7 +112,8 @@ public class Grid {
    * @param cellState initial state of the new cell
    * @return map with types as keys and cells as values
    */
-  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState, Neighbors neighborDirections) {
+  private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState,
+      Neighbors neighborDirections) {
     Map<Type, Cell> data = new HashMap<>();
     Cell wator = new EmptyCell(2, row, col);
     if (type == Type.WATOR && cellState == 0) {
@@ -103,9 +124,12 @@ public class Grid {
     data.put(Type.FIRE, new FireCell(cellState, row, col, params, neighborDirections));
     data.put(Type.LIFE, new GameOfLifeCell(cellState, row, col, neighborDirections));
     data.put(Type.PERCOLATION, new PercolationCell(cellState, row, col, neighborDirections));
-    data.put(Type.SEGREGATION, new SegregationCell(cellState, row, col, params, neighborDirections));
+    data.put(Type.SEGREGATION,
+        new SegregationCell(cellState, row, col, params, neighborDirections));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
+    data.put(Type.ANTS, new ForagerCell(cellState, row, col, neighborDirections));
+    data.put(Type.SUGARSCAPE, new SugarCell(cellState, row, col, params, neighborDirections));
     return data;
   }
 
@@ -126,8 +150,8 @@ public class Grid {
   /**
    * Allows a cell object to be places at the specified location.
    *
-   * @param row    row of cell
-   * @param col    col of cell
+   * @param row  row of cell
+   * @param col  col of cell
    * @param cell Cell object to put at indicated location in  grid
    */
   public void setCellAtLocation(int row, int col, Cell cell) {
@@ -144,17 +168,16 @@ public class Grid {
    * @param col  column location of the cell
    * @param cell cell whose neighbors are being determined within the function
    */
-  private List<Cell> setNeighbors(int row, int col, Cell cell) {
+  private void setNeighbors(int row, int col, Cell cell) {
     int[][] directions = cell.getNeighborDirections();
     List<Cell> neighbors = new ArrayList<>();
-    for (int i = 0; i < directions.length; i++) {
-      Cell neighbor = getCellAtLocation(row + directions[i][0], col + directions[i][1]);
+    for (int[] direction : directions) {
+      Cell neighbor = getCellAtLocation(row + direction[0], col + direction[1]);
       if (neighbor != null) {
         neighbors.add(neighbor);
       }
     }
     cell.setNeighbors(neighbors);
-    return neighbors;
   }
 
   /**
@@ -188,7 +211,7 @@ public class Grid {
   /**
    * Allows controller to make a deep copy of the grid to update the simulation without altering the
    * existing values.
-   *
+   * <p>
    * This gave a flag on design coach, but we believe it is necessary as we need to create a copy of
    * the new grid and then return it, so there is no other way to write the method
    *
@@ -206,8 +229,8 @@ public class Grid {
   }
 
   protected Grid copySelf() {
-    Grid newGrid = new Grid(this.width, this.height, this.fileName, this.type, this.params, this.neighborDirections);
-    return newGrid;
+    return new Grid(this.width, this.height, this.fileName, this.type, this.params,
+        this.neighborDirections, this.populateType);
   }
 
   /**
@@ -217,5 +240,21 @@ public class Grid {
    */
   public Map<String, Double> getParams() {
     return params;
+  }
+
+  protected Type getType() {
+    return type;
+  }
+
+  protected Neighbors getNeighborDirections() {
+    return neighborDirections;
+  }
+
+  protected String getFileName() {
+    return fileName;
+  }
+
+  protected String getPopulateType() {
+    return populateType;
   }
 }

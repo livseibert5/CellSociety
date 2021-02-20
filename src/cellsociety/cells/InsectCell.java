@@ -2,8 +2,6 @@ package cellsociety.cells;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Class that represents ants, a list of InsectCell objects is present in every ForagerCell.
@@ -23,7 +21,7 @@ public class InsectCell extends Cell {
   private final double K = .001;
   private final double N = 10.0;
 
-  private List<Cell> forwardNeighbors;
+  private final List<Cell> forwardNeighbors;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -45,7 +43,7 @@ public class InsectCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 
   /**
@@ -54,13 +52,13 @@ public class InsectCell extends Cell {
   public void findFoodSource() {
     getForagerCell();
     if (foragerCell.getState() == ForagerCell.NEST) {
-      Cell maxPheromones = getMaxPheromones(neighbors, "Food");
+      Cell maxPheromones = getMaxPheromones(getNeighbors(), "Food");
       determineOrientation(maxPheromones);
     }
     setForwardNeighbors();
     Cell location = selectLocation(forwardNeighbors);
     if (location == null) {
-      location = selectLocation(neighbors);
+      location = selectLocation(getNeighbors());
     }
     if (location != null) {
       nextAction = DROP_HOME_PHEROMONES;
@@ -74,13 +72,13 @@ public class InsectCell extends Cell {
    */
   public void returnToNest() {
     getForagerCell();
-    Cell maxPheromones = getMaxPheromones(neighbors, "Home");
+    Cell maxPheromones = getMaxPheromones(getNeighbors(), "Home");
     if (foragerCell.getState() == ForagerCell.NEST) {
       determineOrientation(maxPheromones);
     }
     maxPheromones = getMaxPheromones(forwardNeighbors, "Home");
     if (maxPheromones == null) {
-      maxPheromones = getMaxPheromones(neighbors, "Home");
+      maxPheromones = getMaxPheromones(getNeighbors(), "Home");
     }
     if (maxPheromones != null) {
       nextAction = DROP_FOOD_PHEROMONES;
@@ -99,11 +97,9 @@ public class InsectCell extends Cell {
     if (idealLocation.size() == 0) {
       return null;
     } else {
-      Map<Cell, Double> weights = new HashMap<>();
       double random = Math.random();
       double cumulativeProb = 0.0;
       for (Cell cell: idealLocation) {
-        weights.put(cell, getWeight((ForagerCell) cell));
         cumulativeProb += getWeight((ForagerCell) cell);
         if (random <= cumulativeProb) {
           return cell;
@@ -121,8 +117,8 @@ public class InsectCell extends Cell {
    * Determine which cell the ant lives on so that it's state can be used.
    */
   private void getForagerCell() {
-    neighbors.forEach(cell -> {
-      if (cell.getLocation()[0] == this.row && cell.getLocation()[1] == this.col) {
+    getNeighbors().forEach(cell -> {
+      if (cell.getLocation()[0] == this.getLocation()[0] && cell.getLocation()[1] == this.getLocation()[1]) {
         foragerCell = (ForagerCell) cell;
       }
     });
@@ -132,12 +128,12 @@ public class InsectCell extends Cell {
    * Sets forager's forward neighbors depending on its current orientation.
    */
   private void setForwardNeighbors() {
-    for (Cell cell : neighbors) {
+    for (Cell cell : getNeighbors()) {
       int[] location = cell.getLocation();
       int[][] directions = orientation.directions();
-      for (int i = 0; i < directions.length; i++) {
-        if (location[0] == this.row + directions[i][0]
-            && location[1] == this.col + directions[i][1] && !isCurrentCell(location)) {
+      for (int[] direction: directions) {
+        if (location[0] == this.getLocation()[0] + direction[0]
+            && location[1] == this.getLocation()[1] + direction[1] && !isCurrentCell(location)) {
           forwardNeighbors.add(cell);
         }
       }
@@ -145,7 +141,7 @@ public class InsectCell extends Cell {
   }
 
   private boolean isCurrentCell(int[] location) {
-    return this.row == location[0] && this.col == location[1];
+    return this.getLocation()[0] == location[0] && this.getLocation()[1] == location[1];
   }
 
   /**
@@ -195,9 +191,9 @@ public class InsectCell extends Cell {
   }
 
   private boolean checkCoordinates(int[] location, int[][] directions) {
-    for (int i = 0; i < directions.length; i++) {
-      if (location[0] == this.row + directions[i][0]
-          && location[1] == this.col + directions[i][1] && !isCurrentCell(location)) {
+    for (int[] direction: directions) {
+      if (location[0] == this.getLocation()[0] + direction[0]
+          && location[1] == this.getLocation()[1] + direction[1] && !isCurrentCell(location)) {
         return true;
       }
     }

@@ -2,11 +2,15 @@ package cellsociety.grid;
 
 import cellsociety.controller.Controller;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -14,7 +18,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
-import org.xml.sax.SAXException;
 import java.util.Map;
 
 /**
@@ -27,8 +30,8 @@ public class GridToXML {
   private Document doc;
   private Element rootElement;
   private Element paramsElement;
-  private Map<String, String> simulationData;
-  private Controller controller;
+  private final Map<String, String> simulationData;
+  private final Controller controller;
   private String fileName;
 
   /**
@@ -37,10 +40,12 @@ public class GridToXML {
    *
    * @param controller     current controller for simulation
    * @param simulationData map with data about the simulation
-   * @throws ParserConfigurationException
+   * @throws ParserConfigurationException error for XML parser library
+   * @throws TransformerException error writing to new xml file
+   * @throws IOException error writing grid to new .txt file
    */
   public GridToXML(Controller controller, Map<String, String> simulationData)
-      throws ParserConfigurationException, TransformerException {
+      throws ParserConfigurationException, TransformerException, IOException {
     this.controller = controller;
     this.simulationData = simulationData;
     initializeDocumentBuilder();
@@ -51,13 +56,15 @@ public class GridToXML {
   /**
    * Exports completed XML file so it can be used.
    *
-   * @throws TransformerException
+   * @throws TransformerException error writing to new file
    */
   private void exportNewFile() throws TransformerException {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     DOMSource source = new DOMSource(doc);
-    StreamResult result = new StreamResult(new File(fileName + ".xml"));
+    StreamResult result = new StreamResult(new File("data/" + fileName + ".xml"));
     transformer.transform(source, result);
   }
 
@@ -68,7 +75,7 @@ public class GridToXML {
     doc = dBuilder.newDocument();
   }
 
-  private void createDocument() {
+  private void createDocument() throws IOException {
     rootElement = doc.createElement("Simulation");
     doc.appendChild(rootElement);
 
@@ -84,7 +91,10 @@ public class GridToXML {
     }
 
     createWidthAndHeight();
-    fileName = java.time.LocalDate.now().toString();
+    String pattern = "MM_dd_yy_HH_mm";
+    DateFormat dateFormat = new SimpleDateFormat(pattern);
+    Date today = Calendar.getInstance().getTime();
+    fileName = dateFormat.format(today);
     createGridFile(fileName);
   }
 
@@ -94,9 +104,10 @@ public class GridToXML {
    *
    * @param fileName name for new .txt file
    */
-  private void createGridFile(String fileName) {
+  private void createGridFile(String fileName) throws IOException {
     Element layout = doc.createElement("LayoutFile");
     GridFile gridFile = new GridFile(fileName, controller.getNewGrid());
+    gridFile.writeGridToFile();
     layout.appendChild(doc.createTextNode(fileName + ".txt"));
     rootElement.appendChild(layout);
   }
@@ -105,6 +116,7 @@ public class GridToXML {
     String value = simulationData.get(name);
     Element element = doc.createElement(name);
     element.appendChild(doc.createTextNode(value));
+    System.out.println(value);
     rootElement.appendChild(element);
   }
 
@@ -129,5 +141,4 @@ public class GridToXML {
     rootElement.appendChild(width);
     rootElement.appendChild(height);
   }
-
 }

@@ -1,6 +1,7 @@
 package cellsociety.cells;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for cell that represents agents that live on SugarCell objects.
@@ -16,8 +17,12 @@ public class AgentCell extends Cell {
   private List<int[][]> visionLocations;
   private int[] nextLocation;
 
+  public static final int ALIVE = 0;
   public static final int SUGAR_CELL = 1;
   public static final int DEAD = 2;
+  private final double DEFAULT_SUGAR = 10.0;
+  private final double DEFAULT_VISION = 3.0;
+  private final double DEFAULT_METABOLISM = 2.0;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -27,8 +32,12 @@ public class AgentCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public AgentCell(int state, int row, int col, int[][] neighborDirections) {
+  public AgentCell(int state, int row, int col, Map<String, Double> params,
+      int[][] neighborDirections) {
     super(state, row, col, neighborDirections);
+    sugar = params.getOrDefault("sugar", DEFAULT_SUGAR);
+    vision = params.getOrDefault("vision", DEFAULT_VISION);
+    sugarMetabolism = params.getOrDefault("metabolism", DEFAULT_METABOLISM);
     state = SUGAR_CELL;
     getNeighborLocations();
     setNeighborDirections();
@@ -39,7 +48,7 @@ public class AgentCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 
   /**
@@ -54,13 +63,13 @@ public class AgentCell extends Cell {
    * Gets all of the locations in the four directions up to vision blocks away.
    */
   private void getNeighborLocations() {
-    visionLocations.add(neighborDirections);
+    visionLocations.add(getNeighborDirections());
     if (vision > 1) {
       for (int i = (int) vision; i > 1; i--) {
-        int[][] newDirections = new int[neighborDirections.length][neighborDirections[0].length];
-        for (int j = 0; j < neighborDirections.length; j++) {
-          newDirections[j][0] = neighborDirections[j][0] * (int) vision;
-          newDirections[j][1] = neighborDirections[j][1] * (int) vision;
+        int[][] newDirections = new int[getNeighborDirections().length][getNeighborDirections()[0].length];
+        for (int j = 0; j < getNeighborDirections().length; j++) {
+          newDirections[j][0] = getNeighborDirections()[j][0] * (int) vision;
+          newDirections[j][1] = getNeighborDirections()[j][1] * (int) vision;
         }
         visionLocations.add(newDirections);
       }
@@ -81,7 +90,7 @@ public class AgentCell extends Cell {
         newDirectionIndex++;
       }
     }
-    neighborDirections = newDirections;
+    setNeighborDirections(newDirections);
   }
 
   /**
@@ -92,7 +101,7 @@ public class AgentCell extends Cell {
   private SugarCell findMaxSugar() {
     SugarCell maxSugarCell = null;
     double maxSugarVal = 0;
-    for (Cell neighbor : neighbors) {
+    for (Cell neighbor : this.getNeighbors()) {
       if (!((SugarCell) neighbor).getHasAgent()
           && ((SugarCell) neighbor).getSugar() > maxSugarVal) {
         maxSugarVal = ((SugarCell) neighbor).getSugar();
@@ -120,9 +129,9 @@ public class AgentCell extends Cell {
     this.sugar += sugar;
     this.sugar -= sugarMetabolism;
     if (this.sugar <= 0) {
-      nextState = DEAD;
+      setNextState(DEAD);
     } else {
-      nextState = SUGAR_CELL;
+      setNextState(SUGAR_CELL);
     }
   }
 }

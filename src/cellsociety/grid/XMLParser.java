@@ -17,7 +17,6 @@ import org.xml.sax.SAXException;
  */
 public class XMLParser extends XMLReader {
 
-  private StyleXMLParser styler;
   private Grid grid;
   Map<String, Grid> typeGridPairs;
 
@@ -34,19 +33,15 @@ public class XMLParser extends XMLReader {
   /**
    * Parses the data from the XML file into appropriate data structures.
    *
-   * @throws ParserConfigurationException
-   * @throws SAXException
-   * @throws IOException
+   * @throws ParserConfigurationException error with xml parsing library
+   * @throws SAXException                 error with xml parsing library
+   * @throws IOException                  error reading file
    */
   public void readFile() throws ParserConfigurationException, SAXException, IOException {
     buildParser();
     parseSimulationData();
     Type type;
-    try {
-      type = Type.valueOf(retrieveTextContent("Type"));
-    } catch (IllegalArgumentException e) {
-      type = Type.EMPTY;
-    }
+    type = Type.valueOf(retrieveTextContent("Type"));
     Map<String, Double> params = new HashMap<>();
     if (type == Type.FIRE || type == Type.SEGREGATION || type == Type.WATOR) {
       params = getSimulationParameters();
@@ -56,39 +51,45 @@ public class XMLParser extends XMLReader {
 
   private void createGrid(Type type, Map<String, Double> params)
       throws ParserConfigurationException, SAXException, IOException {
-    styler = new StyleXMLParser(retrieveTextContent("Style"));
+    StyleXMLParser styler = new StyleXMLParser(retrieveTextContent("Style"));
     styler.readFile();
     Neighbors neighborType = Neighbors.valueOf(styler.getNeighborLayout());
     String gridShape = styler.getGridType();
-    typeGridPairs(type, params, neighborType);
+    String populateType = styler.getPopulateType();
+    typeGridPairs(type, params, neighborType, populateType);
     try {
       grid = typeGridPairs.get(gridShape);
     } catch (Exception e) {
-      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType);
+      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType,
+          populateType);
     }
   }
 
-  private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType) {
+  private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType,
+      String populateType) {
     typeGridPairs = new HashMap<>();
     typeGridPairs.put("Square", grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
         Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
-    typeGridPairs.put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
-    typeGridPairs.put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType));
+        type, params, neighborType, populateType));
+    typeGridPairs
+        .put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
+            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+            type, params, neighborType, populateType));
+    typeGridPairs
+        .put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
+            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+            type, params, neighborType, populateType));
   }
 
   /**
    * Creates map of simulation data for use in the view.
    */
   private void parseSimulationData() {
-    simulationData.put("Type", retrieveTextContent("Type"));
-    simulationData.put("Title", retrieveTextContent("Title"));
-    simulationData.put("Author", retrieveTextContent("Author"));
-    simulationData.put("Description", retrieveTextContent("Description"));
+    getInfo().put("Type", retrieveTextContent("Type"));
+    getInfo().put("Title", retrieveTextContent("Title"));
+    getInfo().put("Author", retrieveTextContent("Author"));
+    getInfo().put("Description", retrieveTextContent("Description"));
+    getInfo().put("Style", retrieveTextContent("Style"));
   }
 
   /**
@@ -99,7 +100,7 @@ public class XMLParser extends XMLReader {
    */
   private Map<String, Double> getSimulationParameters() {
     Map<String, Double> params = new HashMap<>();
-    NodeList node = root.getElementsByTagName("Param");
+    NodeList node = getRoot().getElementsByTagName("Param");
     for (int i = 0; i < node.getLength(); i++) {
       Node currNode = node.item(i);
       Element nodeElement = (Element) currNode;

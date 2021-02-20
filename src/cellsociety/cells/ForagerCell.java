@@ -27,9 +27,8 @@ public class ForagerCell extends Cell {
    * @param row   row of cell
    * @param col   col of cell
    */
-  public ForagerCell(int state, int row, int col) {
-    super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
+  public ForagerCell(int state, int row, int col, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
     ants = new ArrayList<>();
   }
 
@@ -38,7 +37,7 @@ public class ForagerCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    nextState = state;
+    setNextState(getState());
   }
 
   /**
@@ -88,9 +87,9 @@ public class ForagerCell extends Cell {
    * @param ant InsectCell object to be added to ants list
    */
   public void addAnt(InsectCell ant) {
-    if (state == NEST) {
+    if (getState() == NEST) {
       ant.dropFoodItem();
-    } else if (state == FOOD_SOURCE) {
+    } else if (getState() == FOOD_SOURCE) {
       ant.findFoodSource();
     }
     ants.add(ant);

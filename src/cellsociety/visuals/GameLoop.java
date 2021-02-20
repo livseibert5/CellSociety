@@ -146,7 +146,7 @@ public class GameLoop extends Application {
             .createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 265, root,
                     event -> {
                       try {
-                        currentControllerType = new AntController();
+                        currentControllerType = new SugarController();
                         currentResourceBundle = Graphics.mySugarSimulation;
                         createSecondLandingScreen(currentControllerType, currentResourceBundle);
 
@@ -180,7 +180,6 @@ public class GameLoop extends Application {
     controllerType.setInitialGrid(grid);
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());
-
     Graphics.faster.setOnAction(event -> setMod(30));
     Graphics.slower.setOnAction(event -> setMod(120));
     Graphics.normal.setOnAction(event -> setMod(60));
@@ -193,6 +192,8 @@ public class GameLoop extends Application {
       } catch (ParserConfigurationException e) {
         e.printStackTrace();
       } catch (TransformerException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
         e.printStackTrace();
       }
     });

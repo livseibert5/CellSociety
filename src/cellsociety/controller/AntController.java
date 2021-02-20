@@ -11,6 +11,11 @@ public class AntController extends Controller{
   private List<InsectCell> insectCellToMove = new ArrayList();
   public AntController()  {
     super();
+    placeAnts();
+  }
+
+  private void placeAnts() {
+    
   }
 
   @Override
@@ -79,7 +84,7 @@ public class AntController extends Controller{
 
   @Override
   public boolean simulationEnded() {
-    return super.simulationEnded();
+    return false;
   }
 
 }

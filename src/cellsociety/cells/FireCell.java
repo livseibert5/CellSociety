@@ -1,6 +1,5 @@
 package cellsociety.cells;
 
-import cellsociety.grid.Type;
 import java.util.Map;
 
 /**
@@ -13,7 +12,7 @@ public class FireCell extends Cell {
   public static final int EMPTY = 0;
   public static final int TREE = 1;
   public static final int BURNING = 2;
-  private double probCatch;
+  private final double probCatch;
 
   public static final double DEFAULT_PROB_CATCH = .30;
 
@@ -28,7 +27,7 @@ public class FireCell extends Cell {
    */
   public FireCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
     super(state, row, col, neighborDirections.directions());
-    this.probCatch = params.containsKey("probCatch") ? params.get("probCatch") : DEFAULT_PROB_CATCH;
+    this.probCatch = params.getOrDefault("probCatch", DEFAULT_PROB_CATCH);
   }
 
   /**
@@ -37,16 +36,17 @@ public class FireCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    if (state == TREE) {
+    if (getState() == TREE) {
       boolean neighborIsBurning = false;
-      for (int i = 0; i < neighbors.size(); i++) {
-        if (neighbors.get(i).getState() == BURNING) {
+      for (int i = 0; i < getNeighbors().size(); i++) {
+        if (getNeighbors().get(i).getState() == BURNING) {
           neighborIsBurning = true;
+          break;
         }
       }
-      nextState = Math.random() < probCatch && neighborIsBurning ? BURNING : TREE;
-    } else if (state == EMPTY || state == BURNING) {
-      nextState = EMPTY;
+      setNextState(Math.random() < probCatch && neighborIsBurning ? BURNING : TREE);
+    } else if (getState() == EMPTY || getState() == BURNING) {
+      setNextState(EMPTY);
     }
   }
 }

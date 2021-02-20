@@ -15,6 +15,9 @@ import java.util.Scanner;
  */
 public class TriangularGrid extends Grid {
 
+  Neighbors up;
+  Neighbors down;
+
   /**
    * Constructor for a TriangularGrid object that extends grid's functionality to create a grid with
    * triangular cells.
@@ -26,11 +29,24 @@ public class TriangularGrid extends Grid {
    * @param params   map of parameters needed for simulation
    */
   public TriangularGrid(int width, int height, String fileName, Type type,
-      Map<String, Double> params, Neighbors neighborDirections) {
-    super(width, height, fileName, type, params, neighborDirections);
+      Map<String, Double> params, Neighbors neighborDirections, String populateType) {
+    super(width, height, fileName, type, params, neighborDirections, populateType);
   }
 
+  private void setDirections() {
+    if (getNeighborDirections() == Neighbors.TRIANGLE_MOORE_DOWN
+        || getNeighborDirections() == Neighbors.TRIANGLE_MOORE_UP) {
+      up = Neighbors.TRIANGLE_MOORE_UP;
+      down = Neighbors.TRIANGLE_MOORE_DOWN;
+    } else {
+      up = Neighbors.TRIANGLE_NEUMANN_UP;
+      down = Neighbors.TRIANGLE_NEUMANN_DOWN;
+    }
+  }
+
+  @Override
   protected void readFile(String fileName) {
+    setDirections();
     Scanner reader = new Scanner(getClass().getClassLoader().getResourceAsStream(fileName));
     int row = 0;
     while (reader.hasNextLine()) {
@@ -40,15 +56,15 @@ public class TriangularGrid extends Grid {
         int cellState = Integer.parseInt(gridRow[col]);
         if (row % 2 == 0) {
           if (col % 2 == 0) {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_DOWN);
+            setCellWithType(row, col, cellState, down);
           } else {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_UP);
+            setCellWithType(row, col, cellState, up);
           }
         } else {
           if (col % 2 == 0) {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_UP);
+            setCellWithType(row, col, cellState, up);
           } else {
-            setCellWithType(row, col, cellState, Neighbors.TRIANGLE_MOORE_DOWN);
+            setCellWithType(row, col, cellState, down);
           }
         }
       }
@@ -56,8 +72,9 @@ public class TriangularGrid extends Grid {
     }
   }
 
-  public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight, int triangleWidth) {
-    List<Double> coordinates = new ArrayList();
+  public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight,
+      int triangleWidth) {
+    List<Double> coordinates = new ArrayList<>();
     if (row % 2 == 0) {
       if (col % 2 == 0) {
         //Triangle Down
@@ -78,23 +95,25 @@ public class TriangularGrid extends Grid {
     return coordinates;
   }
 
-  private void generateTriangleUpCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+  private void generateTriangleUpCoordinates(int row, int col, int triangleHeight,
+      int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((col +0.5) * triangleWidth);
+    coordinates.add((col + 0.5) * triangleWidth);
     coordinates.add((double) (row * triangleHeight));
     coordinates.add((double) col * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
-    coordinates.add((col +1.0) * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
+    coordinates.add((row + 1.0) * triangleHeight);
+    coordinates.add((col + 1.0) * triangleWidth);
+    coordinates.add((row + 1.0) * triangleHeight);
   }
 
-  private void generateTriangleDownCoordinates(int row, int col, int triangleHeight, int triangleWidth,
+  private void generateTriangleDownCoordinates(int row, int col, int triangleHeight,
+      int triangleWidth,
       List<Double> coordinates) {
     coordinates.add((double) (col * triangleWidth));
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((col +1.0) * triangleWidth);
+    coordinates.add((col + 1.0) * triangleWidth);
     coordinates.add((double) row * triangleHeight);
-    coordinates.add((col +0.5) * triangleWidth);
-    coordinates.add((row +1.0) * triangleHeight);
+    coordinates.add((col + 0.5) * triangleWidth);
+    coordinates.add((row + 1.0) * triangleHeight);
   }
 }
