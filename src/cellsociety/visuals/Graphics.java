@@ -4,6 +4,7 @@ import cellsociety.cells.Cell;
 import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -11,11 +12,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -158,8 +161,28 @@ public class Graphics {
     }
   }
 
+  /**
+   * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
+   * @param grid of triangle cells
+   */
   private void addTriangularGrid(Grid grid)  {
-
+    AnchorPane tileMap = new AnchorPane();
+    outside.setCenter(tileMap);
+    TriangularGrid triangleGrid = (TriangularGrid) grid;
+    int[] sizeOfGrid = grid.getSizeOfGrid();
+    int width = sizeOfGrid[1];
+    int length = sizeOfGrid[0];
+    for (int i = 0; i < length; i++) {
+      for (int j = 0; j < width; j++) {
+        Cell cell = triangleGrid.getCellAtLocation(i, j);
+        String cellColor = stateColor.get(cell.getState());
+        List<Double> cellCoordinates = triangleGrid.getCellCoordinatesRelativeToOrigin(i,j,SQUARE_DIMENSIONS,SQUARE_DIMENSIONS);
+        Polygon currentTriangle = new Polygon();
+        currentTriangle.getPoints().addAll(cellCoordinates);
+        currentTriangle.setFill(Color.valueOf(cellColor));
+        tileMap.getChildren().add(currentTriangle);
+      }
+    }
   }
 
   private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
