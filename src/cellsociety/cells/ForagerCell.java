@@ -27,9 +27,8 @@ public class ForagerCell extends Cell {
    * @param row   row of cell
    * @param col   col of cell
    */
-  public ForagerCell(int state, int row, int col) {
-    super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
+  public ForagerCell(int state, int row, int col, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
     ants = new ArrayList<>();
   }
 

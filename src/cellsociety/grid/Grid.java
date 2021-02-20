@@ -3,6 +3,7 @@ package cellsociety.grid;
 import cellsociety.cells.Cell;
 import cellsociety.cells.EmptyCell;
 import cellsociety.cells.FireCell;
+import cellsociety.cells.ForagerCell;
 import cellsociety.cells.GameOfLifeCell;
 import cellsociety.cells.Neighbors;
 import cellsociety.cells.PercolationCell;
@@ -127,6 +128,7 @@ public class Grid {
         new SegregationCell(cellState, row, col, params, neighborDirections));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
+    data.put(Type.ANTS, new ForagerCell(cellState, row, col, neighborDirections));
     data.put(Type.SUGARSCAPE, new SugarCell(cellState, row, col, params, neighborDirections));
     return data;
   }

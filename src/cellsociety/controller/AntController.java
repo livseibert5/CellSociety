@@ -11,6 +11,11 @@ public class AntController extends Controller{
   private List<InsectCell> insectCellToMove = new ArrayList();
   public AntController()  {
     super();
+    placeAnts();
+  }
+
+  private void placeAnts() {
+    
   }
 
   @Override
@@ -71,17 +76,15 @@ public class AntController extends Controller{
 
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (newGrid.getCellAtLocation(i, j).getState() != ForagerCell.EMPTY) {
-          ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
-          foragerCell.determineNextAction();
-        }
+        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
+        foragerCell.determineNextAction();
       }
     }
   }
 
   @Override
   public boolean simulationEnded() {
-    return super.simulationEnded();
+    return false;
   }
 
 }
