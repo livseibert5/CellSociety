@@ -1,7 +1,10 @@
 package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.ForagerCell;
+import cellsociety.controller.AntController;
 import cellsociety.controller.Controller;
+import cellsociety.controller.SugarController;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
 import java.util.List;
@@ -16,8 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -135,16 +140,37 @@ public class Graphics {
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
+    GridPane currentPane;
     if (grid instanceof TriangularGrid) {
       addTriangularGrid(grid);
     }
     else  {
-      addRectangularGrid(grid);
+      currentPane = addRectangularGrid(grid);
+      if (controllerType instanceof AntController)  {
+        addOverlayedCells(grid, currentPane);
+      }
     }
     return scene;
   }
 
-  private void addRectangularGrid(Grid grid) {
+  private void addOverlayedCells(Grid grid, GridPane pane)  {
+    int[] sizeOfGrid = grid.getSizeOfGrid();
+    int width = sizeOfGrid[1];
+    int length = sizeOfGrid[0];
+    for (int i = 0; i < length; i++) {
+      for (int j = 0; j < width; j++) {
+        ForagerCell cell = (ForagerCell) grid.getCellAtLocation(i, j);
+        if (cell.getAnts().size() != 0)   {
+          int size = cell.getAnts().size();
+          Color circleColor = Color.rgb(Math.min(255, 150 + size),Math.min(255, 150 + size),Math.min(255, 150 + size));
+          Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
+          pane.add(circle, j, i);
+        }
+      }
+    }
+  }
+
+  private GridPane addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
     outside.setCenter(gridView);
     int[] sizeOfGrid = grid.getSizeOfGrid();
@@ -153,19 +179,25 @@ public class Graphics {
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < width; j++) {
         Cell cell = grid.getCellAtLocation(i, j);
-        String cellColor = stateColor.get(cell.getState());
-        Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
-        if (!(grid instanceof TriangularGrid))
-          gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
+        Color cellColor;
+        if (cell.determineNewColorOfCell() == null) {
+          cellColor = Color.valueOf(stateColor.get(cell.getState()));
+        }
+        else  {
+          Double[] cellColors = cell.determineNewColorOfCell();
+          cellColor = Color.rgb(cellColors[0].intValue(), cellColors[1].intValue(), cellColors[2].intValue());
+        }
+        gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,cellColor), j, i);
       }
     }
+    return gridView;
   }
 
   /**
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
    * @param grid of triangle cells
    */
-  private void addTriangularGrid(Grid grid)  {
+  private AnchorPane addTriangularGrid(Grid grid)  {
     AnchorPane tileMap = new AnchorPane();
     outside.setCenter(tileMap);
     TriangularGrid triangleGrid = (TriangularGrid) grid;
@@ -183,6 +215,7 @@ public class Graphics {
         tileMap.getChildren().add(currentTriangle);
       }
     }
+    return tileMap;
   }
 
   private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
