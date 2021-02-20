@@ -179,8 +179,15 @@ public class Graphics {
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < width; j++) {
         Cell cell = grid.getCellAtLocation(i, j);
-        String cellColor = stateColor.get(cell.getState());
-        gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
+        Color cellColor;
+        if (cell.determineNewColorOfCell() == null) {
+          cellColor = Color.valueOf(stateColor.get(cell.getState()));
+        }
+        else  {
+          Double[] cellColors = cell.determineNewColorOfCell();
+          cellColor = Color.rgb(cellColors[0].intValue(), cellColors[1].intValue(), cellColors[2].intValue());
+        }
+        gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,cellColor), j, i);
       }
     }
     return gridView;
