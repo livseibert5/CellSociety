@@ -2,6 +2,7 @@ package cellsociety.controller;
 
 import cellsociety.cells.AgentCell;
 import cellsociety.cells.EmptyCell;
+import cellsociety.cells.Neighbors;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.SugarCell;
 import cellsociety.cells.WatorCell;
@@ -11,6 +12,19 @@ public class SugarController extends Controller{
 
   public SugarController()  {
     super();
+    loadAgents(super.getOldGrid());
+  }
+
+  private void loadAgents(Grid grid) {
+    for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
+      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
+        double probAgent = Math.random();
+        if (probAgent > .50) {
+          ((SugarCell) grid.getCellAtLocation(i, j)).setAgent(new AgentCell(AgentCell.ALIVE, i, j, grid.getParams(),
+              Neighbors.SQUARE_NEUMANN.directions()));
+        }
+      }
+    }
   }
 
   @Override
@@ -57,6 +71,11 @@ public class SugarController extends Controller{
 
       }
     }
+  }
+
+  @Override
+  public boolean simulationEnded() {
+    return false;
   }
 
 }

@@ -9,12 +9,12 @@ import java.util.List;
  */
 public abstract class Cell {
 
-  protected int state;
-  protected int nextState;
-  protected int row;
-  protected int col;
-  protected List<Cell> neighbors;
-  protected int[][] neighborDirections;
+  private int state;
+  private int nextState;
+  private int row;
+  private int col;
+  private List<Cell> neighbors;
+  private int[][] neighborDirections;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -108,5 +108,17 @@ public abstract class Cell {
    */
   public int[] getLocation() {
     return new int[]{row, col};
+  }
+
+  protected void setNextState(int nextState) {
+    this.nextState = nextState;
+  }
+
+  protected void setState(int state) {
+    this.state = state;
+  }
+
+  protected void setNeighborDirections(int[][] neighborDirections) {
+    this.neighborDirections = neighborDirections;
   }
 }

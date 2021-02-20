@@ -11,9 +11,11 @@ import java.io.FileWriter;
  */
 public class GridFile {
 
-  private String fileName;
+  private final String fileName;
   private final File newFile;
-  private Grid grid;
+  private final Grid grid;
+  private final String PATH = "data/";
+  private final String TXT = ".txt";
 
   /**
    * Constructor for a GridFile object that takes a name and a grid and creates
@@ -23,19 +25,27 @@ public class GridFile {
    * @param grid grid state to be written to the file
    */
   public GridFile(String name, Grid grid) {
+    this.grid = grid;
     fileName = name;
-    newFile = new File(fileName);
+    newFile = new File(PATH + fileName + TXT);
   }
 
-  private void writeGridToFile() throws IOException {
+  /**
+   * Writes grid layout to a .txt file
+   *
+   * @throws IOException error writing to new .txt file
+   */
+  public void writeGridToFile() throws IOException {
     newFile.createNewFile();
-    FileWriter writer = new FileWriter(fileName);
-    for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
-      StringBuilder gridRow = new StringBuilder();
-      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
-        gridRow.append(grid.getCellAtLocation(i, j).getState());
+    try (FileWriter writer = new FileWriter(PATH + fileName + TXT)) {
+      for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
+        StringBuilder gridRow = new StringBuilder();
+        for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
+          gridRow.append(grid.getCellAtLocation(i, j).getState());
+        }
+        writer.write(gridRow.toString());
+        writer.write(System.getProperty("line.separator"));
       }
-      writer.write(gridRow.toString());
     }
   }
 

@@ -30,7 +30,7 @@ public class SegregationCell extends Cell {
   public SegregationCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
     super(state, row, col,
         neighborDirections.directions());
-    this.satisfied = params.containsKey("satisfied") ? params.get("satisfied") : DEFAULT_SATISFIED;
+    this.satisfied = params.getOrDefault("satisfied", DEFAULT_SATISFIED);
   }
 
   /**
@@ -38,15 +38,15 @@ public class SegregationCell extends Cell {
    */
   @Override
   public void determineNextState() {
-    double percentLikeNeighbors = (double) countLikeNeighbors() / neighbors.size();
+    double percentLikeNeighbors = (double) countLikeNeighbors() / this.getNeighbors().size();
     isSatisfied = percentLikeNeighbors >= satisfied;
-    nextState = isSatisfied ? state : MOVE;
+    setNextState(isSatisfied ? getState() : MOVE);
   }
 
   private int countLikeNeighbors() {
     int likeNeighbors = 0;
-    for (Cell neighbor : neighbors) {
-      if (neighbor.getState() == state) {
+    for (Cell neighbor : this.getNeighbors()) {
+      if (neighbor.getState() == this.getState()) {
         likeNeighbors++;
       }
     }

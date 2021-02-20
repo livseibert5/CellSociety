@@ -22,8 +22,8 @@ public class ToroidalGrid extends Grid {
    * @param params   map of parameters needed for simulation
    */
   public ToroidalGrid(int width, int height, String fileName, Type type,
-      Map<String, Double> params, Neighbors neighborDirections) {
-    super(width, height, fileName, type, params, neighborDirections);
+      Map<String, Double> params, Neighbors neighborDirections, String populateType) {
+    super(width, height, fileName, type, params, neighborDirections, populateType);
   }
 
   /**
@@ -37,15 +37,15 @@ public class ToroidalGrid extends Grid {
   @Override
   public Cell getCellAtLocation(int i, int j) {
     if (isInBounds(i, j)) {
-      return grid[i][j];
+      return super.getCellAtLocation(i, j);
     } else if (wrapsRight(i, j)) {
-      return grid[i][0];
+      return super.getCellAtLocation(i, 0);
     } else if (wrapsLeft(i, j)) {
-      return grid[i][grid[i].length - 1];
+      return super.getCellAtLocation(i, getSizeOfGrid()[1] - 1);
     } else if (wrapsTop(i, j)) {
-      return grid[grid.length - 1][j];
+      return super.getCellAtLocation(getSizeOfGrid()[0] - 1, j);
     } else if (wrapsBottom(i, j)) {
-      return grid[0][j];
+      return super.getCellAtLocation(0, j);
     } else {
       return null;
     }
@@ -64,37 +64,37 @@ public class ToroidalGrid extends Grid {
   @Override
   public void setCellAtLocation(int i, int j, Cell cell) {
     if (isInBounds(i, j)) {
-      grid[i][j] = cell;
+      super.setCellAtLocation(i, j, cell);
     } else if (wrapsRight(i, j)) {
-      grid[i][0] = cell;
+      super.setCellAtLocation(i, 0, cell);
     } else if (wrapsLeft(i, j)) {
-      grid[i][grid[i].length - 1] = cell;
+      super.setCellAtLocation(i, getSizeOfGrid()[1] - 1, cell);
     } else if (wrapsTop(i, j)) {
-      grid[grid.length - 1][j] = cell;
+      super.setCellAtLocation(getSizeOfGrid()[0] - 1, j, cell);
     } else if (wrapsBottom(i, j)) {
-      grid[0][j] = cell;
+      super.setCellAtLocation(0, j, cell);
     }
   }
 
   @Override
   protected Grid copySelf() {
-    return new ToroidalGrid(this.width, this.height, this.fileName, this.type,
-        this.params, this.neighborDirections);
+    return new ToroidalGrid(getSizeOfGrid()[1], getSizeOfGrid()[0], getFileName(), getType(),
+        getParams(), getNeighborDirections(), getPopulateType());
   }
 
   private boolean wrapsRight(int i, int j) {
-    return j == grid[0].length && i >= 0 && i < grid.length;
+    return j == getSizeOfGrid()[1] && i >= 0 && i < getSizeOfGrid()[0];
   }
 
   private boolean wrapsLeft(int i, int j) {
-    return j == -1 && i >= 0 && i < grid.length;
+    return j == -1 && i >= 0 && i < getSizeOfGrid()[0];
   }
 
   private boolean wrapsTop(int i, int j) {
-    return i == grid.length && j >= 0 && j < grid[0].length;
+    return i == getSizeOfGrid()[0] && j >= 0 && j < getSizeOfGrid()[1];
   }
 
   private boolean wrapsBottom(int i, int j) {
-    return i == -1 && j >= 0 && j < grid[0].length;
+    return i == -1 && j >= 0 && j < getSizeOfGrid()[1];
   }
 }
