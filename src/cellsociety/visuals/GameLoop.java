@@ -193,6 +193,8 @@ public class GameLoop extends Application {
         e.printStackTrace();
       } catch (TransformerException e) {
         e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
       }
     });
     myStage.setScene(myScene);

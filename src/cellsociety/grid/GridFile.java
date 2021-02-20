@@ -14,6 +14,8 @@ public class GridFile {
   private final String fileName;
   private final File newFile;
   private final Grid grid;
+  private final String PATH = "data/";
+  private final String TXT = ".txt";
 
   /**
    * Constructor for a GridFile object that takes a name and a grid and creates
@@ -25,7 +27,7 @@ public class GridFile {
   public GridFile(String name, Grid grid) {
     this.grid = grid;
     fileName = name;
-    newFile = new File(fileName);
+    newFile = new File(PATH + fileName + TXT);
   }
 
   /**
@@ -35,13 +37,15 @@ public class GridFile {
    */
   public void writeGridToFile() throws IOException {
     newFile.createNewFile();
-    FileWriter writer = new FileWriter(fileName);
-    for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
-      StringBuilder gridRow = new StringBuilder();
-      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
-        gridRow.append(grid.getCellAtLocation(i, j).getState());
+    try (FileWriter writer = new FileWriter(PATH + fileName + TXT)) {
+      for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
+        StringBuilder gridRow = new StringBuilder();
+        for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
+          gridRow.append(grid.getCellAtLocation(i, j).getState());
+        }
+        writer.write(gridRow.toString());
+        writer.write(System.getProperty("line.separator"));
       }
-      writer.write(gridRow.toString());
     }
   }
 

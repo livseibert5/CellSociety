@@ -2,9 +2,14 @@ package cellsociety.grid;
 
 import cellsociety.controller.Controller;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -56,8 +61,10 @@ public class GridToXML {
   private void exportNewFile() throws TransformerException {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     DOMSource source = new DOMSource(doc);
-    StreamResult result = new StreamResult(new File(fileName + ".xml"));
+    StreamResult result = new StreamResult(new File("data/" + fileName + ".xml"));
     transformer.transform(source, result);
   }
 
@@ -84,7 +91,10 @@ public class GridToXML {
     }
 
     createWidthAndHeight();
-    fileName = java.time.LocalDate.now().toString();
+    String pattern = "MM_dd_yy_HH_mm";
+    DateFormat dateFormat = new SimpleDateFormat(pattern);
+    Date today = Calendar.getInstance().getTime();
+    fileName = dateFormat.format(today);
     createGridFile(fileName);
   }
 
@@ -106,6 +116,7 @@ public class GridToXML {
     String value = simulationData.get(name);
     Element element = doc.createElement(name);
     element.appendChild(doc.createTextNode(value));
+    System.out.println(value);
     rootElement.appendChild(element);
   }
 
@@ -130,5 +141,4 @@ public class GridToXML {
     rootElement.appendChild(width);
     rootElement.appendChild(height);
   }
-
 }

@@ -89,6 +89,7 @@ public class XMLParser extends XMLReader {
     getInfo().put("Title", retrieveTextContent("Title"));
     getInfo().put("Author", retrieveTextContent("Author"));
     getInfo().put("Description", retrieveTextContent("Description"));
+    getInfo().put("Style", retrieveTextContent("Style"));
   }
 
   /**
