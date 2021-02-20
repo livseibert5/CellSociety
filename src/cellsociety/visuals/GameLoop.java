@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.util.Map;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;

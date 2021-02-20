@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -128,6 +129,14 @@ public class Graphics {
         gridView.add(cellRectangle, j, i);
       }
     }
+    return scene;
+  }
+
+  public Scene createCustom(){
+    Scene scene;
+    Group root = new Group();
+    ComboBox typeOfGrid;
+    scene = new Scene(root);
     return scene;
   }
 
