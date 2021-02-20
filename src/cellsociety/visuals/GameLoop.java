@@ -44,6 +44,7 @@ public class GameLoop extends Application {
   private boolean simulationStarted = false;
   private int time = 0;
   private int mod = 60;
+  private String language;
 
   private Map<String, String> simulationData;
 
@@ -189,7 +190,7 @@ public class GameLoop extends Application {
     parse.readFile();
     simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
-    visuals = new Graphics(controllerType, simulationType);
+    visuals = new Graphics(controllerType, simulationType, language);
     controllerType.setInitialGrid(grid);
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());
@@ -270,7 +271,7 @@ public class GameLoop extends Application {
 
   @Override
   public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
-
+    language = "French";
     myScene = creatingLandingScreen();
     myStage = stage;
     stage.setScene(myScene);

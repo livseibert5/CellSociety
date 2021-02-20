@@ -3,6 +3,8 @@ package cellsociety.visuals;
 import cellsociety.cells.Cell;
 import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
+import cellsociety.grid.TriangularGrid;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -11,11 +13,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -62,21 +66,23 @@ public class Graphics {
   public static final ResourceBundle mySugarSimulation = ResourceBundle
           .getBundle(SUGAR_SIMULATION);
 
-  public static final Button exit = new Button("Exit");
-  public static final Button exitSecondLandingScreen = new Button("Exit");
-  public static final Button faster = new Button("Faster");
-  public static final Button slower = new Button("Slower");
-  public static final Button normal = new Button("Regular");
-  public static final Button play = new Button("Play");
-  public static final Button pause = new Button("Pause");
-  public static final Button downloadXMLFile = new Button("Download");
+  private ResourceBundle languageResourceBundle;
+
+  public static final Button exit = new Button();
+  public static final Button exitSecondLandingScreen = new Button();
+  public static final Button faster = new Button();
+  public static final Button slower = new Button();
+  public static final Button normal = new Button();
+  public static final Button play = new Button();
+  public static final Button pause = new Button();
+  public static final Button downloadXMLFile = new Button();
 
   private BorderPane outside;
   private Scene scene;
 
   private Controller controllerType;
   private HashMap<Integer, String> stateColor;
-  public Graphics(Controller controllerType, ResourceBundle currentResourceBundle) {
+  public Graphics(Controller controllerType, ResourceBundle currentResourceBundle, String language) {
     this.controllerType = controllerType;
     this.stateColor = new HashMap<>();
     int amountOfStates = Integer.parseInt(currentResourceBundle.getString("amountOfStates"));
@@ -84,6 +90,20 @@ public class Graphics {
       String color = currentResourceBundle.getString("" + i);
       stateColor.put(i, color);
     }
+    this.languageResourceBundle = ResourceBundle
+        .getBundle("cellsociety.visuals.resources."+language + "Buttons");
+    setButtonText();
+  }
+
+  private void setButtonText()  {
+    exit.setText(languageResourceBundle.getString("Exit"));
+    exitSecondLandingScreen.setText(languageResourceBundle.getString("Exit"));
+    faster.setText(languageResourceBundle.getString("Faster"));
+    slower.setText(languageResourceBundle.getString("Slower"));
+    normal.setText(languageResourceBundle.getString("Normal"));
+    pause.setText(languageResourceBundle.getString("Pause"));
+    play.setText(languageResourceBundle.getString("Play"));
+    downloadXMLFile.setText(languageResourceBundle.getString("downloadXMLFile"));
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
@@ -116,6 +136,16 @@ public class Graphics {
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
+    if (grid instanceof TriangularGrid) {
+      addTriangularGrid(grid);
+    }
+    else  {
+      addRectangularGrid(grid);
+    }
+    return scene;
+  }
+
+  private void addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
     outside.setCenter(gridView);
     int[] sizeOfGrid = grid.getSizeOfGrid();
@@ -126,10 +156,10 @@ public class Graphics {
         Cell cell = grid.getCellAtLocation(i, j);
         String cellColor = stateColor.get(cell.getState());
         Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
-        gridView.add(cellRectangle, j, i);
+        if (!(grid instanceof TriangularGrid))
+          gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
       }
     }
-    return scene;
   }
 
   public Scene createCustom(){
@@ -142,6 +172,35 @@ public class Graphics {
     return scene;
   }
 
+  /**
+   * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
+   * @param grid of triangle cells
+   */
+  private void addTriangularGrid(Grid grid)  {
+    AnchorPane tileMap = new AnchorPane();
+    outside.setCenter(tileMap);
+    TriangularGrid triangleGrid = (TriangularGrid) grid;
+    int[] sizeOfGrid = grid.getSizeOfGrid();
+    int width = sizeOfGrid[1];
+    int length = sizeOfGrid[0];
+    for (int i = 0; i < length; i++) {
+      for (int j = 0; j < width; j++) {
+        Cell cell = triangleGrid.getCellAtLocation(i, j);
+        String cellColor = stateColor.get(cell.getState());
+        List<Double> cellCoordinates = triangleGrid.getCellCoordinatesRelativeToOrigin(i,j,SQUARE_DIMENSIONS,SQUARE_DIMENSIONS);
+        Polygon currentTriangle = new Polygon();
+        currentTriangle.getPoints().addAll(cellCoordinates);
+        currentTriangle.setFill(Color.valueOf(cellColor));
+        tileMap.getChildren().add(currentTriangle);
+      }
+    }
+  }
+
+  private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
+    return new Rectangle(width, height, color);
+  }
+
+  
   public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
                             String font) {
     Text text = new Text(75, 100, message);
