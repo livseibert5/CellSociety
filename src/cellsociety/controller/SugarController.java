@@ -12,6 +12,11 @@ public class SugarController extends Controller{
 
   public SugarController()  {
     super();
+  }
+
+  @Override
+  public void setInitialGrid(Grid grid) {
+    super.setInitialGrid(grid);
     loadAgents(super.getOldGrid());
   }
 
@@ -20,8 +25,10 @@ public class SugarController extends Controller{
       for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
         double probAgent = Math.random();
         if (probAgent > .50) {
-          ((SugarCell) grid.getCellAtLocation(i, j)).setAgent(new AgentCell(AgentCell.ALIVE, i, j, grid.getParams(),
-              Neighbors.SQUARE_NEUMANN.directions()));
+          AgentCell agent = new AgentCell(AgentCell.ALIVE, i, j, grid.getParams(),
+              Neighbors.SQUARE_NEUMANN.directions());
+          grid.setNeighbors(i, j, agent);
+          ((SugarCell) grid.getCellAtLocation(i, j)).setAgent(agent);
         }
       }
     }
