@@ -1,5 +1,6 @@
 package cellsociety.cells;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ public class AgentCell extends Cell {
     sugar = params.getOrDefault("sugar", DEFAULT_SUGAR);
     vision = params.getOrDefault("vision", DEFAULT_VISION);
     sugarMetabolism = params.getOrDefault("metabolism", DEFAULT_METABOLISM);
+    this.visionLocations = new ArrayList<>();
     state = SUGAR_CELL;
     getNeighborLocations();
     setNeighborDirections();
@@ -56,7 +58,11 @@ public class AgentCell extends Cell {
    */
   public void determineNextLocation() {
     SugarCell maxSugar = findMaxSugar();
-    nextLocation = maxSugar.getLocation();
+    if (maxSugar != null) {
+      nextLocation = maxSugar.getLocation();
+    } else {
+      nextLocation = getLocation();
+    }
   }
 
   /**
@@ -101,7 +107,7 @@ public class AgentCell extends Cell {
   private SugarCell findMaxSugar() {
     SugarCell maxSugarCell = null;
     double maxSugarVal = 0;
-    for (Cell neighbor : this.getNeighbors()) {
+    for (Cell neighbor : getNeighbors()) {
       if (!((SugarCell) neighbor).getHasAgent()
           && ((SugarCell) neighbor).getSugar() > maxSugarVal) {
         maxSugarVal = ((SugarCell) neighbor).getSugar();
