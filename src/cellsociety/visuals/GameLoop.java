@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -76,7 +78,7 @@ public class GameLoop extends Application {
               try {
                 currentControllerType = new GameOfLifeController();
                 currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
-                createSecondLandingScreen(currentControllerType, currentResourceBundle);
+                openFileChooser(currentControllerType, currentResourceBundle);
 
               } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -89,7 +91,7 @@ public class GameLoop extends Application {
 
             currentControllerType = new PercolationController();
             currentResourceBundle = Graphics.myPercolationSimulationResources;
-            createSecondLandingScreen(currentControllerType, currentResourceBundle);
+            openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
@@ -100,7 +102,7 @@ public class GameLoop extends Application {
           try {
             currentControllerType = new SegregationController();
             currentResourceBundle = Graphics.mySegregationSimulationResources;
-            createSecondLandingScreen(currentControllerType, currentResourceBundle);
+            openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
@@ -111,7 +113,7 @@ public class GameLoop extends Application {
           try {
             currentControllerType = new WatorController();
             currentResourceBundle = Graphics.myWaTorSimulationResources;
-            createSecondLandingScreen(currentControllerType, currentResourceBundle);
+            openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
@@ -122,7 +124,7 @@ public class GameLoop extends Application {
           try {
             currentControllerType = new FireController();
             currentResourceBundle = Graphics.myFireSimulationResources;
-            createSecondLandingScreen(currentControllerType, currentResourceBundle);
+            openFileChooser(currentControllerType, currentResourceBundle);
 
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
@@ -135,7 +137,7 @@ public class GameLoop extends Application {
                       try {
                         currentControllerType = new AntController();
                         currentResourceBundle = Graphics.myAntSimulation;
-                        createSecondLandingScreen(currentControllerType, currentResourceBundle);
+                        openFileChooser(currentControllerType, currentResourceBundle);
 
                       } catch (IOException | SAXException | ParserConfigurationException e) {
                         e.printStackTrace();
@@ -148,13 +150,24 @@ public class GameLoop extends Application {
                       try {
                         currentControllerType = new SugarController();
                         currentResourceBundle = Graphics.mySugarSimulation;
-                        createSecondLandingScreen(currentControllerType, currentResourceBundle);
+                        openFileChooser(currentControllerType, currentResourceBundle);
 
                       } catch (IOException | SAXException | ParserConfigurationException e) {
                         e.printStackTrace();
                       }
                     });
 
+    visuals
+            .createButton(Graphics.myLandingSceneResources.getString("Custom"), 305, root,
+                    event -> {
+                      try {
+
+                        createSecondLandingScreen(currentControllerType, currentResourceBundle);
+
+                      } catch (IOException | SAXException | ParserConfigurationException e) {
+                        e.printStackTrace();
+                      }
+                    });
     root.getChildren().add(welcome);
     root.getChildren().add(instructions);
 
@@ -214,11 +227,8 @@ public class GameLoop extends Application {
   }
 
 
-  public void createSecondLandingScreen(Controller currentControllerType, ResourceBundle currentResourceBundle)
-      throws IOException, SAXException, ParserConfigurationException {
+  private void openFileChooser(Controller currentControllerType, ResourceBundle currentResourceBundle) throws IOException, SAXException, ParserConfigurationException {
 
-    Group root = new Group();
-    addExitButton(root);
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
@@ -226,8 +236,25 @@ public class GameLoop extends Application {
       String fileName = selectedFile.getName();
       setSpecificConfigFile(fileName, currentControllerType, currentResourceBundle);
     }
+  }
 
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+  public Scene createCustom(){
+    Scene scene;
+    Group root = new Group();
+    ComboBox typeOfGrid = new ComboBox();
+    typeOfGrid.getItems().addAll(new Rectangle());
+    root.getChildren().add(typeOfGrid);
+    scene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+    return scene;
+  }
+
+  public void createSecondLandingScreen(Controller currentControllerType, ResourceBundle currentResourceBundle)
+      throws IOException, SAXException, ParserConfigurationException {
+
+    Group root = new Group();
+    addExitButton(root);
+    myScene = createCustom();
+           // new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     myStage.setScene(myScene);
   }
 

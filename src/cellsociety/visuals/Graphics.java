@@ -30,7 +30,7 @@ public class Graphics {
 
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
+  public static final int SCREEN_HEIGHT = 500;
   public static final Paint BACKGROUND = Color.AZURE;
   private static final int SQUARE_DIMENSIONS = 30;
 
@@ -135,8 +135,10 @@ public class Graphics {
   public Scene createCustom(){
     Scene scene;
     Group root = new Group();
-    ComboBox typeOfGrid;
-    scene = new Scene(root);
+    ComboBox typeOfGrid = new ComboBox();
+    typeOfGrid.getItems().addAll(new Rectangle());
+    root.getChildren().add(typeOfGrid);
+    scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
     return scene;
   }
 
@@ -162,11 +164,6 @@ public class Graphics {
     controllerType.updateState();
     return controllerType.getNewGrid();
   }
-
-
-
-
-
 
   public static void createButton(String buttonName, double baseY, Group root,
                            EventHandler<ActionEvent> event) {
