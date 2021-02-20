@@ -11,11 +11,27 @@ public class AntController extends Controller{
   private List<InsectCell> insectCellToMove = new ArrayList();
   public AntController()  {
     super();
+  }
+
+  @Override
+  public void setInitialGrid(Grid grid) {
+    super.setInitialGrid(grid);
     placeAnts();
   }
 
   private void placeAnts() {
-    
+    Grid grid = super.getOldGrid();
+    for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
+      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
+        if (grid.getCellAtLocation(i, j).getState() == ForagerCell.NEST || grid.getCellAtLocation(i, j).getState() == ForagerCell.FOOD_SOURCE) {
+          for (int k = 0; k < grid.getSizeOfGrid()[0]; k++) {
+            InsectCell ant = new InsectCell(0, i, j);
+            grid.setNeighbors(i, j, ant);
+            ((ForagerCell) grid.getCellAtLocation(i, j)).addAnt(ant);
+          }
+        }
+      }
+    }
   }
 
   @Override
