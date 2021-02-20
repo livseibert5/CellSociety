@@ -3,6 +3,7 @@ package cellsociety.visuals;
 import cellsociety.cells.Cell;
 import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
+import cellsociety.grid.TriangularGrid;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -131,6 +132,16 @@ public class Graphics {
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
+    if (grid instanceof TriangularGrid) {
+      addTriangularGrid(grid);
+    }
+    else  {
+      addRectangularGrid(grid);
+    }
+    return scene;
+  }
+
+  private void addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
     outside.setCenter(gridView);
     int[] sizeOfGrid = grid.getSizeOfGrid();
@@ -141,11 +152,21 @@ public class Graphics {
         Cell cell = grid.getCellAtLocation(i, j);
         String cellColor = stateColor.get(cell.getState());
         Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
-        gridView.add(cellRectangle, j, i);
+        if (!(grid instanceof TriangularGrid))
+          gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
       }
     }
-    return scene;
   }
+
+  private void addTriangularGrid(Grid grid)  {
+
+  }
+
+  private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
+    return new Rectangle(width, height, color);
+  }
+
+
 
   public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
                             String font) {
