@@ -48,9 +48,9 @@ public class ForagerCell extends Cell {
   public void determineNextAction() {
     ants.forEach(ant -> {
       if (ant.hasFoodItem()) {
-        ant.returnToNest();
+        ant.returnToNest(this);
       } else {
-        ant.findFoodSource();
+        ant.findFoodSource(this);
       }
     });
   }
@@ -92,7 +92,7 @@ public class ForagerCell extends Cell {
     if (getState() == NEST) {
       ant.dropFoodItem();
     } else if (getState() == FOOD_SOURCE) {
-      ant.findFoodSource();
+      ant.getFoodItem();
     }
     ants.add(ant);
   }
