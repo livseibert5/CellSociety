@@ -68,6 +68,7 @@ public class Graphics {
   public static final Button normal = new Button("Regular");
   public static final Button play = new Button("Play");
   public static final Button pause = new Button("Pause");
+  public static final Button downloadXMLFile = new Button("Download");
 
   private BorderPane outside;
   private Scene scene;
@@ -96,10 +97,15 @@ public class Graphics {
     HBox centerButtons = new HBox(exit);
     centerButtons.setAlignment(Pos.BOTTOM_CENTER);
     HBox bottomButtons = new HBox(leftButtons, rightButtons, centerButtons);
+    HBox topButtonsLeft = new HBox(downloadXMLFile);
+    topButtonsLeft.setAlignment(Pos.TOP_LEFT);
+    HBox topButtonsRight = new HBox(faster);
+    topButtonsRight.setAlignment(Pos.TOP_RIGHT);
+    HBox topButtons = new HBox(topButtonsRight, topButtonsLeft);
     exit.setOnAction(eventExit);
     outside.autosize();
     outside.setBottom(bottomButtons);
-    outside.setTop(faster);
+    outside.setTop(topButtons);
     outside.setLeft(slower);
     outside.setRight(normal);
     scene = new Scene(outside);

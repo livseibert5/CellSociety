@@ -2,6 +2,7 @@ package cellsociety.visuals;
 
 import cellsociety.controller.*;
 import cellsociety.grid.Grid;
+import cellsociety.grid.GridToXML;
 import cellsociety.grid.XMLParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -182,7 +185,16 @@ public class GameLoop extends Application {
     Graphics.normal.setOnAction(event -> setMod(60));
     Graphics.play.setOnAction(event -> simulationStarted = true);
     Graphics.pause.setOnAction(event -> simulationStarted = false);
-
+    Button downloadXMLFile = new Button();
+    visuals.downloadXMLFile.setOnAction(event -> {
+      try {
+        new GridToXML(controllerType, simulationData);
+      } catch (ParserConfigurationException e) {
+        e.printStackTrace();
+      } catch (TransformerException e) {
+        e.printStackTrace();
+      }
+    });
     myStage.setScene(myScene);
     return grid;
   }
