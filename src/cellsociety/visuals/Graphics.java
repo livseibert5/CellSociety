@@ -146,9 +146,13 @@ public class Graphics {
       currentPane = addRectangularGrid(grid);
     }
     if (controllerType instanceof AntController)  {
-
+      addOverlayedCells(grid, currentPane);
     }
     return scene;
+  }
+
+  private void addOverlayedCells(Grid grid, Pane pane)  {
+
   }
 
   private GridPane addRectangularGrid(Grid grid) {
@@ -162,8 +166,7 @@ public class Graphics {
         Cell cell = grid.getCellAtLocation(i, j);
         String cellColor = stateColor.get(cell.getState());
         Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
-        if (!(grid instanceof TriangularGrid))
-          gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
+        gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
       }
     }
     return gridView;
