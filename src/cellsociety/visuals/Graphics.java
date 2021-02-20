@@ -1,6 +1,7 @@
 package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
+import cellsociety.cells.ForagerCell;
 import cellsociety.controller.AntController;
 import cellsociety.controller.Controller;
 import cellsociety.controller.SugarController;
@@ -21,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -138,21 +140,34 @@ public class Graphics {
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
-    Pane currentPane;
+    GridPane currentPane;
     if (grid instanceof TriangularGrid) {
-      currentPane = addTriangularGrid(grid);
+      addTriangularGrid(grid);
     }
     else  {
       currentPane = addRectangularGrid(grid);
-    }
-    if (controllerType instanceof AntController)  {
-      addOverlayedCells(grid, currentPane);
+      if (controllerType instanceof AntController)  {
+        addOverlayedCells(grid, currentPane);
+      }
     }
     return scene;
   }
 
-  private void addOverlayedCells(Grid grid, Pane pane)  {
-
+  private void addOverlayedCells(Grid grid, GridPane pane)  {
+    int[] sizeOfGrid = grid.getSizeOfGrid();
+    int width = sizeOfGrid[1];
+    int length = sizeOfGrid[0];
+    for (int i = 0; i < length; i++) {
+      for (int j = 0; j < width; j++) {
+        ForagerCell cell = (ForagerCell) grid.getCellAtLocation(i, j);
+        if (cell.getAnts().size() != 0)   {
+          int size = cell.getAnts().size();
+          Color circleColor = Color.rgb(Math.min(255, 150 + size),Math.min(255, 150 + size),Math.min(255, 150 + size));
+          Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
+          pane.add(circle, j, i);
+        }
+      }
+    }
   }
 
   private GridPane addRectangularGrid(Grid grid) {
