@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -239,14 +240,64 @@ public class GameLoop extends Application {
     }
   }
 
-  public Scene createCustom(){
-    Scene scene;
+  public HashMap<String, String> createCustom(){
+    //create a map with the same tags that the style sheets have.
+    //random.
+    //trinagular cant be tordial
+    //languages: english, spanish, and french.
+    //color: dark, light, duke mode
     Group root = new Group();
-    ComboBox typeOfGrid = new ComboBox();
-    typeOfGrid.getItems().addAll(new Rectangle());
-    root.getChildren().add(typeOfGrid);
-    scene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
-    return scene;
+    HashMap<String, String> readInXML = new HashMap<>();
+
+    String[] simulationOptions = {"Fire", "Wa-Tor", "Percolation", "Segregation", "Game of Life"};
+    ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 1);
+      typeOfSimulation.setOnAction(event -> {
+        readInXML.put("Type", (String) typeOfSimulation.getValue());});
+
+    String[] shapeOptions = {"Triangle", "Rectangle"};
+    ComboBox typeOfShape = getComboBox(shapeOptions, root, 2);
+      typeOfShape.setOnAction(event -> {
+        System.out.println(typeOfShape.getValue());
+        readInXML.put("Shape", (String) typeOfShape.getValue());});
+
+    String[] gridOptions = {"finite", "toroidal"};
+    ComboBox typeOfGrid = getComboBox(gridOptions, root, 3);
+    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+    typeOfGrid.setOnAction(event -> {
+      System.out.println(typeOfGrid.getValue());
+      readInXML.put("Grid", (String) typeOfGrid.getValue());});
+
+    String[] languageOptions = {"english", "french", "spanish"};
+    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 4);
+    typeOfLanguage.setOnAction(event -> {
+      System.out.println(typeOfLanguage.getValue());
+      readInXML.put("Language", (String) typeOfLanguage.getValue());});
+
+    String[] colorOptions = {"dark", "light", "duke"};
+    ComboBox typeOfColor = getComboBox(colorOptions, root, 5);
+    typeOfColor.setOnAction(event -> {
+      System.out.println(typeOfColor.getValue());
+      readInXML.put("Color", (String) typeOfColor.getValue());});
+
+    String[] startGridOptions = {"normal", "random"};
+    ComboBox typeOfStart = getComboBox(startGridOptions, root, 6);
+    typeOfStart.setOnAction(event -> {
+      System.out.println(typeOfStart.getValue());
+      readInXML.put("Start", (String) typeOfStart.getValue());});
+
+    return readInXML;
+  }
+
+  private ComboBox getComboBox(String[] listOfOptions, Group root, int listNumber) {
+    ComboBox typeOfComboBox = new ComboBox();
+    //typeOfComboBox.setSt
+    for(String s : listOfOptions){
+      typeOfComboBox.getItems().add(s);
+    }
+    typeOfComboBox.setTranslateX(visuals.SCREEN_WIDTH/2 - 40);
+    typeOfComboBox.setTranslateY(40*listNumber);
+    root.getChildren().add(typeOfComboBox);
+    return typeOfComboBox;
   }
 
   public void createSecondLandingScreen(Controller currentControllerType, ResourceBundle currentResourceBundle)
@@ -254,7 +305,7 @@ public class GameLoop extends Application {
 
     Group root = new Group();
     addExitButton(root);
-    myScene = createCustom();
+    createCustom();
            // new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     myStage.setScene(myScene);
   }

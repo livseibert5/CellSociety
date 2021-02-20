@@ -5,6 +5,8 @@ import cellsociety.controller.Controller;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
 import java.util.List;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -162,15 +164,7 @@ public class Graphics {
     }
   }
 
-  public Scene createCustom(){
-    Scene scene;
-    Group root = new Group();
-    ComboBox typeOfGrid = new ComboBox();
-    typeOfGrid.getItems().addAll(new Rectangle());
-    root.getChildren().add(typeOfGrid);
-    scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND);
-    return scene;
-  }
+
 
   /**
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
@@ -200,7 +194,7 @@ public class Graphics {
     return new Rectangle(width, height, color);
   }
 
-  
+
   public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
                             String font) {
     Text text = new Text(75, 100, message);
