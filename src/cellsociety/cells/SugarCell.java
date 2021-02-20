@@ -27,8 +27,8 @@ public class SugarCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public SugarCell(int state, int row, int col, Map<String, Double> params, int[][] neighborDirections) {
-    super(state, row, col, neighborDirections);
+  public SugarCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
+    super(state, row, col, neighborDirections.directions());
     this.maxSugarCapacity = params.getOrDefault("maxSugarCapacity", DEFAULT_MAX_SUGAR);
     hasAgent = false;
     sugarGrowBackIntervalCounter = 0;

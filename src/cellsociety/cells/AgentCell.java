@@ -17,6 +17,7 @@ public class AgentCell extends Cell {
   private List<int[][]> visionLocations;
   private int[] nextLocation;
 
+  public static final int ALIVE = 0;
   public static final int SUGAR_CELL = 1;
   public static final int DEAD = 2;
   private final double DEFAULT_SUGAR = 10.0;

@@ -71,8 +71,10 @@ public class AntController extends Controller{
 
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
-        foragerCell.determineNextAction();
+        if (newGrid.getCellAtLocation(i, j).getState() != ForagerCell.EMPTY) {
+          ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
+          foragerCell.determineNextAction();
+        }
       }
     }
   }

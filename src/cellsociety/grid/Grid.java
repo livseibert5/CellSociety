@@ -9,6 +9,7 @@ import cellsociety.cells.PercolationCell;
 import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.SegregationCell;
+import cellsociety.cells.SugarCell;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +127,7 @@ public class Grid {
         new SegregationCell(cellState, row, col, params, neighborDirections));
     data.put(Type.EMPTY, new EmptyCell(0, row, col));
     data.put(Type.WATOR, wator);
+    data.put(Type.SUGARSCAPE, new SugarCell(cellState, row, col, params, neighborDirections));
     return data;
   }
 
