@@ -1,7 +1,9 @@
 package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
+import cellsociety.controller.AntController;
 import cellsociety.controller.Controller;
+import cellsociety.controller.SugarController;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
 import java.util.List;
@@ -16,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
@@ -135,16 +138,20 @@ public class Graphics {
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
+    Pane currentPane;
     if (grid instanceof TriangularGrid) {
-      addTriangularGrid(grid);
+      currentPane = addTriangularGrid(grid);
     }
     else  {
-      addRectangularGrid(grid);
+      currentPane = addRectangularGrid(grid);
+    }
+    if (controllerType instanceof AntController)  {
+
     }
     return scene;
   }
 
-  private void addRectangularGrid(Grid grid) {
+  private GridPane addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
     outside.setCenter(gridView);
     int[] sizeOfGrid = grid.getSizeOfGrid();
@@ -159,13 +166,14 @@ public class Graphics {
           gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
       }
     }
+    return gridView;
   }
 
   /**
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
    * @param grid of triangle cells
    */
-  private void addTriangularGrid(Grid grid)  {
+  private AnchorPane addTriangularGrid(Grid grid)  {
     AnchorPane tileMap = new AnchorPane();
     outside.setCenter(tileMap);
     TriangularGrid triangleGrid = (TriangularGrid) grid;
@@ -183,6 +191,7 @@ public class Graphics {
         tileMap.getChildren().add(currentTriangle);
       }
     }
+    return tileMap;
   }
 
   private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
