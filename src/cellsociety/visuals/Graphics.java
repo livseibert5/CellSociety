@@ -61,21 +61,23 @@ public class Graphics {
   public static final ResourceBundle mySugarSimulation = ResourceBundle
           .getBundle(SUGAR_SIMULATION);
 
-  public static final Button exit = new Button("Exit");
-  public static final Button exitSecondLandingScreen = new Button("Exit");
-  public static final Button faster = new Button("Faster");
-  public static final Button slower = new Button("Slower");
-  public static final Button normal = new Button("Regular");
-  public static final Button play = new Button("Play");
-  public static final Button pause = new Button("Pause");
-  public static final Button downloadXMLFile = new Button("Download");
+  private ResourceBundle languageResourceBundle;
+
+  public static final Button exit = new Button();
+  public static final Button exitSecondLandingScreen = new Button();
+  public static final Button faster = new Button();
+  public static final Button slower = new Button();
+  public static final Button normal = new Button();
+  public static final Button play = new Button();
+  public static final Button pause = new Button();
+  public static final Button downloadXMLFile = new Button();
 
   private BorderPane outside;
   private Scene scene;
 
   private Controller controllerType;
   private HashMap<Integer, String> stateColor;
-  public Graphics(Controller controllerType, ResourceBundle currentResourceBundle) {
+  public Graphics(Controller controllerType, ResourceBundle currentResourceBundle, String language) {
     this.controllerType = controllerType;
     this.stateColor = new HashMap<>();
     int amountOfStates = Integer.parseInt(currentResourceBundle.getString("amountOfStates"));
@@ -83,6 +85,20 @@ public class Graphics {
       String color = currentResourceBundle.getString("" + i);
       stateColor.put(i, color);
     }
+    this.languageResourceBundle = ResourceBundle
+        .getBundle("cellsociety.visuals.resources."+language + "Buttons");
+    setButtonText();
+  }
+
+  private void setButtonText()  {
+    exit.setText(languageResourceBundle.getString("Exit"));
+    exitSecondLandingScreen.setText(languageResourceBundle.getString("Exit"));
+    faster.setText(languageResourceBundle.getString("Faster"));
+    slower.setText(languageResourceBundle.getString("Slower"));
+    normal.setText(languageResourceBundle.getString("Normal"));
+    pause.setText(languageResourceBundle.getString("Pause"));
+    play.setText(languageResourceBundle.getString("Play"));
+    downloadXMLFile.setText(languageResourceBundle.getString("downloadXMLFile"));
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
