@@ -165,7 +165,6 @@ public class Graphics {
       for (int j = 0; j < width; j++) {
         Cell cell = grid.getCellAtLocation(i, j);
         String cellColor = stateColor.get(cell.getState());
-        Rectangle cellRectangle = new Rectangle(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS, Color.valueOf(cellColor));
         gridView.add(createRectangleAtLocation(SQUARE_DIMENSIONS,SQUARE_DIMENSIONS,Color.valueOf(cellColor)), j, i);
       }
     }
