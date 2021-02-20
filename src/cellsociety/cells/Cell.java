@@ -136,4 +136,8 @@ public abstract class Cell {
   protected void setNeighborDirections(int[][] neighborDirections) {
     this.neighborDirections = neighborDirections;
   }
+
+  public Double[] determineNewColorOfCell() {
+    return null;
+  }
 }

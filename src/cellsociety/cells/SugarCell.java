@@ -96,4 +96,16 @@ public class SugarCell extends Cell {
   public double getSugar() {
     return sugar;
   }
+
+  @Override
+  public Double[] determineNewColorOfCell() {
+    double red = 255;
+    double green = 154;
+    double blue = 0;
+    red = red  -  (red * (sugar / maxSugarCapacity));
+    green = green  -  (green * (sugar / maxSugarCapacity));
+    blue = blue  -  (blue * (sugar / maxSugarCapacity));
+    return new Double[]{red, green, blue};
+
+  }
 }
