@@ -14,6 +14,7 @@ import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -107,7 +108,7 @@ public class Graphics {
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
-      EventHandler<ActionEvent> eventExit) {
+      EventHandler<ActionEvent> eventExit, Color color) {
     outside = new BorderPane();
     outside.getChildren().clear();
 
@@ -129,8 +130,9 @@ public class Graphics {
     outside.setTop(topButtons);
     outside.setLeft(slower);
     outside.setRight(normal);
-
+    outside.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     scene = new Scene(outside);
+
 
     return setGridView(grid, simulationResource, eventExit);
   }

@@ -179,6 +179,25 @@ public class GameLoop extends Application {
                       }
                     });
 
+    VBox leftOfLandingScreen = createLandingScreenCustom(root);
+
+    TextFlow text = new TextFlow();
+    text.getChildren().add(welcome);
+
+    text.setTextAlignment(TextAlignment.CENTER);
+    sceneLayout.setTop(text);
+    sceneLayout.setCenter(buttonsInVeritcal);
+    sceneLayout.setLeft(leftOfLandingScreen);
+
+    return new Scene(sceneLayout, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, backgroundColor);
+
+  }
+
+  public void setExitButtonToLandingScreen() {
+    myStage.setScene(creatingLandingScreen());
+  }
+
+  private VBox createLandingScreenCustom(Group root){
     String[] languageOptions = {"english", "french", "spanish"};
     ComboBox typeOfLanguage = getComboBox(languageOptions, root, 1, 0);
     typeOfLanguage.setPromptText("Language");
@@ -187,19 +206,19 @@ public class GameLoop extends Application {
       language = (String) typeOfLanguage.getValue();
     });
 
-    TextFlow text = new TextFlow();
-    text.getChildren().add(welcome);
+    String[] colorOptions = {"dark", "light", "duke"};
+    ComboBox typeOfColor = getComboBox(colorOptions, root, 1, 0);
+    typeOfColor.setPromptText("Color");
+    typeOfColor.setOnAction(event -> {
+      System.out.println(typeOfColor.getValue());
+      String color = (String) typeOfColor.getValue();
+      if(Graphics.colorResourceBundle.containsKey(color)){
+        backgroundColor = Color.valueOf(Graphics.colorResourceBundle.getString(color));
+      }
+    });
 
-    text.setTextAlignment(TextAlignment.CENTER);
-    sceneLayout.setTop(text);
-    sceneLayout.setCenter(buttonsInVeritcal);
-    sceneLayout.setLeft(typeOfLanguage);
-    return new Scene(sceneLayout, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, backgroundColor);
-
-  }
-
-  public void setExitButtonToLandingScreen() {
-    myStage.setScene(creatingLandingScreen());
+    VBox comboBox = new VBox(typeOfLanguage, typeOfColor);
+    return comboBox;
   }
 
   private void setMod(int mod) {
@@ -215,7 +234,7 @@ public class GameLoop extends Application {
     visuals = new Graphics(controllerType, simulationType, language);
     controllerType.setInitialGrid(grid);
     myScene = visuals
-        .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen());
+        .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen(), (Color) backgroundColor);
     Graphics.faster.setOnAction(event -> setMod(30));
     Graphics.slower.setOnAction(event -> setMod(120));
     Graphics.normal.setOnAction(event -> setMod(60));
