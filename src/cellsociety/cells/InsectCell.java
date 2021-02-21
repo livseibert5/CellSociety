@@ -156,7 +156,7 @@ public class InsectCell extends Cell {
    * @param type      desired type of pheromones
    * @return cell with the most of the given pheromone type
    */
-  private Cell getMaxPheromones(List<Cell> neighbors, String type) {
+  public Cell getMaxPheromones(List<Cell> neighbors, String type) {
     double maxPheromones = 0;
     Cell pheromoneCell = null;
     for (Cell cell : neighbors) {
