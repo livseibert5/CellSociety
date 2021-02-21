@@ -13,12 +13,13 @@ public class ForagerCell extends Cell {
   private double foodPheromones = 0.0;
   private double homePheromones = 0.0;
 
-  public final static int NEST = 0;
-  public final static int FOOD_SOURCE = 1;
-  public final static int EMPTY = 2;
-  public final static int OBSTACLE = 3;
+  public static final int NEST = 0;
+  public static final int FOOD_SOURCE = 1;
+  public static final int EMPTY = 2;
+  public static final int OBSTACLE = 3;
   public static final String FOOD = "Food";
   public static final String HOME = "Home";
+  public static final double MAX_PHEROMONES = 1000;
 
   private final List<InsectCell> ants;
 
