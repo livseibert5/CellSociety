@@ -42,10 +42,14 @@ public class GraphicsTwoView extends Graphics{
   }
 
   public Scene setGridView(Grid grid, Grid secondGrid, ResourceBundle simulationResource,
-      EventHandler<ActionEvent> eventExit) {
-    super.setGridView(grid, simulationResource, eventExit);
+      EventHandler<ActionEvent> eventExit, boolean firstSimulation, boolean secondSimulation) {
+    if (firstSimulation)
+      super.setGridView(grid, simulationResource, eventExit);
     BorderPane outside = super.getOutside();
-    return setPane2(secondGrid, outside);
+    if (secondSimulation) {
+      return setPane2(secondGrid, outside);
+    }
+    return getScene();
   }
 
   private Scene setPane2(Grid secondGrid,  BorderPane outside) {
