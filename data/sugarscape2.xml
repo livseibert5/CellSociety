@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>SUGARSCAPE</Type>
+  <Title>Sugarscape Model</Title>
+  <Author>Team 9</Author>
+  <Description>Modeling agents on the sugarscape.</Description>
+  <ConfigParams>
+    <Param>
+      <Name>sugar</Name>
+      <Value>4.0</Value>
+    </Param>
+    <Param>
+      <Name>vision</Name>
+      <Value>6.0</Value>
+    </Param>
+    <Param>
+      <Name>metabolism</Name>
+      <Value>1.0</Value>
+    </Param>
+    <Param>
+      <Name>maxSugarCapacity</Name>
+      <Value>10.0</Value>
+    </Param>
+  </ConfigParams>
+  <Width>15</Width>
+  <Height>15</Height>
+  <LayoutFile>sugarscape.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
+</Simulation>

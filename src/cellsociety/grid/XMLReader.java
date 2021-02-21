@@ -70,13 +70,9 @@ public abstract class XMLReader {
    * @param tagName name of tag
    * @return text value from tag
    */
-  protected String retrieveTextContent(String tagName) {
-    try {
-      NodeList node = root.getElementsByTagName(tagName);
-      return node.item(0).getTextContent();
-    } catch (NullPointerException e) {
-      return tagName;
-    }
+  protected String retrieveTextContent(String tagName) throws NullPointerException {
+    NodeList node = root.getElementsByTagName(tagName);
+    return node.item(0).getTextContent();
   }
 
   /**

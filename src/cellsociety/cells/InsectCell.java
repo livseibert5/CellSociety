@@ -30,8 +30,7 @@ public class InsectCell extends Cell {
    * @param col   col of cell
    */
   public InsectCell(int state, int row, int col) {
-    super(state, row, col,
-        new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
+    super(state, row, col, Neighbors.SQUARE_MOORE.directions());
     hasFoodItem = false;
     orientation = chooseStartingOrientation();
     forwardNeighbors = new ArrayList<>();

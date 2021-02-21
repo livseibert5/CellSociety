@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Style>
-  <Language>ENGLISH</Language>
   <GridType>Toroidal</GridType>
+  <GridPopulate>MANUAL</GridPopulate>
   <NeighborLayout>SQUARE_MOORE</NeighborLayout>
-  <CellSize>10</CellSize>
-  <CellOutline>YES</CellOutline>
-  <CellColor>BLUE</CellColor>
 </Style>
