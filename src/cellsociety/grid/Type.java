@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import cellsociety.cells.FireCell;
 import java.util.List;
 
+/**
+ * Associates Type of simulation with potential states.
+ */
 public enum Type {
   FIRE(new ArrayList<>(List.of(FireCell.EMPTY, FireCell.TREE, FireCell.BURNING))),
   SEGREGATION(new ArrayList<>(List.of(SegregationCell.TYPEX, SegregationCell.TYPEO))),

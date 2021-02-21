@@ -11,6 +11,7 @@ import cellsociety.cells.PredatorCell;
 import cellsociety.cells.PreyCell;
 import cellsociety.cells.SegregationCell;
 import cellsociety.cells.SugarCell;
+import cellsociety.cells.WatorCell;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Grid {
   private Map<String, Double> params;
   private Neighbors neighborDirections;
   private String populateType;
+  private final String RANDOM = "RANDOM";
 
   /**
    * Constructor for Grid objects, creates a new grid based on the specifications passed in from the
@@ -54,7 +56,7 @@ public class Grid {
     this.fileName = fileName;
     this.neighborDirections = neighborDirections;
     this.populateType = populateType;
-    if (populateType.equals("RANDOM")) {
+    if (populateType.equals(RANDOM)) {
       populateRandomly();
     } else {
       readFile(fileName);
@@ -81,6 +83,9 @@ public class Grid {
     }
   }
 
+  /**
+   * Allows grid to be populated randomly instead of from a .txt file.
+   */
   protected void populateRandomly() {
     Random rand = new Random();
     for (int i = 0; i < grid.length; i++) {
@@ -115,10 +120,10 @@ public class Grid {
   private Map<Type, Cell> createCellTypeMap(int row, int col, int cellState,
       Neighbors neighborDirections) {
     Map<Type, Cell> data = new HashMap<>();
-    Cell wator = new EmptyCell(2, row, col);
-    if (type == Type.WATOR && cellState == 0) {
+    Cell wator = new EmptyCell(WatorCell.EMPTY, row, col);
+    if (type == Type.WATOR && cellState == WatorCell.PREDATOR) {
       wator = new PredatorCell(cellState, row, col, params, neighborDirections);
-    } else if (type == Type.WATOR && cellState == 1) {
+    } else if (type == Type.WATOR && cellState == WatorCell.PREY) {
       wator = new PreyCell(cellState, row, col, params, neighborDirections);
     }
     data.put(Type.FIRE, new FireCell(cellState, row, col, params, neighborDirections));
@@ -195,6 +200,13 @@ public class Grid {
     }
   }
 
+  /**
+   * Determines if coordinates are in grid.
+   *
+   * @param i row location
+   * @param j column location
+   * @return true if given coordinates are in bounds
+   */
   protected boolean isInBounds(int i, int j) {
     return i >= 0 && i < grid.length && j >= 0 && j < grid[i].length;
   }
@@ -211,7 +223,7 @@ public class Grid {
   /**
    * Allows controller to make a deep copy of the grid to update the simulation without altering the
    * existing values.
-   * <p>
+   *
    * This gave a flag on design coach, but we believe it is necessary as we need to create a copy of
    * the new grid and then return it, so there is no other way to write the method
    *
@@ -228,6 +240,11 @@ public class Grid {
     return newGrid;
   }
 
+  /**
+   * Allows controller to create a copy of the current grid.
+   *
+   * @return new grid instance with same instance variables as old grid.
+   */
   protected Grid copySelf() {
     return new Grid(this.width, this.height, this.fileName, this.type, this.params,
         this.neighborDirections, this.populateType);
@@ -242,18 +259,38 @@ public class Grid {
     return params;
   }
 
+  /**
+   * Allows Grid subclasses to access the grid type.
+   *
+   * @return grid type
+   */
   protected Type getType() {
     return type;
   }
 
+  /**
+   * Allows Grid subclasses to access neighbor directions of grid.
+   *
+   * @return directions to neighbors of each cell
+   */
   protected Neighbors getNeighborDirections() {
     return neighborDirections;
   }
 
+  /**
+   * Allows Grid subclasses to access the name of the file with the initial layout.
+   *
+   * @return file name of .txt file with grid layout
+   */
   protected String getFileName() {
     return fileName;
   }
 
+  /**
+   * Allows Grid subclasses to access whether or not they should populate randomly or from file.
+   *
+   * @return random or manual population type
+   */
   protected String getPopulateType() {
     return populateType;
   }

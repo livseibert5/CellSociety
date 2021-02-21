@@ -17,8 +17,10 @@ public class ForagerCell extends Cell {
   public final static int FOOD_SOURCE = 1;
   public final static int EMPTY = 2;
   public final static int OBSTACLE = 3;
+  public static final String FOOD = "Food";
+  public static final String HOME = "Home";
 
-  private List<InsectCell> ants;
+  private final List<InsectCell> ants;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -46,9 +48,9 @@ public class ForagerCell extends Cell {
   public void determineNextAction() {
     ants.forEach(ant -> {
       if (ant.hasFoodItem()) {
-        ant.returnToNest();
+        ant.returnToNest(this);
       } else {
-        ant.findFoodSource();
+        ant.findFoodSource(this);
       }
     });
   }
@@ -60,7 +62,7 @@ public class ForagerCell extends Cell {
    * @return pheromone level of desired type
    */
   public double getPheromones(String type) {
-    if (type.equals("Food")) {
+    if (type.equals(FOOD)) {
       return foodPheromones;
     } else {
       return homePheromones;
@@ -74,7 +76,7 @@ public class ForagerCell extends Cell {
    * @param pheromones new pheromone level
    */
   public void setPheromones(String type, double pheromones) {
-    if (type.equals("Food")) {
+    if (type.equals(FOOD)) {
       foodPheromones = pheromones;
     } else {
       homePheromones = pheromones;
@@ -90,7 +92,7 @@ public class ForagerCell extends Cell {
     if (getState() == NEST) {
       ant.dropFoodItem();
     } else if (getState() == FOOD_SOURCE) {
-      ant.findFoodSource();
+      ant.getFoodItem();
     }
     ants.add(ant);
   }

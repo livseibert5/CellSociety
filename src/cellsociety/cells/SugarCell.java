@@ -27,7 +27,8 @@ public class SugarCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public SugarCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
+  public SugarCell(int state, int row, int col, Map<String, Double> params,
+      Neighbors neighborDirections) {
     super(state, row, col, neighborDirections.directions());
     this.maxSugarCapacity = params.getOrDefault("maxSugarCapacity", DEFAULT_MAX_SUGAR);
     hasAgent = false;
@@ -53,6 +54,16 @@ public class SugarCell extends Cell {
   }
 
   /**
+   * Allows controller to set the agent of a cell so that it can move an agent to a new cell.
+   *
+   * @param agent new agent inhabitant
+   */
+  public void setAgent(AgentCell agent) {
+    this.agent = agent;
+    hasAgent = true;
+  }
+
+  /**
    * Returns whether the cell has an agent on it or not.
    *
    * @return true if cell has an agent
@@ -61,24 +72,20 @@ public class SugarCell extends Cell {
     return hasAgent;
   }
 
+  /**
+   * Allows controller to access the agent on the cell.
+   *
+   * @return agent from cell
+   */
   public AgentCell getAgent() {
     return this.agent;
   }
+
   /**
    * Allows controller to remove agent when moving it to a new cell.
    */
   public void removeAgent() {
     hasAgent = false;
-  }
-
-  /**
-   * Allows controller to set the agent of a cell so that it can move an agent to a new cell.
-   *
-   * @param agent new agent inhabitant
-   */
-  public void setAgent(AgentCell agent) {
-    this.agent = agent;
-    hasAgent = true;
   }
 
   /**

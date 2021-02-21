@@ -27,7 +27,8 @@ public class SegregationCell extends Cell {
    * @param col    column location of cell
    * @param params map of params needed for simulation
    */
-  public SegregationCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
+  public SegregationCell(int state, int row, int col, Map<String, Double> params,
+      Neighbors neighborDirections) {
     super(state, row, col,
         neighborDirections.directions());
     this.satisfied = params.getOrDefault("satisfied", DEFAULT_SATISFIED);
@@ -43,6 +44,12 @@ public class SegregationCell extends Cell {
     setNextState(isSatisfied ? getState() : MOVE);
   }
 
+  /**
+   * Counts number of neighbors of the same type to determine whether or not the cell should stay or
+   * move.
+   *
+   * @return number of neighbors of the same type
+   */
   private int countLikeNeighbors() {
     int likeNeighbors = 0;
     for (Cell neighbor : this.getNeighbors()) {

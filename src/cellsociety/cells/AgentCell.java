@@ -14,7 +14,6 @@ public class AgentCell extends Cell {
   private double sugar;
   private double vision;
   private double sugarMetabolism;
-  private int nextAction;
   private List<int[][]> visionLocations;
   private int[] nextLocation;
 

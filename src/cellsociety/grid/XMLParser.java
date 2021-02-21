@@ -49,6 +49,15 @@ public class XMLParser extends XMLReader {
     createGrid(type, params);
   }
 
+  /**
+   * Creates new grid object depending on XML input.
+   *
+   * @param type   simulation type for grid
+   * @param params parameters to be passed to grid
+   * @throws ParserConfigurationException error with xml parsing library
+   * @throws SAXException                 error with xml parsing library
+   * @throws IOException                  error reading file
+   */
   private void createGrid(Type type, Map<String, Double> params)
       throws ParserConfigurationException, SAXException, IOException {
     StyleXMLParser styler = new StyleXMLParser(retrieveTextContent("Style"));
@@ -65,6 +74,14 @@ public class XMLParser extends XMLReader {
     }
   }
 
+  /**
+   * Creates map with types of grids and the object they create for easier access.
+   *
+   * @param type         grid shape
+   * @param params       parameters to be passed to new grid
+   * @param neighborType neighbor formation for new grid
+   * @param populateType population type for new grid
+   */
   private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType,
       String populateType) {
     typeGridPairs = new HashMap<>();
