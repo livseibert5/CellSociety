@@ -19,7 +19,8 @@ Billy - controller
 Lola - view
 
 ### Resources Used
-
+[Java Create and Write to Files](https://www.w3schools.com/java/java_files_create.asp)
+[Java DOM Parser](https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm)
 
 ### Running the Program
 
@@ -29,6 +30,8 @@ Data files needed:
 
 * XML Config Files:
   * Antforaging.xml
+  * antforaging2.xml
+  * antforaging3.xml  
   * Sugarscape.xml
   * Firecorners.xml
   * Fireeverywhere.xml
@@ -63,6 +66,8 @@ Data files needed:
   * Predatorpreyedges2.xml
 * TXT Layout Files:
     * Antforaging.txt
+    * antforaging2.txt
+    * antforaging3.txt  
     * Sugarscape.txt
     * Firecorners.txt
     * Fireeverywhere.txt

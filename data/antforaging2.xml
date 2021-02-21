@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>ANTS</Type>
+  <Title>Ant Model</Title>
+  <Author>Team 9</Author>
+  <Description>Modeling ants.</Description>
+  <Width>50</Width>
+  <Height>30</Height>
+  <LayoutFile>antforaging2.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
+</Simulation>
