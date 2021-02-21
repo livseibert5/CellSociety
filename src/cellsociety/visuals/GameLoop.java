@@ -9,13 +9,19 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -25,7 +31,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
@@ -46,7 +51,7 @@ public class GameLoop extends Application {
   private int time = 0;
   private int mod = 60;
   private String language;
-
+  private Paint backgroundColor = Color.AZURE;
   private Map<String, String> simulationData;
 
   private void step(double elapsedTime)
@@ -67,15 +72,17 @@ public class GameLoop extends Application {
   }
 
   public Scene creatingLandingScreen() {
-    int baseY = 0;
+    int baseY = 20;
     simulationStarted = false;
     Group root = new Group();
+    VBox buttonsInVeritcal = new VBox();
+    BorderPane sceneLayout = new BorderPane();
     Text welcome = visuals.constructText(baseY, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
     Text instructions = visuals.constructText(baseY + 20, 15,
         "click on any simulation to start", FontWeight.NORMAL, Graphics.FONT);
 
     visuals
-        .createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 25, root,
+        .createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 0, buttonsInVeritcal,
             event -> {
               try {
                 currentControllerType = new GameOfLifeController();
@@ -87,8 +94,8 @@ public class GameLoop extends Application {
               }
             });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 65,
-        root, event -> {
+    visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 10,
+        buttonsInVeritcal, event -> {
           try {
 
             currentControllerType = new PercolationController();
@@ -99,8 +106,8 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 105,
-        root, event -> {
+    visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 20,
+        buttonsInVeritcal, event -> {
           try {
             currentControllerType = new SegregationController();
             currentResourceBundle = Graphics.mySegregationSimulationResources;
@@ -110,7 +117,7 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 145, root,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 30, buttonsInVeritcal,
         event -> {
           try {
             currentControllerType = new WatorController();
@@ -121,7 +128,7 @@ public class GameLoop extends Application {
           }
         });
 
-    visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 185, root,
+    visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 40, buttonsInVeritcal,
         event -> {
           try {
             currentControllerType = new FireController();
@@ -134,7 +141,7 @@ public class GameLoop extends Application {
         });
 
     visuals
-            .createButton(Graphics.myLandingSceneResources.getString("AntSimulation"), 225, root,
+            .createButton(Graphics.myLandingSceneResources.getString("AntSimulation"), 50, buttonsInVeritcal,
                     event -> {
                       try {
                         currentControllerType = new AntController();
@@ -147,7 +154,8 @@ public class GameLoop extends Application {
                     });
 
     visuals
-            .createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 265, root,
+            .createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 60,
+                    buttonsInVeritcal,
                     event -> {
                       try {
                         currentControllerType = new SugarController();
@@ -160,7 +168,7 @@ public class GameLoop extends Application {
                     });
 
     visuals
-            .createButton(Graphics.myLandingSceneResources.getString("Custom"), 305, root,
+            .createButton(Graphics.myLandingSceneResources.getString("Custom"), 70, buttonsInVeritcal,
                     event -> {
                       try {
 
@@ -170,10 +178,23 @@ public class GameLoop extends Application {
                         e.printStackTrace();
                       }
                     });
-    root.getChildren().add(welcome);
-    root.getChildren().add(instructions);
 
-    return new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, visuals.BACKGROUND);
+    String[] languageOptions = {"english", "french", "spanish"};
+    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 1, 0);
+    typeOfLanguage.setPromptText("Language");
+    typeOfLanguage.setOnAction(event -> {
+      System.out.println(typeOfLanguage.getValue());
+      language = (String) typeOfLanguage.getValue();
+    });
+
+    TextFlow text = new TextFlow();
+    text.getChildren().add(welcome);
+
+    text.setTextAlignment(TextAlignment.CENTER);
+    sceneLayout.setTop(text);
+    sceneLayout.setCenter(buttonsInVeritcal);
+    sceneLayout.setLeft(typeOfLanguage);
+    return new Scene(sceneLayout, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, backgroundColor);
 
   }
 
@@ -241,41 +262,49 @@ public class GameLoop extends Application {
     //trinagular cant be tordial
     //languages: english, spanish, and french.
     //color: dark, light, duke mode
+    double comboBoxXPosition = visuals.SCREEN_WIDTH/2 - 40;
     Group root = new Group();
     HashMap<String, String> readInXML = new HashMap<>();
 
     String[] simulationOptions = {"Fire", "Wa-Tor", "Percolation", "Segregation", "Game of Life"};
-    ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 1);
+    ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 1, comboBoxXPosition);
       typeOfSimulation.setOnAction(event -> {
         readInXML.put("Type", (String) typeOfSimulation.getValue());});
 
     String[] shapeOptions = {"Triangle", "Rectangle"};
-    ComboBox typeOfShape = getComboBox(shapeOptions, root, 2);
+    ComboBox typeOfShape = getComboBox(shapeOptions, root, 2, comboBoxXPosition);
       typeOfShape.setOnAction(event -> {
         System.out.println(typeOfShape.getValue());
         readInXML.put("Shape", (String) typeOfShape.getValue());});
 
     String[] gridOptions = {"finite", "toroidal"};
-    ComboBox typeOfGrid = getComboBox(gridOptions, root, 3);
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+    ComboBox typeOfGrid = getComboBox(gridOptions, root, 3, comboBoxXPosition);
+    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, backgroundColor);
     typeOfGrid.setOnAction(event -> {
       System.out.println(typeOfGrid.getValue());
       readInXML.put("Grid", (String) typeOfGrid.getValue());});
 
     String[] languageOptions = {"english", "french", "spanish"};
-    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 4);
+    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 4, comboBoxXPosition);
     typeOfLanguage.setOnAction(event -> {
       System.out.println(typeOfLanguage.getValue());
-      readInXML.put("Language", (String) typeOfLanguage.getValue());});
+      readInXML.put("Language", (String) typeOfLanguage.getValue());
+      language = readInXML.get("Language");
+    });
 
     String[] colorOptions = {"dark", "light", "duke"};
-    ComboBox typeOfColor = getComboBox(colorOptions, root, 5);
+    ComboBox typeOfColor = getComboBox(colorOptions, root, 5, comboBoxXPosition);
     typeOfColor.setOnAction(event -> {
       System.out.println(typeOfColor.getValue());
-      readInXML.put("Color", (String) typeOfColor.getValue());});
+      readInXML.put("Color", (String) typeOfColor.getValue());
+        String color = readInXML.get("Color");
+      if(Graphics.colorResourceBundle.containsKey(color)){
+            backgroundColor = Color.valueOf(Graphics.colorResourceBundle.getString(color));
+      }
+    });
 
     String[] startGridOptions = {"normal", "random"};
-    ComboBox typeOfStart = getComboBox(startGridOptions, root, 6);
+    ComboBox typeOfStart = getComboBox(startGridOptions, root, 6, comboBoxXPosition);
     typeOfStart.setOnAction(event -> {
       System.out.println(typeOfStart.getValue());
       readInXML.put("Start", (String) typeOfStart.getValue());});
@@ -283,13 +312,17 @@ public class GameLoop extends Application {
     return readInXML;
   }
 
-  private ComboBox getComboBox(String[] listOfOptions, Group root, int listNumber) {
+//  private static void setGridBackgroundColor(){
+//    backgroundColor =
+//  }
+
+  private ComboBox getComboBox(String[] listOfOptions, Group root, int listNumber, double xPosition) {
     ComboBox typeOfComboBox = new ComboBox();
     //typeOfComboBox.setSt
     for(String s : listOfOptions){
       typeOfComboBox.getItems().add(s);
     }
-    typeOfComboBox.setTranslateX(visuals.SCREEN_WIDTH/2 - 40);
+    typeOfComboBox.setTranslateX(xPosition);
     typeOfComboBox.setTranslateY(40*listNumber);
     root.getChildren().add(typeOfComboBox);
     return typeOfComboBox;
@@ -317,7 +350,7 @@ public class GameLoop extends Application {
 
   @Override
   public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
-    language = "French";
+    language = "English";
     myScene = creatingLandingScreen();
     myStage = stage;
     stage.setScene(myScene);

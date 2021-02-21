@@ -11,7 +11,6 @@ import cellsociety.grid.TriangularGrid;
 
 import java.util.*;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -19,12 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -40,7 +34,6 @@ public class Graphics {
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 500;
-  public static Paint BACKGROUND = Color.AZURE;
   private static final int SQUARE_DIMENSIONS = 30;
 
   //properties package
@@ -52,7 +45,7 @@ public class Graphics {
   public static final String WATOR_PACKAGE = "cellsociety.visuals.resources.WaTorSimulation";
   public static final String ANT_PACKAGE = "cellsociety.visuals.resources.AntSimulation";
   public static final String SUGAR_SIMULATION = "cellsociety.visuals.resources.SugarSimulation";
-
+  public static final String COLOR_RESOURCE_BUNDLE = "cellsociety.visuals.resources.Color";
   //resource bundles for each simulation
   public static final ResourceBundle myLandingSceneResources = ResourceBundle
       .getBundle(LANDING_SCREEN_PACKAGE);
@@ -70,6 +63,7 @@ public class Graphics {
           .getBundle(ANT_PACKAGE);
   public static final ResourceBundle mySugarSimulation = ResourceBundle
           .getBundle(SUGAR_SIMULATION);
+  public static final ResourceBundle colorResourceBundle = ResourceBundle.getBundle(COLOR_RESOURCE_BUNDLE);
 
   private ResourceBundle languageResourceBundle;
 
@@ -87,6 +81,7 @@ public class Graphics {
 
   private Controller controllerType;
   private HashMap<Integer, String> stateColor;
+
   public Graphics(Controller controllerType, ResourceBundle currentResourceBundle, String language) {
     this.controllerType = controllerType;
     this.stateColor = new HashMap<>();
@@ -109,10 +104,6 @@ public class Graphics {
     pause.setText(languageResourceBundle.getString("Pause"));
     play.setText(languageResourceBundle.getString("Play"));
     downloadXMLFile.setText(languageResourceBundle.getString("downloadXMLFile"));
-  }
-
-  public Paint getBackgroundColor(){
-    return BACKGROUND;
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
@@ -138,6 +129,7 @@ public class Graphics {
     outside.setTop(topButtons);
     outside.setLeft(slower);
     outside.setRight(normal);
+
     scene = new Scene(outside);
 
     return setGridView(grid, simulationResource, eventExit);
@@ -207,12 +199,6 @@ public class Graphics {
     return gridView;
   }
 
-  public void setBackground(HashMap<String, String> map){
-    String color = map.get("Color").toUpperCase(Locale.ROOT);
-    Color chosenColor = Color.valueOf(color);
-    BACKGROUND = chosenColor;
-  }
-
   /**
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
    * @param grid of triangle cells
@@ -253,8 +239,9 @@ public class Graphics {
     double ascent = -textBounds.getMinY();
     double width = textBounds.getWidth();
 
-    double leftX = (SCREEN_WIDTH - width) / 2;
-    double topY = baseY - ascent;
+    double leftX = 0;
+           // (SCREEN_WIDTH - width) / 2;
+    double topY = baseY;
     text.relocate(leftX, topY);
 
     return text;
@@ -266,11 +253,11 @@ public class Graphics {
     return controllerType.getNewGrid();
   }
 
-  public static void createButton(String buttonName, double baseY, Group root,
+  public static void createButton(String buttonName, double baseY, VBox root,
                            EventHandler<ActionEvent> event) {
     Button button = new Button(buttonName);
 
-    double xPosition = ((SCREEN_WIDTH / 2) - 50);
+    double xPosition = 50;
     double yPosition = baseY + 100;
 
     button.setTranslateY(yPosition);
