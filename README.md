@@ -148,6 +148,7 @@ Interesting data files:
 * randomgameoflife.xml - game of life with random starting distribution
 * randomfire.xml
 * gameoflifepartialneighbors.xml
+* percolationpartialneighbors.xml
 
 XML Layouts:
 * XML config files
