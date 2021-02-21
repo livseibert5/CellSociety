@@ -322,6 +322,10 @@ public class GameLoop extends Application {
       System.out.println(typeOfStart.getValue());
       readInXML.put("Start", (String) typeOfStart.getValue());});
 
+    Button createXMLInstance = new Button("Start");
+    createXMLInstance.setTranslateY(5*10);
+    root.getChildren().add(createXMLInstance);
+    createXMLInstance.setOnAction(event -> new XMLParser(readInXML));
     //root.getChildren().addAll(typeOfColor,typeOfStart,typeOfLanguage, typeOfShape, typeOfSimulation);
     myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT);
     return readInXML;
