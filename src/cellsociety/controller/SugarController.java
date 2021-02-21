@@ -70,7 +70,7 @@ public class SugarController extends Controller{
         currentCell.determineNextState();
         if (currentCell.getHasAgent())  {
           AgentCell agentCell = currentCell.getAgent();
-          agentCell.determineNextLocation();
+          agentCell.determineNextLocation(currentCell);
         }
       }
     }

@@ -34,7 +34,9 @@ public abstract class Cell {
   /**
    * Calculate next state of cell depending on states of neighboring cells.
    */
-  public abstract void determineNextState();
+  public void determineNextState() {
+    nextState = state;
+  }
 
   /**
    * Accesses simulation type of cell.
@@ -137,6 +139,11 @@ public abstract class Cell {
     this.neighborDirections = neighborDirections;
   }
 
+  /**
+   * Lets cells that use a gradient color scheme update the color of their cell.
+   *
+   * @return new color of cell, null if no change
+   */
   public Double[] determineNewColorOfCell() {
     return null;
   }

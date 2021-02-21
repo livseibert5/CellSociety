@@ -38,14 +38,6 @@ public class PredatorCell extends WatorCell {
   }
 
   /**
-   * A predator cell always remains a predator.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(PREDATOR);
-  }
-
-  /**
    * Determines whether the predator spawns or dies, decrements its energy each time the simulation
    * is updated.
    */

@@ -44,14 +44,6 @@ public class InsectCell extends Cell {
   }
 
   /**
-   * Ant cells always remain ants.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(getState());
-  }
-
-  /**
    * Directs forager towards food source.
    */
   public void findFoodSource(ForagerCell cell) {

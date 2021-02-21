@@ -17,7 +17,9 @@ public class SugarCell extends Cell {
 
   private final double SUGAR_GROWBACK_RATE = 1;
   private final double SUGAR_GROWBACK_INTERVAL = 1;
-  private final double DEFAULT_MAX_SUGAR = 8.0;
+  private final double DEFAULT_MAX_SUGAR = 10.0;
+
+  public static final int EMPTY = 0;
 
   /**
    * Cell constructor used to set basic properties of cell object.
@@ -97,28 +99,30 @@ public class SugarCell extends Cell {
     return sugar;
   }
 
+  /**
+   * Lets the controller determine that maximum sugar capacity for a cell.
+   *
+   * @param maxSugarCapacity new maximum sugar capacity
+   */
   public void setMaxSugarCapacity(double maxSugarCapacity) {
     this.maxSugarCapacity = maxSugarCapacity;
     sugar = maxSugarCapacity;
   }
 
-  public void setSugar(double sugar) {
-    this.sugar = sugar;
-  }
-
+  /**
+   * Cell color gets darker the more sugar it has.
+   *
+   * @return new rgb color of cell
+   */
   @Override
   public Double[] determineNewColorOfCell() {
     double red = 255;
     double green = 154;
     double blue = 0;
-    double change = sugar / 10.0;
-    if (change > 1) {
-      change = 1;
-    }
+    double change = sugar / DEFAULT_MAX_SUGAR > 1 ? 1 : sugar / DEFAULT_MAX_SUGAR;
     red = red  -  (red * (change));
     green = green  -  (green * (change));
     blue = blue  -  (blue * (change));
     return new Double[]{red, green, blue};
-
   }
 }

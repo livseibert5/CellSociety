@@ -34,14 +34,6 @@ public class PreyCell extends WatorCell {
   }
 
   /**
-   * A prey cell always remains a prey cell.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(PREY);
-  }
-
-  /**
    * Increments the prey's breed time counter every time the simulation is updated, detects if the
    * prey is ready to spawn.
    */

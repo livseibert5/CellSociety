@@ -36,14 +36,6 @@ public class ForagerCell extends Cell {
   }
 
   /**
-   * Location of food sources, nests, and obstacles don't change.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(getState());
-  }
-
-  /**
    * Determines whether ant should find food or return to its nest.
    */
   public void determineNextAction() {
@@ -89,14 +81,6 @@ public class ForagerCell extends Cell {
     }
   }
 
-  public void incrementPheromones(String type, double pheromones) {
-    if (type.equals(FOOD)) {
-      foodPheromones += pheromones;
-    } else {
-      homePheromones += pheromones;
-    }
-  }
-
   /**
    * Move an ant to a new cell.
    *
@@ -109,15 +93,6 @@ public class ForagerCell extends Cell {
       ant.getFoodItem();
     }
     ants.add(ant);
-  }
-
-  /**
-   * Remove an ant from the current cell.
-   *
-   * @param ant InsectCell object to be removed from the cell
-   */
-  public void removeAnt(InsectCell ant) {
-    ants.remove(ant);
   }
 
   /**

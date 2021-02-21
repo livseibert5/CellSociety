@@ -19,13 +19,4 @@ public class EmptyCell extends Cell {
   public EmptyCell(int cellState, int row, int col) {
     super(cellState, row, col, new int[0][0]);
   }
-
-  /**
-   * State never changes because this cell is just a placeholder so that the grid doesn't throw
-   * errors.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(getState());
-  }
 }

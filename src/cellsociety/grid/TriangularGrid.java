@@ -105,7 +105,6 @@ public class TriangularGrid extends Grid {
         generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
       } else {
         generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
-
       }
     }
     return coordinates;
@@ -131,18 +130,6 @@ public class TriangularGrid extends Grid {
     coordinates.add((double) row * triangleHeight);
     coordinates.add((col/2.0 + 0.5) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
-  }
-
-  @Override
-  public Grid getCopyOfGrid() {
-    Grid newGrid = copySelf();
-    for (int i = 0; i < getSizeOfGrid()[0]; i++) {
-      for (int j = 0; j < getSizeOfGrid()[1]; j++) {
-        newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
-        newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
-      }
-    }
-    return newGrid;
   }
 
   @Override
