@@ -173,7 +173,7 @@ public class GameLoop extends Application {
     root.getChildren().add(welcome);
     root.getChildren().add(instructions);
 
-    return new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, Graphics.BACKGROUND);
+    return new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, visuals.getBackgroundColor());
 
   }
 
@@ -204,14 +204,9 @@ public class GameLoop extends Application {
     visuals.downloadXMLFile.setOnAction(event -> {
       try {
         new GridToXML(controllerType, simulationData);
-      } catch (ParserConfigurationException e) {
+      } catch (ParserConfigurationException | TransformerException | IOException e) {
         e.printStackTrace();
-      } catch (TransformerException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    });
+      }});
     myStage.setScene(myScene);
     return grid;
   }
@@ -262,7 +257,7 @@ public class GameLoop extends Application {
 
     String[] gridOptions = {"finite", "toroidal"};
     ComboBox typeOfGrid = getComboBox(gridOptions, root, 3);
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
+    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.getBackgroundColor());
     typeOfGrid.setOnAction(event -> {
       System.out.println(typeOfGrid.getValue());
       readInXML.put("Grid", (String) typeOfGrid.getValue());});

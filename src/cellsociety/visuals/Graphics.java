@@ -7,7 +7,8 @@ import cellsociety.controller.Controller;
 import cellsociety.controller.SugarController;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
-import java.util.List;
+
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -32,17 +33,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ResourceBundle;
-
 
 public class Graphics {
 
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 500;
-  public static final Paint BACKGROUND = Color.AZURE;
+  private static Paint BACKGROUND = Color.AZURE;
   private static final int SQUARE_DIMENSIONS = 30;
 
   //properties package
@@ -111,6 +108,10 @@ public class Graphics {
     pause.setText(languageResourceBundle.getString("Pause"));
     play.setText(languageResourceBundle.getString("Play"));
     downloadXMLFile.setText(languageResourceBundle.getString("downloadXMLFile"));
+  }
+
+  public Paint getBackgroundColor(){
+    return BACKGROUND;
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
@@ -196,7 +197,11 @@ public class Graphics {
     return gridView;
   }
 
-
+  public void setBackground(HashMap<String, String> map){
+    String color = map.get("Color").toUpperCase(Locale.ROOT);
+    Color chosenColor = Color.valueOf(color);
+    BACKGROUND = chosenColor;
+  }
 
   /**
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
