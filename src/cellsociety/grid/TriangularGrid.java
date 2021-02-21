@@ -31,6 +31,7 @@ public class TriangularGrid extends Grid {
   public TriangularGrid(int width, int height, String fileName, Type type,
       Map<String, Double> params, Neighbors neighborDirections, String populateType) {
     super(width, height, fileName, type, params, neighborDirections, populateType);
+    System.out.println("here");
   }
 
   /**
@@ -131,5 +132,23 @@ public class TriangularGrid extends Grid {
     coordinates.add((double) row * triangleHeight);
     coordinates.add((col + 0.5) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
+  }
+
+  @Override
+  public Grid getCopyOfGrid() {
+    Grid newGrid = copySelf();
+    for (int i = 0; i < getSizeOfGrid()[0]; i++) {
+      for (int j = 0; j < getSizeOfGrid()[1]; j++) {
+        newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
+        newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
+      }
+    }
+    return newGrid;
+  }
+
+  @Override
+  protected Grid copySelf() {
+    return new TriangularGrid(this.getSizeOfGrid()[1], this.getSizeOfGrid()[1], this.getFileName(), this.getType(), this.getParams(),
+        this.getNeighborDirections(), this.getPopulateType());
   }
 }
