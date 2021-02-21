@@ -31,7 +31,6 @@ public class TriangularGrid extends Grid {
   public TriangularGrid(int width, int height, String fileName, Type type,
       Map<String, Double> params, Neighbors neighborDirections, String populateType) {
     super(width, height, fileName, type, params, neighborDirections, populateType);
-    System.out.println("here");
   }
 
   /**
@@ -115,22 +114,22 @@ public class TriangularGrid extends Grid {
   private void generateTriangleUpCoordinates(int row, int col, int triangleHeight,
       int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((col + 0.5) * triangleWidth);
+    coordinates.add((col/2.0 + 0.5) * triangleWidth);
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((double) col * triangleWidth);
+    coordinates.add((double) col/2.0 * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
-    coordinates.add((col + 1.0) * triangleWidth);
+    coordinates.add((col/2.0 + 1.0) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
   }
 
   private void generateTriangleDownCoordinates(int row, int col, int triangleHeight,
       int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((double) (col * triangleWidth));
+    coordinates.add((double) (col/2.0 * triangleWidth));
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((col + 1.0) * triangleWidth);
+    coordinates.add((col/2.0 + 1.0) * triangleWidth);
     coordinates.add((double) row * triangleHeight);
-    coordinates.add((col + 0.5) * triangleWidth);
+    coordinates.add((col/2.0 + 0.5) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
   }
 
