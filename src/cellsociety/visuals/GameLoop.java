@@ -405,7 +405,7 @@ public class GameLoop extends Application {
       }
     });
 
-    String[] startGridOptions = {"MANUEL", "RANDOM"};
+    String[] startGridOptions = {"MANUAL", "RANDOM"};
     ComboBox typeOfStart = getComboBox(startGridOptions, root, 4, comboBoxXPosition);
     typeOfStart.setPromptText("Start Grid Layout");
     typeOfStart.setOnAction(event -> {
