@@ -110,6 +110,12 @@ public class Graphics {
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit, Color color) {
     outside = new BorderPane();
+    setOutsideButtons(eventExit, color);
+
+    return setGridView(grid, simulationResource, eventExit);
+  }
+
+  protected void setOutsideButtons(EventHandler<ActionEvent> eventExit, Color color) {
     outside.getChildren().clear();
 
     HBox leftButtons = new HBox(play);
@@ -124,35 +130,39 @@ public class Graphics {
     HBox topButtonsRight = new HBox(faster);
     topButtonsRight.setAlignment(Pos.TOP_RIGHT);
     HBox topButtons = new HBox(topButtonsRight, topButtonsLeft);
+    HBox leftButtonsTop = new HBox(slower);
+    leftButtonsTop.setAlignment(Pos.TOP_LEFT);
+    HBox leftButtonsBottom = new HBox(normal);
+    leftButtonsBottom.setAlignment(Pos.BOTTOM_LEFT);
+    HBox leftButtons2 = new HBox(leftButtonsBottom, leftButtonsTop);
     exit.setOnAction(eventExit);
     outside.autosize();
     outside.setBottom(bottomButtons);
     outside.setTop(topButtons);
-    outside.setLeft(slower);
-    outside.setRight(normal);
+    outside.setLeft(leftButtons2);
+    //outside.setRight(normal);
     outside.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     scene = new Scene(outside);
-
-
-    return setGridView(grid, simulationResource, eventExit);
   }
 
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
-    GridPane currentPane;
+    Pane currentPane;
     if (grid instanceof TriangularGrid) {
-      addTriangularGrid(grid);
+      currentPane = addTriangularGrid(grid);
+      outside.setCenter(currentPane);
     }
     else  {
       currentPane = addRectangularGrid(grid);
+      outside.setCenter(currentPane);
       if (controllerType instanceof AntController || controllerType instanceof SugarController)  {
-        addOverlayedCells(grid, currentPane);
+        addOverlayedCells(grid, (GridPane) currentPane);
       }
     }
     return scene;
   }
-
-  private void addOverlayedCells(Grid grid, GridPane pane)  {
+  
+  protected void addOverlayedCells(Grid grid, GridPane pane)  {
     int[] sizeOfGrid = grid.getSizeOfGrid();
     int width = sizeOfGrid[1];
     int length = sizeOfGrid[0];
@@ -178,9 +188,8 @@ public class Graphics {
     }
   }
 
-  private GridPane addRectangularGrid(Grid grid) {
+  protected GridPane addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
-    outside.setCenter(gridView);
     int[] sizeOfGrid = grid.getSizeOfGrid();
     int width = sizeOfGrid[1];
     int length = sizeOfGrid[0];
@@ -205,7 +214,7 @@ public class Graphics {
    * https://stackoverflow.com/questions/54165602/create-hexagonal-field-with-javafx
    * @param grid of triangle cells
    */
-  private AnchorPane addTriangularGrid(Grid grid)  {
+  protected AnchorPane addTriangularGrid(Grid grid)  {
     AnchorPane tileMap = new AnchorPane();
     outside.setCenter(tileMap);
     TriangularGrid triangleGrid = (TriangularGrid) grid;
@@ -266,6 +275,18 @@ public class Graphics {
     button.setTranslateX(xPosition);
     root.getChildren().add(button);
     button.setOnAction(event);
+  }
+
+  protected BorderPane getOutside()  {
+    return this.outside;
+  }
+
+  protected void setOutside(BorderPane outside) {
+    this.outside = outside;
+  }
+
+  protected Scene getScene() {
+    return this.scene;
   }
 
 
