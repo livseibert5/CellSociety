@@ -79,7 +79,7 @@ public class AntController extends Controller{
         for (InsectCell insectCell: foragerCell.getAnts())  {
           if (insectCell.getNextAction() == InsectCell.DROP_FOOD_PHEROMONES)  {
             //Ask Livia about what to update the pheromones level to
-            foragerCell.setPheromones("Food", foragerCell.getPheromones("Food")+0.5);
+             foragerCell.setPheromones("Food", foragerCell.getPheromones("Food")+0.5);
             insectCell.returnToNest(foragerCell);
           }
           else if (insectCell.getNextAction() == InsectCell.DROP_HOME_PHEROMONES) {
