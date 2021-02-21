@@ -93,12 +93,12 @@ public abstract class Cell {
   /**
    * Sets location of the cell.
    *
-   * @param i row location of cell
-   * @param j column location of cell
+   * @param row row location of cell
+   * @param col column location of cell
    */
-  public void setDims(int i, int j) {
-    this.row = i;
-    this.col = j;
+  public void setLocation(int row, int col) {
+    this.row = row;
+    this.col = col;
   }
 
   /**
@@ -110,14 +110,29 @@ public abstract class Cell {
     return new int[]{row, col};
   }
 
+  /**
+   * Allows subclasses of Cell to set their next state.
+   *
+   * @param nextState state to go to on update
+   */
   protected void setNextState(int nextState) {
     this.nextState = nextState;
   }
 
+  /**
+   * Allows subclasses of Cell to set their current state.
+   *
+   * @param state new state of cell
+   */
   protected void setState(int state) {
     this.state = state;
   }
 
+  /**
+   * Allows subclasses of Cell to set new directions for where to find their neighbors.
+   *
+   * @param neighborDirections coordinate directions to neighboring cells
+   */
   protected void setNeighborDirections(int[][] neighborDirections) {
     this.neighborDirections = neighborDirections;
   }

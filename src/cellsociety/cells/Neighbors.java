@@ -1,5 +1,10 @@
 package cellsociety.cells;
 
+/**
+ * Associates cell neighbor types with the coordinates of those neighbors.
+ *
+ * @author Livia Seibert
+ */
 public enum Neighbors {
   SQUARE_MOORE(new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}}),
   SQUARE_NEUMANN(new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}),

@@ -27,7 +27,8 @@ public class SugarCell extends Cell {
    * @param col                col of cell
    * @param neighborDirections directions to neighboring cells
    */
-  public SugarCell(int state, int row, int col, Map<String, Double> params, Neighbors neighborDirections) {
+  public SugarCell(int state, int row, int col, Map<String, Double> params,
+      Neighbors neighborDirections) {
     super(state, row, col, neighborDirections.directions());
     this.maxSugarCapacity = params.getOrDefault("maxSugarCapacity", DEFAULT_MAX_SUGAR);
     hasAgent = false;
@@ -42,7 +43,7 @@ public class SugarCell extends Cell {
   public void determineNextState() {
     setNextState(getState());
     sugarGrowBackIntervalCounter++;
-    if (sugarGrowBackIntervalCounter == SUGAR_GROWBACK_INTERVAL) {
+    if (sugarGrowBackIntervalCounter >= SUGAR_GROWBACK_INTERVAL) {
       sugarGrowBackIntervalCounter = 0;
       if (sugar + SUGAR_GROWBACK_RATE > maxSugarCapacity) {
         sugar = maxSugarCapacity;
@@ -50,25 +51,6 @@ public class SugarCell extends Cell {
         sugar += SUGAR_GROWBACK_RATE;
       }
     }
-  }
-
-  /**
-   * Returns whether the cell has an agent on it or not.
-   *
-   * @return true if cell has an agent
-   */
-  public boolean getHasAgent() {
-    return hasAgent;
-  }
-
-  public AgentCell getAgent() {
-    return this.agent;
-  }
-  /**
-   * Allows controller to remove agent when moving it to a new cell.
-   */
-  public void removeAgent() {
-    hasAgent = false;
   }
 
   /**
@@ -82,6 +64,31 @@ public class SugarCell extends Cell {
   }
 
   /**
+   * Returns whether the cell has an agent on it or not.
+   *
+   * @return true if cell has an agent
+   */
+  public boolean getHasAgent() {
+    return hasAgent;
+  }
+
+  /**
+   * Allows controller to access the agent on the cell.
+   *
+   * @return agent from cell
+   */
+  public AgentCell getAgent() {
+    return this.agent;
+  }
+
+  /**
+   * Allows controller to remove agent when moving it to a new cell.
+   */
+  public void removeAgent() {
+    hasAgent = false;
+  }
+
+  /**
    * Allows controller to access sugar level on cell so that agent can acquire this sugar.
    *
    * @return current sugar amount on cell
@@ -90,14 +97,27 @@ public class SugarCell extends Cell {
     return sugar;
   }
 
+  public void setMaxSugarCapacity(double maxSugarCapacity) {
+    this.maxSugarCapacity = maxSugarCapacity;
+    sugar = maxSugarCapacity;
+  }
+
+  public void setSugar(double sugar) {
+    this.sugar = sugar;
+  }
+
   @Override
   public Double[] determineNewColorOfCell() {
     double red = 255;
     double green = 154;
     double blue = 0;
-    red = red  -  (red * (sugar / maxSugarCapacity));
-    green = green  -  (green * (sugar / maxSugarCapacity));
-    blue = blue  -  (blue * (sugar / maxSugarCapacity));
+    double change = sugar / 10.0;
+    if (change > 1) {
+      change = 1;
+    }
+    red = red  -  (red * (change));
+    green = green  -  (green * (change));
+    blue = blue  -  (blue * (change));
     return new Double[]{red, green, blue};
 
   }

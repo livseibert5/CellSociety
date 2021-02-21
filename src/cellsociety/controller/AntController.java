@@ -29,6 +29,8 @@ public class AntController extends Controller{
             grid.setNeighbors(i, j, ant);
             ((ForagerCell) grid.getCellAtLocation(i, j)).addAnt(ant);
           }
+          ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones("Food", Math.random() * i / 2);
+          ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones("Home", Math.random() * i / 2);
         }
       }
     }
@@ -76,11 +78,11 @@ public class AntController extends Controller{
           if (insectCell.getNextAction() == InsectCell.DROP_FOOD_PHEROMONES)  {
             //Ask Livia about what to update the pheromones level to
             foragerCell.setPheromones("Food", foragerCell.getPheromones("Food")+0.5);
-            insectCell.returnToNest();
+            insectCell.returnToNest(foragerCell);
           }
           else if (insectCell.getNextAction() == InsectCell.DROP_HOME_PHEROMONES) {
             foragerCell.setPheromones("Home", foragerCell.getPheromones("Home")+0.5);
-            insectCell.findFoodSource();
+            insectCell.findFoodSource(foragerCell);
           }
         }
       }

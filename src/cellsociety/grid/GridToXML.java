@@ -68,43 +68,56 @@ public class GridToXML {
     transformer.transform(source, result);
   }
 
+  /**
+   * Creates DocumentBuilder and DocumentBuilderFactory to create new XML doc.
+   *
+   * @throws ParserConfigurationException issue with DocumentBuilder creation
+   */
   private void initializeDocumentBuilder() throws ParserConfigurationException {
-    DocumentBuilderFactory dbFactory =
-        DocumentBuilderFactory.newInstance();
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
     doc = dBuilder.newDocument();
   }
 
+  /**
+   * Builds the new XML file.
+   *
+   * @throws IOException error writing to new file
+   */
   private void createDocument() throws IOException {
     rootElement = doc.createElement("Simulation");
     doc.appendChild(rootElement);
-
     for (String str : simulationData.keySet()) {
       createNewElementWithText(str);
     }
-
     paramsElement = doc.createElement("ConfigParams");
     rootElement.appendChild(paramsElement);
     Map<String, Double> params = controller.getNewGrid().getParams();
     for (String str : params.keySet()) {
       createNewParameter(str, params.get(str));
     }
-
     createWidthAndHeight();
+    fileName = createFileName();
+    createGridFile();
+  }
+
+  /**
+   * Creates file name from XML file based on date and time.
+   *
+   * @return file name for XML file
+   */
+  private String createFileName() {
     String pattern = "MM_dd_yy_HH_mm";
     DateFormat dateFormat = new SimpleDateFormat(pattern);
     Date today = Calendar.getInstance().getTime();
-    fileName = dateFormat.format(today);
-    createGridFile(fileName);
+    return dateFormat.format(today);
   }
 
   /**
    * Uses the GridFile class to write a new .txt file with the current grid layout, then creates an
    * element in the new XML file that references the .txt file.
-   *
-   * @param fileName name for new .txt file
    */
-  private void createGridFile(String fileName) throws IOException {
+  private void createGridFile() throws IOException {
     Element layout = doc.createElement("LayoutFile");
     GridFile gridFile = new GridFile(fileName, controller.getNewGrid());
     gridFile.writeGridToFile();
@@ -112,14 +125,24 @@ public class GridToXML {
     rootElement.appendChild(layout);
   }
 
+  /**
+   * Creates an XML tag with the given name and value from the simulationData map.
+   *
+   * @param name name of new XML tag
+   */
   private void createNewElementWithText(String name) {
     String value = simulationData.get(name);
     Element element = doc.createElement(name);
     element.appendChild(doc.createTextNode(value));
-    System.out.println(value);
     rootElement.appendChild(element);
   }
 
+  /**
+   * Creates a new parameter tag with the proper name and value.
+   *
+   * @param key name of parameter
+   * @param value value of parameter
+   */
   private void createNewParameter(String key, Double value) {
     Element param = doc.createElement("Param");
     paramsElement.appendChild(param);
@@ -131,6 +154,9 @@ public class GridToXML {
     val.appendChild(doc.createTextNode(Double.toString(value)));
   }
 
+  /**
+   * Creates width and height tag for XML file.
+   */
   private void createWidthAndHeight() {
     Element width = doc.createElement("Width");
     width.appendChild(
