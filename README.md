@@ -108,6 +108,7 @@ Data files needed:
   * squaremoore.xml
   * randomsquaremoore.xml
   * randomsquareneumann.xml
+  * squarepartialneighbors.xml
 
 Features implemented:
 
@@ -146,6 +147,7 @@ Interesting data files:
 * trianglegameoflife.xml - game of life with triangle grid
 * randomgameoflife.xml - game of life with random starting distribution
 * randomfire.xml
+* gameoflifepartialneighbors.xml
 
 XML Layouts:
 * XML config files

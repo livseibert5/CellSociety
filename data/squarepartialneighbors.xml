@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Style>
+  <GridType>Square</GridType>
+  <GridPopulate>MANUAL</GridPopulate>
+  <NeighborLayout>SQUARE_A6</NeighborLayout>
+</Style>
