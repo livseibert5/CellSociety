@@ -294,7 +294,6 @@ public class GameLoop extends Application {
       scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
     }
     else  {
-      System.out.println("here");
        scene = visuals.setGridView(grid, currentResourceBundle, event);
     }
     myStage.setScene(scene);
