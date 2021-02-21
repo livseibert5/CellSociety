@@ -79,11 +79,6 @@ public class XMLParser extends XMLReader {
     String populateType = styler.getPopulateType();
     typeGridPairs(type, params, neighborType, populateType);
     grid = typeGridPairs.get(gridShape);
-      /*
-    } catch (Exception e) {
-      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType,
-          populateType);
-    }*/
   }
 
   /**

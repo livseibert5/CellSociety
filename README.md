@@ -33,6 +33,7 @@ Data files needed:
   * antforaging2.xml
   * antforaging3.xml  
   * Sugarscape.xml
+  * sugarscape2.xml  
   * Firecorners.xml
   * Fireeverywhere.xml
   * Fireline.xml
@@ -105,6 +106,8 @@ Data files needed:
   * toroidalmoore.xml
   * squareneumann.xml
   * squaremoore.xml
+  * randomsquaremoore.xml
+  * randomsquareneumann.xml
 
 Features implemented:
 
@@ -139,6 +142,10 @@ Interesting data files:
 * firebad.xml - specifies an unrecognized parameter with an integer value instead of a double, throws no errors
 * invalidstate.xml - fire simulation with unrecognized states in the txt file, gets rid of them and executes game play anyways
 * celloutofbounds.xml - cells are specified out of bounds, runs normally
+* trianglepercolation.xml - percolation with triangle grid
+* trianglegameoflife.xml - game of life with triangle grid
+* randomgameoflife.xml - game of life with random starting distribution
+* randomfire.xml
 
 XML Layouts:
 * XML config files
