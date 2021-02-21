@@ -2,15 +2,13 @@ package cellsociety.controller;
 
 import cellsociety.cells.ForagerCell;
 import cellsociety.cells.InsectCell;
-import cellsociety.cells.SugarCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AntController extends Controller{
 
-  private List<InsectCell> insectCellToMove = new ArrayList();
+  private final List<InsectCell> insectCellToMove = new ArrayList<>();
   public AntController()  {
     super();
   }
