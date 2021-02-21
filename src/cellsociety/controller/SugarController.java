@@ -18,6 +18,8 @@ public class SugarController extends Controller{
   public void setInitialGrid(Grid grid) {
     super.setInitialGrid(grid);
     loadAgents(super.getOldGrid());
+    setSugar(super.getOldGrid());
+    super.getOldGrid().initializeCells();
   }
 
   private void loadAgents(Grid grid) {
@@ -34,6 +36,22 @@ public class SugarController extends Controller{
     }
   }
 
+  private void setSugar(Grid grid) {
+    int[] peakOne = {grid.getSizeOfGrid()[0] / 4, grid.getSizeOfGrid()[1] / 4};
+    int[] peakTwo = {grid.getSizeOfGrid()[0] * 3 / 4, grid.getSizeOfGrid()[1] * 3 / 4};
+    for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
+      for (int j = 0; j <grid.getSizeOfGrid()[1]; j++) {
+        int[] location = {i, j};
+        double distance = Math.min(distanceFrom(location, peakOne), distanceFrom(location, peakTwo));
+        ((SugarCell) grid.getCellAtLocation(i, j)).setMaxSugarCapacity(10 / distance);
+      }
+    }
+  }
+
+  private double distanceFrom(int[] locationOne, int[] locationTwo) {
+    return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math.pow(locationOne[1] - locationTwo[1], 2));
+  }
+
   @Override
   public void updateState() {
     Grid oldGrid = super.getOldGrid();
@@ -42,6 +60,7 @@ public class SugarController extends Controller{
 
     determineNextLocationsForAllCells(oldGrid, dims);
     moveAllAgentCellsToNewGrid(oldGrid, newGrid, dims);
+    newGrid.initializeCells();
   }
 
   private void determineNextLocationsForAllCells(Grid oldGrid, int[] dims) {

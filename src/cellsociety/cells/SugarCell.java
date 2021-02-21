@@ -43,7 +43,7 @@ public class SugarCell extends Cell {
   public void determineNextState() {
     setNextState(getState());
     sugarGrowBackIntervalCounter++;
-    if (sugarGrowBackIntervalCounter == SUGAR_GROWBACK_INTERVAL) {
+    if (sugarGrowBackIntervalCounter >= SUGAR_GROWBACK_INTERVAL) {
       sugarGrowBackIntervalCounter = 0;
       if (sugar + SUGAR_GROWBACK_RATE > maxSugarCapacity) {
         sugar = maxSugarCapacity;
@@ -97,14 +97,27 @@ public class SugarCell extends Cell {
     return sugar;
   }
 
+  public void setMaxSugarCapacity(double maxSugarCapacity) {
+    this.maxSugarCapacity = maxSugarCapacity;
+    sugar = maxSugarCapacity;
+  }
+
+  public void setSugar(double sugar) {
+    this.sugar = sugar;
+  }
+
   @Override
   public Double[] determineNewColorOfCell() {
     double red = 255;
     double green = 154;
     double blue = 0;
-    red = red  -  (red * (sugar / maxSugarCapacity));
-    green = green  -  (green * (sugar / maxSugarCapacity));
-    blue = blue  -  (blue * (sugar / maxSugarCapacity));
+    double change = sugar / 10.0;
+    if (change > 1) {
+      change = 1;
+    }
+    red = red  -  (red * (change));
+    green = green  -  (green * (change));
+    blue = blue  -  (blue * (change));
     return new Double[]{red, green, blue};
 
   }

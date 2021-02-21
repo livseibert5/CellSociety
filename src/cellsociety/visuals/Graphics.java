@@ -2,6 +2,7 @@ package cellsociety.visuals;
 
 import cellsociety.cells.Cell;
 import cellsociety.cells.ForagerCell;
+import cellsociety.cells.SugarCell;
 import cellsociety.controller.AntController;
 import cellsociety.controller.Controller;
 import cellsociety.controller.SugarController;
@@ -146,7 +147,7 @@ public class Graphics {
     }
     else  {
       currentPane = addRectangularGrid(grid);
-      if (controllerType instanceof AntController)  {
+      if (controllerType instanceof AntController || controllerType instanceof SugarController)  {
         addOverlayedCells(grid, currentPane);
       }
     }
@@ -159,13 +160,21 @@ public class Graphics {
     int length = sizeOfGrid[0];
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < width; j++) {
-        ForagerCell cell = (ForagerCell) grid.getCellAtLocation(i, j);
-        if (cell.getAnts().size() != 0)   {
-          int size = cell.getAnts().size();
-          Color circleColor = Color.rgb(Math.min(255, 150 + size),Math.min(255, 150 + size),Math.min(255, 150 + size));
-          Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
-          pane.add(circle, j, i);
-          //System.out.println(i+" "+j);
+        if (grid.getCellAtLocation(i, j) instanceof ForagerCell) {
+          ForagerCell cell = (ForagerCell) grid.getCellAtLocation(i, j);
+          if (cell.getAnts().size() != 0)   {
+            int size = cell.getAnts().size();
+            Color circleColor = Color.rgb(Math.min(255, 150 + size),Math.min(255, 150 + size),Math.min(255, 150 + size));
+            Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
+            pane.add(circle, j, i);
+          }
+        } else {
+          SugarCell cell = (SugarCell) grid.getCellAtLocation(i, j);
+          if (cell.getHasAgent()) {
+            Color circleColor = Color.RED;
+            Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
+            pane.add(circle, j, i);
+          }
         }
       }
     }
