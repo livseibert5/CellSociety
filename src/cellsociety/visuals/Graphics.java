@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
 
 
 public class Graphics {
-
+  //static file components
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 500;
@@ -68,6 +68,7 @@ public class Graphics {
 
   private ResourceBundle languageResourceBundle;
 
+  //buttons in the grid scene
   public static final Button exit = new Button();
   public static final Button exitSecondLandingScreen = new Button();
   public static final Button faster = new Button();
@@ -76,13 +77,21 @@ public class Graphics {
   public static final Button play = new Button();
   public static final Button pause = new Button();
   public static final Button downloadXMLFile = new Button();
-
+  //scene layout
   private BorderPane outside;
   private Scene scene;
-
+  //chooseController type
   private Controller controllerType;
+  //sets the cell color depending on what simulation is running
   private HashMap<Integer, String> stateColor;
 
+  /**
+   * Graphics class contructor. initializes the controller type and the state color Hashmap.
+   * also initialized the amount of states in a cell depending on the simulation that is chosen.
+   * @param controllerType chooses what controller depending on the simulation.
+   * @param currentResourceBundle choose the resource bundle depending on the simulation.
+   * @param language chooses the language depending on what the user chooses (english, spanish, or french).
+   */
   public Graphics(Controller controllerType, ResourceBundle currentResourceBundle, String language) {
     this.controllerType = controllerType;
     this.stateColor = new HashMap<>();
@@ -96,6 +105,7 @@ public class Graphics {
     setButtonText();
   }
 
+  //set button titles
   private void setButtonText()  {
     exit.setText(languageResourceBundle.getString("Exit"));
     exitSecondLandingScreen.setText(languageResourceBundle.getString("Exit"));
@@ -107,6 +117,14 @@ public class Graphics {
     downloadXMLFile.setText(languageResourceBundle.getString("downloadXMLFile"));
   }
 
+  /**
+   * creates the visual grid of every simulation
+   * @param grid adds the grid with the specific cells.
+   * @param simulationResource chooses the resource bundle specific to the simulation chosen.
+   * @param eventExit action that makes the scene go back to the landing scene.
+   * @param color chooses background color
+   * @return returns the scene of the simulation chosen.
+   */
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit, Color color) {
     outside = new BorderPane();
@@ -115,6 +133,11 @@ public class Graphics {
     return setGridView(grid, simulationResource, eventExit);
   }
 
+  /**
+   * sets the buttons outside of the simulation grid.
+   * @param eventExit event that makes the scene go back to the landing scene when the exit button is clicked.
+   * @param color chooses the background color
+   */
   protected void setOutsideButtons(EventHandler<ActionEvent> eventExit, Color color) {
     outside.getChildren().clear();
 
@@ -140,11 +163,17 @@ public class Graphics {
     outside.setBottom(bottomButtons);
     outside.setTop(topButtons);
     outside.setLeft(leftButtons2);
-    //outside.setRight(normal);
     outside.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     scene = new Scene(outside);
   }
 
+  /**
+   * set the grid depending on which simulation is chosen.
+   * @param grid grid created when a simulation is chosen.
+   * @param simulationResource resource bundle that correlates with the simulation chosen.
+   * @param eventExit event that makes the scene go back to the landing screen.
+   * @return return the scene that is going to be displayed.
+   */
   public Scene setGridView(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
     Pane currentPane;
@@ -161,7 +190,12 @@ public class Graphics {
     }
     return scene;
   }
-  
+
+  /**
+   * for ant and sugar cells to chaneg the colors depending on the changing states
+   * @param grid current grid that is already created
+   * @param pane create a new grid pane with different colors
+   */
   protected void addOverlayedCells(Grid grid, GridPane pane)  {
     int[] sizeOfGrid = grid.getSizeOfGrid();
     int width = sizeOfGrid[1];
@@ -188,6 +222,11 @@ public class Graphics {
     }
   }
 
+  /**
+   * create a rectangular grid if the user chooses rectangular grid.
+   * @param grid grid already created depending on the simulation and cell color types.
+   * @return return a grid pane with the changing color and new cells.
+   */
   protected GridPane addRectangularGrid(Grid grid) {
     GridPane gridView = new GridPane();
     int[] sizeOfGrid = grid.getSizeOfGrid();
@@ -235,35 +274,56 @@ public class Graphics {
     return tileMap;
   }
 
+  /**
+   * creates a new rectangle, for rectangular cells.
+   * @param width width of rectangle created
+   * @param height height of rectangle created
+   * @param color color of rectangular fill
+   * @return return a rectangular shape with specific dimensions and color.
+   */
   private Rectangle createRectangleAtLocation(int width, int height, Color color)  {
     return new Rectangle(width, height, color);
   }
 
-
+  /**
+   * create a text file
+   * @param baseY how far away from the top of the screen is the text
+   * @param size how big the text is
+   * @param message what the text says
+   * @param fontWeight what font weight the text is
+   * @param font what font the text is
+   * @return return a text feature with the specific parameters.
+   */
   public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
                             String font) {
     Text text = new Text(75, 100, message);
     Font textFont = Font.font(font, fontWeight, size);
     text.setFont(textFont);
 
-    Bounds textBounds = text.getBoundsInParent();
-    double ascent = -textBounds.getMinY();
-    double width = textBounds.getWidth();
-
     double leftX = 0;
-           // (SCREEN_WIDTH - width) / 2;
     double topY = baseY;
     text.relocate(leftX, topY);
 
     return text;
   }
 
-
+  /**
+   * update the cell state, and therefore update the grid
+   * @param controllerType tells you what state the cells are in, updatin gbased on the simulation parameters
+   * @return a new grid with the new cells and states.
+   */
   public Grid updateGrid(Controller controllerType) {
     controllerType.updateState();
     return controllerType.getNewGrid();
   }
 
+  /**
+   * creates a button
+   * @param buttonName the title of the button
+   * @param baseY how far away the button is from the top of the screen
+   * @param root where the button is added to the scene
+   * @param event what the button does when it is clicked on
+   */
   public static void createButton(String buttonName, double baseY, VBox root,
                            EventHandler<ActionEvent> event) {
     Button button = new Button(buttonName);
@@ -277,19 +337,29 @@ public class Graphics {
     button.setOnAction(event);
   }
 
+  /**
+   * get the borderPane
+   * @return borderPane instance variable
+   */
   protected BorderPane getOutside()  {
     return this.outside;
   }
 
+  /**
+   * set borderPane
+   * @param outside borderPane
+   */
   protected void setOutside(BorderPane outside) {
     this.outside = outside;
   }
 
+  /**
+   * get Scene type
+   * @return scene instance variable
+   */
   protected Scene getScene() {
     return this.scene;
   }
-
-
 }
 
 

@@ -362,11 +362,11 @@ public class GameLoop extends Application {
     double comboBoxXPosition = visuals.SCREEN_WIDTH/2 - 40;
     HashMap<String, String> readInXML = new HashMap<>();
     VBox root = new VBox();
-    String[] simulationOptions = {"Fire", "Wa-Tor", "Percolation", "Segregation", "Game of Life"};
+    String[] simulationOptions = {"FIRE", "WATOR", "PERCOLATION", "SEGREGATION", "LIFE"};
     ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 0, comboBoxXPosition);
     typeOfSimulation.setPromptText("Simulation");
       typeOfSimulation.setOnAction(event ->
-        readInXML.put("Type", (String) typeOfSimulation.getValue()));
+        readInXML.put("Type", ((String) typeOfSimulation.getValue()).toUpperCase(Locale.ROOT)));
 
     String[] shapeOptions = {"Triangle", "Square", "Toroidal"};
     ComboBox typeOfShape = getComboBox(shapeOptions, root, 1, comboBoxXPosition);
@@ -393,7 +393,7 @@ public class GameLoop extends Application {
       }
     });
 
-    String[] startGridOptions = {"normal", "random"};
+    String[] startGridOptions = {"MANUEL", "RANDOM"};
     ComboBox typeOfStart = getComboBox(startGridOptions, root, 4, comboBoxXPosition);
     typeOfStart.setPromptText("Start Grid Layout");
     typeOfStart.setOnAction(event -> {
