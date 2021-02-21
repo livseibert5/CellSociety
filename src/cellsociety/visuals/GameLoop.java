@@ -56,7 +56,7 @@ public class GameLoop extends Application {
   private Paint backgroundColor = Color.AZURE;
   private Map<String, String> simulationData;
   private Controller secondController;
-  private boolean hasSecondSimulation = false;
+  private boolean secondSimulationStarted = false;
   private Map<String, String> secondSimulationData;
 
   /**
@@ -71,7 +71,7 @@ public class GameLoop extends Application {
   private void step(double elapsedTime)
       throws IOException, SAXException, ParserConfigurationException {
     time += 1;
-    if (simulationStarted && mod != 0 && (time % mod == 0)) {
+    if ((simulationStarted || secondSimulationStarted) && mod != 0 && (time % mod == 0)) {
       updateGrid(currentResourceBundle, currentControllerType,
           event -> setExitButtonToLandingScreen());
       checkSimulationEnded();
@@ -83,10 +83,12 @@ public class GameLoop extends Application {
    * checks if simulation ended, stops simulation if it did.
    */
   private void checkSimulationEnded() {
-      if (currentControllerType.simulationEnded()) {
-        if (secondController == null || secondController.simulationEnded())
-          simulationStarted = false;
-      }
+    if (currentControllerType.simulationEnded()) {
+      simulationStarted = false;
+    }
+    if (secondController == null || secondController.simulationEnded()) {
+      secondSimulationStarted = false;
+    }
   }
 
   /**
@@ -99,6 +101,7 @@ public class GameLoop extends Application {
     //where the Simulation Menu text starts.
     int baseY = 20;
     simulationStarted = false;
+    secondSimulationStarted = false;
     //vertical button layout.
     VBox buttonsInVertical = new VBox();
     BorderPane sceneLayout = new BorderPane();
@@ -298,8 +301,8 @@ public class GameLoop extends Application {
     Graphics.faster.setOnAction(event -> setMod(30));
     Graphics.slower.setOnAction(event -> setMod(120));
     Graphics.normal.setOnAction(event -> setMod(60));
-    Graphics.play.setOnAction(event -> simulationStarted = true);
-    Graphics.pause.setOnAction(event -> simulationStarted = false);
+    Graphics.play.setOnAction(event -> startSimulation());
+    Graphics.pause.setOnAction(event -> pauseSimulation());
     Button downloadXMLFile = new Button();
     Graphics.downloadXMLFile.setOnAction(event -> {
       try {
@@ -311,14 +314,23 @@ public class GameLoop extends Application {
     return grid;
   }
 
+  private void pauseSimulation()  {
+    simulationStarted = false;
+    secondSimulationStarted = false;
+  }
+  private void startSimulation()  {
+    simulationStarted = true;
+    if (secondController != null) secondSimulationStarted = true;
+  }
+
   private void updateGrid(ResourceBundle resourceBundle, Controller controller,
                           EventHandler<ActionEvent> event) {
     Grid grid = visuals.updateGrid(controller);
     Scene scene;
-    if (hasSecondSimulation)  {
+    if (secondSimulationStarted)  {
       GraphicsTwoView secondGraphicsController = (GraphicsTwoView) visuals;
       Grid grid2 = secondGraphicsController.updateGrid(secondController);
-      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
+      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event, simulationStarted, secondSimulationStarted);
     }
     else  {
        scene = visuals.setGridView(grid, currentResourceBundle, event);
@@ -346,12 +358,12 @@ public class GameLoop extends Application {
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
-      hasSecondSimulation = true;
+      secondSimulationStarted = true;
       String fileName = selectedFile.getName();
       setTwoGrid(firstFileName, fileName, currentControllerType, secondController, currentResourceBundle);
     }
     else  {
-      hasSecondSimulation = false;
+      secondSimulationStarted = false;
       setSpecificConfigFile(firstFileName, currentControllerType, currentResourceBundle);
     }
     simulationStarted = true;
@@ -438,6 +450,7 @@ public class GameLoop extends Application {
     Graphics.exitSecondLandingScreen.setOnAction(event -> {
       myScene = creatingLandingScreen();
       myStage.setScene(myScene);
+      pauseSimulation();
     });
   }
 

@@ -15,6 +15,10 @@ public class GameOfLifeController extends Controller {
     super();
   }
 
+  /**
+   * game of life simulation never ends
+   * @return false at all times
+   */
   @Override
   public boolean simulationEnded() {
     return false;
