@@ -30,6 +30,11 @@ public class XMLParser extends XMLReader {
     super(fileName);
   }
 
+  public XMLParser(Map<String, String> configData) {
+    super(configData);
+    createCustomSimulation();
+  }
+
   /**
    * Parses the data from the XML file into appropriate data structures.
    *
@@ -47,6 +52,13 @@ public class XMLParser extends XMLReader {
       params = getSimulationParameters();
     }
     createGrid(type, params);
+  }
+
+  private void createCustomSimulation() {
+    Type type = Type.valueOf(getInfo().get("Type"));
+    Neighbors neighborType = Neighbors.SQUARE_MOORE;
+    typeGridPairs(type, new HashMap<String, Double>(), neighborType, getInfo().get("PopulateType"));
+    grid = typeGridPairs.get(getInfo().get("GridType"));
   }
 
   /**

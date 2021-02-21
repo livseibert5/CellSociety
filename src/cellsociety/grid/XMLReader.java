@@ -37,6 +37,10 @@ public abstract class XMLReader {
     this.fileName = fileName;
   }
 
+  public XMLReader(Map<String, String> simulationData) {
+    this.simulationData = simulationData;
+  }
+
   /**
    * Allows XMLReader subclasses to read from their specific file layouts.
    *
