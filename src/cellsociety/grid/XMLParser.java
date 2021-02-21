@@ -78,12 +78,7 @@ public class XMLParser extends XMLReader {
     String gridShape = styler.getGridType();
     String populateType = styler.getPopulateType();
     typeGridPairs(type, params, neighborType, populateType);
-    try {
-      grid = typeGridPairs.get(gridShape);
-    } catch (Exception e) {
-      grid = new Grid(8, 8, retrieveTextContent("LayoutFile"), type, params, neighborType,
-          populateType);
-    }
+    grid = typeGridPairs.get(gridShape);
   }
 
   /**
@@ -133,14 +128,10 @@ public class XMLParser extends XMLReader {
     for (int i = 0; i < node.getLength(); i++) {
       Node currNode = node.item(i);
       Element nodeElement = (Element) currNode;
-      try {
-        String name = nodeElement.getElementsByTagName("Name").item(0).getTextContent();
-        Double val = Double
-            .parseDouble(nodeElement.getElementsByTagName("Value").item(0).getTextContent());
-        params.put(name, val);
-      } catch (Exception e) {
-        return params;
-      }
+      String name = nodeElement.getElementsByTagName("Name").item(0).getTextContent();
+      Double val = Double
+          .parseDouble(nodeElement.getElementsByTagName("Value").item(0).getTextContent());
+      params.put(name, val);
     }
     return params;
   }

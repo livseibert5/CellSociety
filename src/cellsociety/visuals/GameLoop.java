@@ -248,7 +248,7 @@ public class GameLoop extends Application {
     ComboBox typeOfColor = getComboBox(colorOptions, root, 1, 0);
     typeOfColor.setPromptText("Color");
     typeOfColor.setOnAction(event -> {
-      System.out.println(typeOfColor.getValue());
+      //System.out.println(typeOfColor.getValue());
       String color = (String) typeOfColor.getValue();
       if(Graphics.colorResourceBundle.containsKey(color)){
         backgroundColor = Color.valueOf(Graphics.colorResourceBundle.getString(color));

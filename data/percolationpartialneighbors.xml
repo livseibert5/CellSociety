@@ -3,9 +3,9 @@
   <Type>PERCOLATION</Type>
   <Title>Percolation</Title>
   <Author>Team 9</Author>
-  <Description>Percolation starts on both sides.</Description>
+  <Description>Simulate percolation.</Description>
   <Width>8</Width>
   <Height>8</Height>
-  <LayoutFile>percolationedges2.txt</LayoutFile>
-  <Style>squaremoore.xml</Style>
+  <LayoutFile>percolation1.txt</LayoutFile>
+  <Style>squarepartialneighbors.xml</Style>
 </Simulation>

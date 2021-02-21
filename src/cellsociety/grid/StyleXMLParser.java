@@ -33,13 +33,8 @@ public class StyleXMLParser extends XMLReader {
    */
   public void readFile() throws IOException, SAXException, ParserConfigurationException {
     buildParser();
-    getInfo().put("Language", retrieveTextContent("Language"));
     getInfo().put("GridType", retrieveTextContent("GridType"));
-    getInfo().put("CellShape", retrieveTextContent("CellShape"));
     getInfo().put("NeighborLayout", retrieveTextContent("NeighborLayout"));
-    getInfo().put("CellSize", retrieveTextContent("CellSize"));
-    getInfo().put("CellOutline", retrieveTextContent("CellOutline"));
-    getInfo().put("CellColor", retrieveTextContent("CellColor"));
     getInfo().put("GridPopulate", retrieveTextContent("GridPopulate"));
   }
 

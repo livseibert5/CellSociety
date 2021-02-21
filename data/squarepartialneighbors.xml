@@ -2,5 +2,5 @@
 <Style>
   <GridType>Square</GridType>
   <GridPopulate>MANUAL</GridPopulate>
-  <NeighborLayout>SQUARE_MOORE</NeighborLayout>
+  <NeighborLayout>SQUARE_A6</NeighborLayout>
 </Style>
