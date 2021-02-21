@@ -43,7 +43,7 @@ public class InsectCell extends Cell {
     Collections.shuffle(list);
     return list.get(0);
   }
-  
+
   /**
    * Ant cells always remain ants.
    */
