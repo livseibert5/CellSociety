@@ -38,7 +38,9 @@ public class InsectCell extends Cell {
 
   private Orientation chooseStartingOrientation() {
     List<Orientation> list = new ArrayList<>(
-        Arrays.asList(Orientation.NORTH, Orientation.SOUTH, Orientation.EAST, Orientation.WEST, Orientation.NORTHEAST, Orientation.NORTHWEST, Orientation.SOUTHEAST, Orientation.SOUTHWEST));
+        Arrays.asList(Orientation.NORTH, Orientation.SOUTH, Orientation.EAST, Orientation.WEST,
+            Orientation.NORTHEAST, Orientation.NORTHWEST, Orientation.SOUTHEAST,
+            Orientation.SOUTHWEST));
     Collections.shuffle(list);
     return list.get(0);
   }
@@ -127,9 +129,11 @@ public class InsectCell extends Cell {
   private void determineOrientation(Cell cell) {
     if (cell != null) {
       List<Orientation> list = new ArrayList<>(
-          Arrays.asList(Orientation.NORTH, Orientation.SOUTH, Orientation.EAST, Orientation.WEST, Orientation.NORTHEAST, Orientation.NORTHWEST, Orientation.SOUTHEAST, Orientation.SOUTHWEST));
+          Arrays.asList(Orientation.NORTH, Orientation.SOUTH, Orientation.EAST, Orientation.WEST,
+              Orientation.NORTHEAST, Orientation.NORTHWEST, Orientation.SOUTHEAST,
+              Orientation.SOUTHWEST));
       Collections.shuffle(list);
-      for (Orientation o: list) {
+      for (Orientation o : list) {
         if (isFacing(cell, o)) {
           orientation = o;
           break;

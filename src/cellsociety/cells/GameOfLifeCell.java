@@ -31,7 +31,7 @@ public class GameOfLifeCell extends Cell {
       setNextState(DEAD);
     } else if (getState() == ALIVE || (getState() == DEAD && livingNeighbors == 3)) {
       setNextState(ALIVE);
-    } else if (getState()== DEAD) {
+    } else if (getState() == DEAD) {
       setNextState(DEAD);
     }
   }

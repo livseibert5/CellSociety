@@ -18,11 +18,13 @@ import java.util.List;
 public enum Type {
   FIRE(new ArrayList<>(List.of(FireCell.EMPTY, FireCell.TREE, FireCell.BURNING))),
   SEGREGATION(new ArrayList<>(List.of(SegregationCell.TYPEX, SegregationCell.TYPEO))),
-  PERCOLATION(new ArrayList<>(List.of(PercolationCell.BLOCKED, PercolationCell.PERCOLATED, PercolationCell.OPEN))),
+  PERCOLATION(new ArrayList<>(
+      List.of(PercolationCell.BLOCKED, PercolationCell.PERCOLATED, PercolationCell.OPEN))),
   WATOR(new ArrayList<>(List.of(WatorCell.PREDATOR, WatorCell.PREY, WatorCell.DEAD))),
   LIFE(new ArrayList<>(List.of(GameOfLifeCell.ALIVE, GameOfLifeCell.DEAD))),
   EMPTY(new ArrayList<>()),
-  ANTS(new ArrayList<>(List.of(ForagerCell.NEST, ForagerCell.FOOD_SOURCE, ForagerCell.EMPTY, ForagerCell.OBSTACLE))),
+  ANTS(new ArrayList<>(
+      List.of(ForagerCell.NEST, ForagerCell.FOOD_SOURCE, ForagerCell.EMPTY, ForagerCell.OBSTACLE))),
   SUGARSCAPE(new ArrayList<>(List.of(SugarCell.EMPTY)));
 
   private List<Integer> states;

@@ -19,8 +19,8 @@ enum Orientation {
   private final int[][] directions;
 
   /**
-   * Constructor for Orientation item, passes it a list of neighbor directions to cells
-   * that are at the specified orientation relative to the cell.
+   * Constructor for Orientation item, passes it a list of neighbor directions to cells that are at
+   * the specified orientation relative to the cell.
    *
    * @param directions coordinates of neighbor cells at orientation relative to current cell
    */

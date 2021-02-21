@@ -41,8 +41,8 @@ public class GridToXML {
    * @param controller     current controller for simulation
    * @param simulationData map with data about the simulation
    * @throws ParserConfigurationException error for XML parser library
-   * @throws TransformerException error writing to new xml file
-   * @throws IOException error writing grid to new .txt file
+   * @throws TransformerException         error writing to new xml file
+   * @throws IOException                  error writing grid to new .txt file
    */
   public GridToXML(Controller controller, Map<String, String> simulationData)
       throws ParserConfigurationException, TransformerException, IOException {
@@ -140,7 +140,7 @@ public class GridToXML {
   /**
    * Creates a new parameter tag with the proper name and value.
    *
-   * @param key name of parameter
+   * @param key   name of parameter
    * @param value value of parameter
    */
   private void createNewParameter(String key, Double value) {

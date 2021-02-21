@@ -120,9 +120,9 @@ public class SugarCell extends Cell {
     double green = 154;
     double blue = 0;
     double change = sugar / DEFAULT_MAX_SUGAR > 1 ? 1 : sugar / DEFAULT_MAX_SUGAR;
-    red = red  -  (red * (change));
-    green = green  -  (green * (change));
-    blue = blue  -  (blue * (change));
+    red = red - (red * (change));
+    green = green - (green * (change));
+    blue = blue - (blue * (change));
     return new Double[]{red, green, blue};
   }
 }
