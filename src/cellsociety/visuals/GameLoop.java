@@ -202,7 +202,7 @@ public class GameLoop extends Application {
     ComboBox typeOfLanguage = getComboBox(languageOptions, root, 1, 0);
     typeOfLanguage.setPromptText("Language");
     typeOfLanguage.setOnAction(event -> {
-      System.out.println(typeOfLanguage.getValue());
+      //System.out.println(typeOfLanguage.getValue());
       language = (String) typeOfLanguage.getValue();
     });
 
@@ -210,7 +210,7 @@ public class GameLoop extends Application {
     ComboBox typeOfColor = getComboBox(colorOptions, root, 1, 0);
     typeOfColor.setPromptText("Color");
     typeOfColor.setOnAction(event -> {
-      System.out.println(typeOfColor.getValue());
+      //System.out.println(typeOfColor.getValue());
       String color = (String) typeOfColor.getValue();
       if(Graphics.colorResourceBundle.containsKey(color)){
         backgroundColor = Color.valueOf(Graphics.colorResourceBundle.getString(color));
