@@ -48,6 +48,11 @@ public class ForagerCell extends Cell {
    */
   public void determineNextAction() {
     ants.forEach(ant -> {
+      if (this.getState() == NEST) {
+        ant.dropFoodItem();
+      } else if (this.getState() == FOOD_SOURCE) {
+        ant.getFoodItem();
+      }
       if (ant.hasFoodItem()) {
         ant.returnToNest(this);
       } else {
@@ -81,6 +86,14 @@ public class ForagerCell extends Cell {
       foodPheromones = pheromones;
     } else {
       homePheromones = pheromones;
+    }
+  }
+
+  public void incrementPheromones(String type, double pheromones) {
+    if (type.equals(FOOD)) {
+      foodPheromones += pheromones;
+    } else {
+      homePheromones += pheromones;
     }
   }
 

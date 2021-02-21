@@ -243,7 +243,7 @@ public class GameLoop extends Application {
 
   @Override
   public void start(Stage stage) throws IOException, SAXException, ParserConfigurationException {
-    language = "French";
+    language = "English";
     myScene = creatingLandingScreen();
     myStage = stage;
     stage.setScene(myScene);
