@@ -55,6 +55,10 @@ public class GameLoop extends Application {
   private Paint backgroundColor = Color.AZURE;
   private Map<String, String> simulationData;
 
+  private Controller secondController;
+  private boolean hasSecondSimulation = false;
+  private Map<String, String> secondSimulationData;
+
   private void step(double elapsedTime)
       throws IOException, SAXException, ParserConfigurationException {
     time += 1;
@@ -68,6 +72,7 @@ public class GameLoop extends Application {
 
   private void checkSimulationEnded() {
       if (currentControllerType.simulationEnded()) {
+        if (secondController == null || secondController.simulationEnded())
           simulationStarted = false;
       }
   }
@@ -87,6 +92,7 @@ public class GameLoop extends Application {
             event -> {
               try {
                 currentControllerType = new GameOfLifeController();
+                secondController = new GameOfLifeController();
                 currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
                 openFileChooser(currentControllerType, currentResourceBundle);
 
@@ -100,6 +106,7 @@ public class GameLoop extends Application {
           try {
 
             currentControllerType = new PercolationController();
+            secondController = new GameOfLifeController();
             currentResourceBundle = Graphics.myPercolationSimulationResources;
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -111,6 +118,7 @@ public class GameLoop extends Application {
         buttonsInVeritcal, event -> {
           try {
             currentControllerType = new SegregationController();
+            secondController = new SegregationController();
             currentResourceBundle = Graphics.mySegregationSimulationResources;
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -122,6 +130,7 @@ public class GameLoop extends Application {
         event -> {
           try {
             currentControllerType = new WatorController();
+            secondController = new WatorController();
             currentResourceBundle = Graphics.myWaTorSimulationResources;
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -133,6 +142,7 @@ public class GameLoop extends Application {
         event -> {
           try {
             currentControllerType = new FireController();
+            secondController = new FireController();
             currentResourceBundle = Graphics.myFireSimulationResources;
             openFileChooser(currentControllerType, currentResourceBundle);
 
@@ -146,6 +156,7 @@ public class GameLoop extends Application {
                     event -> {
                       try {
                         currentControllerType = new AntController();
+                        secondController = new AntController();
                         currentResourceBundle = Graphics.myAntSimulation;
                         openFileChooser(currentControllerType, currentResourceBundle);
 
@@ -160,6 +171,7 @@ public class GameLoop extends Application {
                     event -> {
                       try {
                         currentControllerType = new SugarController();
+                        secondController = new SugarController();
                         currentResourceBundle = Graphics.mySugarSimulation;
                         openFileChooser(currentControllerType, currentResourceBundle);
 
@@ -232,7 +244,28 @@ public class GameLoop extends Application {
     simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
     visuals = new Graphics(controllerType, simulationType, language);
+    return setGraphicsParameters(controllerType, null, grid, grid);
+  }
+
+  private Grid setTwoGrid(String filename, String secondFileName, Controller controllerType, Controller secondController,
+      ResourceBundle simulationType)
+      throws IOException, SAXException, ParserConfigurationException {
+    XMLParser parse = new XMLParser(filename);
+    parse.readFile();
+    simulationData = parse.getInfo();
+    Grid grid = parse.getGrid();
+    XMLParser parse2 = new XMLParser(secondFileName);
+    parse2.readFile();
+    secondSimulationData = parse2.getInfo();
+    Grid grid2 = parse2.getGrid();
+    visuals = new GraphicsTwoView(controllerType, secondController, simulationType, language);
+    return setGraphicsParameters(controllerType, secondController, grid, grid2);
+  }
+
+  private Grid setGraphicsParameters(Controller controllerType, Controller secondController,
+      Grid grid, Grid grid2) {
     controllerType.setInitialGrid(grid);
+    if (secondController != null) secondController.setInitialGrid(grid2);
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen(), (Color) backgroundColor);
     Graphics.faster.setOnAction(event -> setMod(30));
@@ -254,11 +287,19 @@ public class GameLoop extends Application {
   private void updateGrid(ResourceBundle resourceBundle, Controller controller,
                           EventHandler<ActionEvent> event) {
     Grid grid = visuals.updateGrid(controller);
-    Scene scene = visuals.setGridView(grid, currentResourceBundle, event);
+    Scene scene;
+    if (hasSecondSimulation)  {
+      GraphicsTwoView secondGraphicsController = (GraphicsTwoView) visuals;
+      Grid grid2 = secondGraphicsController.updateGrid(secondController);
+      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
+    }
+    else  {
+       scene = visuals.setGridView(grid, currentResourceBundle, event);
+    }
     myStage.setScene(scene);
   }
 
-  public Grid setSpecificConfigFile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
+  private Grid setSpecificConfigFile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
       throws ParserConfigurationException, SAXException, IOException {
     return setGrid(fileName, currentControllerType, currentResourceBundle);
   }
@@ -269,10 +310,25 @@ public class GameLoop extends Application {
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
-      simulationStarted = true;
       String fileName = selectedFile.getName();
-      setSpecificConfigFile(fileName, currentControllerType, currentResourceBundle);
+      openSecondFileChooser(fileName, secondController, currentResourceBundle);
     }
+  }
+
+  private void openSecondFileChooser(String firstFileName, Controller secondController, ResourceBundle currentResourceBundle) throws IOException, SAXException, ParserConfigurationException {
+
+    FileChooser chooser = new FileChooser();
+    File selectedFile = chooser.showOpenDialog(myStage);
+    if (selectedFile != null){
+      hasSecondSimulation = true;
+      String fileName = selectedFile.getName();
+      setTwoGrid(firstFileName, fileName, currentControllerType, secondController, currentResourceBundle);
+    }
+    else  {
+      hasSecondSimulation = false;
+      setSpecificConfigFile(firstFileName, currentControllerType, currentResourceBundle);
+    }
+    simulationStarted = true;
   }
 
   public HashMap<String, String> createCustom(){
