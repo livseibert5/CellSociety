@@ -13,7 +13,10 @@ public class PercolationController extends Controller {
 
   private int startingEdge;
   //0 for top, 1 for right, 2 for bottom, 3 for left
-
+  public static final int TOP = 0;
+  public static final int RIGHT = 1;
+  public static final int BOTTOM = 2;
+  public static final int LEFT = 3;
   /**
    * Constructor to create the controller
    */
@@ -33,19 +36,19 @@ public class PercolationController extends Controller {
 
     for (int i = 0; i < dims[0]; i++) {
       if (grid.getCellAtLocation(i, 0).getState() == PercolationCell.PERCOLATED) {
-        startingEdge = 3;
+        startingEdge = LEFT;
         return;
       } else if (grid.getCellAtLocation(i, dims[1] - 1).getState() == PercolationCell.PERCOLATED) {
-        startingEdge = 1;
+        startingEdge = RIGHT;
         return;
       }
     }
     for (int j = 0; j < dims[1]; j++) {
       if (grid.getCellAtLocation(0, j).getState() == PercolationCell.PERCOLATED) {
-        startingEdge = 0;
+        startingEdge = TOP;
         return;
       } else if (grid.getCellAtLocation(dims[0] - 1, j).getState() == PercolationCell.PERCOLATED) {
-        startingEdge = 2;
+        startingEdge = BOTTOM;
         return;
       }
     }
@@ -80,27 +83,18 @@ public class PercolationController extends Controller {
   }
 
   private boolean simulationEndedByEdge(Grid grid, int[] dims) {
-    switch (startingEdge) {
-      case 0:
-        return checkBottomEdge(grid, dims);
-
-      case 1:
-        return checkLeftEdge(grid, dims);
-
-      case 2:
-        return checkTopEdge(grid, dims);
-
-      case 3:
-        return checkRightEdge(grid, dims);
-
-
-    }
-    return false;
+    return switch (startingEdge) {
+      case TOP -> checkBottomEdge(grid, dims);
+      case RIGHT -> checkLeftEdge(grid, dims);
+      case BOTTOM -> checkTopEdge(grid, dims);
+      case LEFT -> checkRightEdge(grid, dims);
+      default -> false;
+    };
   }
 
   private boolean checkLeftEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[0]; i++) {
-      if (grid.getCellAtLocation(i, 0).getState() == 2) {
+      if (grid.getCellAtLocation(i, 0).getState() == PercolationCell.PERCOLATED) {
         return true;
       }
     }
@@ -109,7 +103,7 @@ public class PercolationController extends Controller {
 
   private boolean checkBottomEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[1]; i++) {
-      if (grid.getCellAtLocation(dims[0] - 1, i).getState() == 2) {
+      if (grid.getCellAtLocation(dims[0] - 1, i).getState() == PercolationCell.PERCOLATED) {
         return true;
       }
     }
@@ -118,7 +112,7 @@ public class PercolationController extends Controller {
 
   private boolean checkRightEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[0]; i++) {
-      if (grid.getCellAtLocation(i, dims[1] - 1).getState() == 2) {
+      if (grid.getCellAtLocation(i, dims[1] - 1).getState() == PercolationCell.PERCOLATED) {
         return true;
       }
     }
@@ -127,7 +121,7 @@ public class PercolationController extends Controller {
 
   private boolean checkTopEdge(Grid grid, int[] dims) {
     for (int i = 0; i < dims[1]; i++) {
-      if (grid.getCellAtLocation(0, i).getState() == 2) {
+      if (grid.getCellAtLocation(0, i).getState() == PercolationCell.PERCOLATED) {
         return true;
       }
     }

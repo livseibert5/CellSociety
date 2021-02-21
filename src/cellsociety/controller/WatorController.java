@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class WatorController extends Controller {
 
   //boolean[][] updated;
-  private int[][] neighbors = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+  private final int[][] neighbors = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
 
   /**
    * Constructor to create the controller
@@ -62,9 +62,7 @@ public class WatorController extends Controller {
 
   private void shuffleNeighbors() {
     List<int[]> neighborList = new ArrayList<>();
-    for (int i = 0; i < neighbors.length; i++) {
-      neighborList.add(neighbors[i]);
-    }
+    Collections.addAll(neighborList, neighbors);
     Collections.shuffle(neighborList);
     for (int i = 0; i < neighbors.length; i++) {
       neighbors[i] = neighborList.get(i);
@@ -101,13 +99,13 @@ public class WatorController extends Controller {
   private void moveWatorCell(Grid oldGrid, Grid newGrid, int i, int j, WatorCell watorCell) {
     moveCell(i, j, oldGrid, newGrid);
     if (watorCell.getState() == WatorCell.PREDATOR) {
-      HashMap<String, Double> params = new HashMap();
+      HashMap<String, Double> params = new HashMap<>();
       params.put("startingEnergy", ((PredatorCell) watorCell).getStartingEnergy());
       params.put("offspringEnergy", ((PredatorCell) watorCell).getOffspringEnergy());
       newGrid.setCellAtLocation(i, j, new PredatorCell(WatorCell.PREDATOR, i, j, params,
           Neighbors.SQUARE_NEUMANN));
     } else if (watorCell.getState() == WatorCell.PREY) {
-      HashMap<String, Double> params = new HashMap();
+      HashMap<String, Double> params = new HashMap<>();
       params.put("breedTime", ((PreyCell) watorCell).getBreedTime());
       newGrid.setCellAtLocation(i, j, new PreyCell(WatorCell.PREY, i, j, params, Neighbors.SQUARE_NEUMANN));
     }
@@ -122,9 +120,9 @@ public class WatorController extends Controller {
       }
     }
     shuffleNeighbors();
-    for (int index = 0; index < neighbors.length; index++) {
-      int row = i + neighbors[index][0];
-      int col = j + neighbors[index][1];
+    for (int[] neighbor : neighbors) {
+      int row = i + neighbor[0];
+      int col = j + neighbor[1];
       if (newGrid.getCellAtLocation(
           row, col).getState() == WatorCell.EMPTY) {
         newGrid.setCellAtLocation(row, col, oldGrid.getCellAtLocation(i, j));
@@ -135,9 +133,9 @@ public class WatorController extends Controller {
 
   private boolean movePredator(int i, int j, Grid oldGrid, Grid newGrid) {
     shuffleNeighbors();
-    for (int index = 0; index < neighbors.length; index++) {
-      int row = i + neighbors[index][0];
-      int col = j + neighbors[index][1];
+    for (int[] neighbor : neighbors) {
+      int row = i + neighbor[0];
+      int col = j + neighbor[1];
       if (newGrid.getCellAtLocation(
           row, col).getState() == WatorCell.PREY) {
         newGrid.setCellAtLocation(row, col, oldGrid.getCellAtLocation(i, j));

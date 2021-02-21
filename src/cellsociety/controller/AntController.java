@@ -2,19 +2,26 @@ package cellsociety.controller;
 
 import cellsociety.cells.ForagerCell;
 import cellsociety.cells.InsectCell;
-import cellsociety.cells.SugarCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AntController extends Controller{
 
-  private List<InsectCell> insectCellToMove = new ArrayList();
+  private final List<InsectCell> insectCellToMove = new ArrayList<>();
+
+  /**
+   * default constructor for ant controller
+   */
   public AntController()  {
     super();
   }
 
+  /**
+   * overridden method for setting initial grid that also
+   * sets initial pheromones and places ants
+   * @param grid grid of cells
+   */
   @Override
   public void setInitialGrid(Grid grid) {
     super.setInitialGrid(grid);
@@ -64,6 +71,11 @@ public class AntController extends Controller{
     return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math.pow(locationOne[1] - locationTwo[1], 2));
   }
 
+  /**
+   * overridden method for updating state of the grid
+   * updates ant locations and moves them to new cells
+   * resets controller after that is done
+   */
   @Override
   public void updateState() {
     super.getOldGrid().initializeCells();
@@ -106,6 +118,10 @@ public class AntController extends Controller{
     }
   }
 
+  /**
+   * simulation never ends for ant simulation
+   * @return false all the time, every single time
+   */
   @Override
   public boolean simulationEnded() {
     return false;

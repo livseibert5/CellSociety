@@ -1,11 +1,8 @@
 package cellsociety.controller;
 
 import cellsociety.cells.AgentCell;
-import cellsociety.cells.EmptyCell;
 import cellsociety.cells.Neighbors;
-import cellsociety.cells.PredatorCell;
 import cellsociety.cells.SugarCell;
-import cellsociety.cells.WatorCell;
 import cellsociety.grid.Grid;
 
 public class SugarController extends Controller{
@@ -52,6 +49,10 @@ public class SugarController extends Controller{
     return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math.pow(locationOne[1] - locationTwo[1], 2));
   }
 
+  /**
+   * method that overloads the updateState method
+   * determines next location for all cells and moves the agent cells accordingly
+   */
   @Override
   public void updateState() {
     Grid oldGrid = super.getOldGrid();
@@ -99,6 +100,10 @@ public class SugarController extends Controller{
     }
   }
 
+  /**
+   * sugar simualtion never ends
+   * @return false all the time, everytime
+   */
   @Override
   public boolean simulationEnded() {
     return false;

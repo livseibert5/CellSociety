@@ -42,26 +42,17 @@ public class GraphicsTwoView extends Graphics{
   }
 
   public Scene setGridView(Grid grid, Grid secondGrid, ResourceBundle simulationResource,
-      EventHandler<ActionEvent> eventExit) {
-    Pane currentPane;
-    BorderPane outside = getOutside();
-    if (grid instanceof TriangularGrid) {
-      currentPane = addTriangularGrid(grid);
-      outside.setCenter(currentPane);
-      outside.setRight(addTriangularGrid(grid));
+      EventHandler<ActionEvent> eventExit, boolean firstSimulation, boolean secondSimulation) {
+    if (firstSimulation)
+      super.setGridView(grid, simulationResource, eventExit);
+    BorderPane outside = super.getOutside();
+    if (secondSimulation) {
+      return setPane2(secondGrid, outside);
     }
-    else  {
-      currentPane = addRectangularGrid(grid);
-      outside.setCenter(currentPane);
-      if (firstControllerType instanceof AntController || secondControllerType instanceof SugarController)  {
-        addOverlayedCells(grid, (GridPane) currentPane);
-      }
-    }
-
-    return setPane2(secondGrid, currentPane, outside);
+    return getScene();
   }
 
-  private Scene setPane2(Grid secondGrid, Pane currentPane, BorderPane outside) {
+  private Scene setPane2(Grid secondGrid,  BorderPane outside) {
     Pane pane2;
     if (secondGrid instanceof TriangularGrid) {
       pane2 = addTriangularGrid(secondGrid);

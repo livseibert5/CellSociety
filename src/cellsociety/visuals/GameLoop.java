@@ -56,7 +56,7 @@ public class GameLoop extends Application {
   private Paint backgroundColor = Color.AZURE;
   private Map<String, String> simulationData;
   private Controller secondController;
-  private boolean hasSecondSimulation = false;
+  private boolean secondSimulationStarted = false;
   private Map<String, String> secondSimulationData;
 
   /**
@@ -71,7 +71,7 @@ public class GameLoop extends Application {
   private void step(double elapsedTime)
       throws IOException, SAXException, ParserConfigurationException {
     time += 1;
-    if (simulationStarted && mod != 0 && (time % mod == 0)) {
+    if ((simulationStarted || secondSimulationStarted) && mod != 0 && (time % mod == 0)) {
       updateGrid(currentResourceBundle, currentControllerType,
           event -> setExitButtonToLandingScreen());
       checkSimulationEnded();
@@ -83,10 +83,12 @@ public class GameLoop extends Application {
    * checks if simulation ended, stops simulation if it did.
    */
   private void checkSimulationEnded() {
-      if (currentControllerType.simulationEnded()) {
-        if (secondController == null || secondController.simulationEnded())
-          simulationStarted = false;
-      }
+    if (currentControllerType.simulationEnded()) {
+      simulationStarted = false;
+    }
+    if (secondController == null || secondController.simulationEnded()) {
+      secondSimulationStarted = false;
+    }
   }
 
   /**
@@ -99,6 +101,7 @@ public class GameLoop extends Application {
     //where the Simulation Menu text starts.
     int baseY = 20;
     simulationStarted = false;
+    secondSimulationStarted = false;
     //vertical button layout.
     VBox buttonsInVertical = new VBox();
     BorderPane sceneLayout = new BorderPane();
@@ -248,7 +251,7 @@ public class GameLoop extends Application {
     ComboBox typeOfColor = getComboBox(colorOptions, root, 1, 0);
     typeOfColor.setPromptText("Color");
     typeOfColor.setOnAction(event -> {
-      //System.out.println(typeOfColor.getValue());
+      //set background color to whatever color is chosen from the list
       String color = (String) typeOfColor.getValue();
       if(Graphics.colorResourceBundle.containsKey(color)){
         backgroundColor = Color.valueOf(Graphics.colorResourceBundle.getString(color));
@@ -258,10 +261,12 @@ public class GameLoop extends Application {
     return new VBox(typeOfLanguage, typeOfColor);
   }
 
+  //change the speed of the simulation
   private void setMod(int mod) {
     this.mod = mod;
   }
 
+  //read a specific xml file to get the start of the simulation layout
   private Grid setGrid(String filename, Controller controllerType, ResourceBundle simulationType)
       throws IOException, SAXException, ParserConfigurationException {
     XMLParser parse = new XMLParser(filename);
@@ -271,7 +276,7 @@ public class GameLoop extends Application {
     visuals = new Graphics(controllerType, simulationType, language);
     return setGraphicsParameters(controllerType, null, grid, grid);
   }
-
+  //create the second view grid
   private Grid setTwoGrid(String filename, String secondFileName, Controller controllerType, Controller secondController,
       ResourceBundle simulationType)
       throws IOException, SAXException, ParserConfigurationException {
@@ -286,7 +291,7 @@ public class GameLoop extends Application {
     visuals = new GraphicsTwoView(controllerType, secondController, simulationType, language);
     return setGraphicsParameters(controllerType, secondController, grid, grid2);
   }
-
+  //set the parameters for the grid
   private Grid setGraphicsParameters(Controller controllerType, Controller secondController,
       Grid grid, Grid grid2) {
     controllerType.setInitialGrid(grid);
@@ -296,8 +301,8 @@ public class GameLoop extends Application {
     Graphics.faster.setOnAction(event -> setMod(30));
     Graphics.slower.setOnAction(event -> setMod(120));
     Graphics.normal.setOnAction(event -> setMod(60));
-    Graphics.play.setOnAction(event -> simulationStarted = true);
-    Graphics.pause.setOnAction(event -> simulationStarted = false);
+    Graphics.play.setOnAction(event -> startSimulation());
+    Graphics.pause.setOnAction(event -> pauseSimulation());
     Button downloadXMLFile = new Button();
     Graphics.downloadXMLFile.setOnAction(event -> {
       try {
@@ -309,14 +314,23 @@ public class GameLoop extends Application {
     return grid;
   }
 
+  private void pauseSimulation()  {
+    simulationStarted = false;
+    secondSimulationStarted = false;
+  }
+  private void startSimulation()  {
+    simulationStarted = true;
+    if (secondController != null) secondSimulationStarted = true;
+  }
+
   private void updateGrid(ResourceBundle resourceBundle, Controller controller,
                           EventHandler<ActionEvent> event) {
     Grid grid = visuals.updateGrid(controller);
     Scene scene;
-    if (hasSecondSimulation)  {
+    if (secondSimulationStarted)  {
       GraphicsTwoView secondGraphicsController = (GraphicsTwoView) visuals;
       Grid grid2 = secondGraphicsController.updateGrid(secondController);
-      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
+      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event, simulationStarted, secondSimulationStarted);
     }
     else  {
        scene = visuals.setGridView(grid, currentResourceBundle, event);
@@ -344,23 +358,19 @@ public class GameLoop extends Application {
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
-      hasSecondSimulation = true;
+      secondSimulationStarted = true;
       String fileName = selectedFile.getName();
       setTwoGrid(firstFileName, fileName, currentControllerType, secondController, currentResourceBundle);
     }
     else  {
-      hasSecondSimulation = false;
+      secondSimulationStarted = false;
       setSpecificConfigFile(firstFileName, currentControllerType, currentResourceBundle);
     }
     simulationStarted = true;
   }
 
-  public HashMap<String, String> createCustom(){
-    //create a map with the same tags that the style sheets have.
-    //random.
-    //trinagular cant be tordial
-    //languages: english, spanish, and french.
-    //color: dark, light, duke mode
+  private HashMap<String, String> createCustom(){
+
     double comboBoxXPosition = visuals.SCREEN_WIDTH/2 - 40;
     HashMap<String, String> readInXML = new HashMap<>();
     VBox root = new VBox();
@@ -411,10 +421,6 @@ public class GameLoop extends Application {
     return readInXML;
   }
 
-//  private static void setGridBackgroundColor(){
-//    backgroundColor =
-//  }
-
   private ComboBox getComboBox(String[] listOfOptions, VBox root, int listNumber, double xPosition) {
     ComboBox<String> typeOfComboBox = new ComboBox<String>();
     //typeOfComboBox.setSt
@@ -428,13 +434,12 @@ public class GameLoop extends Application {
     return typeOfComboBox;
   }
 
-  public void createSecondLandingScreen(Controller currentControllerType, ResourceBundle currentResourceBundle)
+  private void createSecondLandingScreen(Controller currentControllerType, ResourceBundle currentResourceBundle)
       throws IOException, SAXException, ParserConfigurationException {
 
     Group root = new Group();
     addExitButton(root);
     createCustom();
-           // new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     myStage.setScene(myScene);
   }
 
@@ -445,6 +450,7 @@ public class GameLoop extends Application {
     Graphics.exitSecondLandingScreen.setOnAction(event -> {
       myScene = creatingLandingScreen();
       myStage.setScene(myScene);
+      pauseSimulation();
     });
   }
 

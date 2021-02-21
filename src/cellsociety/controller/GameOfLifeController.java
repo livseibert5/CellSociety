@@ -14,5 +14,4 @@ public class GameOfLifeController extends Controller {
   public GameOfLifeController() {
     super();
   }
-
 }
