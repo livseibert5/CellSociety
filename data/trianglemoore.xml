@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Style>
+  <Language>ENGLISH</Language>
+  <GridType>Triangle</GridType>
+  <NeighborLayout>TRIANGLE_MOORE_UP</NeighborLayout>
+  <CellSize>10</CellSize>
+  <CellOutline>YES</CellOutline>
+  <CellColor>BLUE</CellColor>
+</Style>
