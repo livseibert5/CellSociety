@@ -243,23 +243,7 @@ public class GameLoop extends Application {
     simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
     visuals = new Graphics(controllerType, simulationType, language);
-    controllerType.setInitialGrid(grid);
-    myScene = visuals
-        .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen(), (Color) backgroundColor);
-    Graphics.faster.setOnAction(event -> setMod(30));
-    Graphics.slower.setOnAction(event -> setMod(120));
-    Graphics.normal.setOnAction(event -> setMod(60));
-    Graphics.play.setOnAction(event -> simulationStarted = true);
-    Graphics.pause.setOnAction(event -> simulationStarted = false);
-    Button downloadXMLFile = new Button();
-    visuals.downloadXMLFile.setOnAction(event -> {
-      try {
-        new GridToXML(controllerType, simulationData);
-      } catch (ParserConfigurationException | TransformerException | IOException e) {
-        e.printStackTrace();
-      }});
-    myStage.setScene(myScene);
-    return grid;
+    return setGraphicsParameters(controllerType, null, grid, grid);
   }
 
   private Grid setTwoGrid(String filename, String secondFileName, Controller controllerType, Controller secondController,
@@ -273,9 +257,14 @@ public class GameLoop extends Application {
     parse2.readFile();
     secondSimulationData = parse2.getInfo();
     Grid grid2 = parse2.getGrid();
-    visuals = new Graphics(controllerType, simulationType, language);
+    visuals = new GraphicsTwoView(controllerType, secondController, simulationType, language);
     controllerType.setInitialGrid(grid);
-    secondController.setInitialGrid(grid2);
+    return setGraphicsParameters(controllerType, secondController, grid, grid2);
+  }
+
+  private Grid setGraphicsParameters(Controller controllerType, Controller secondController,
+      Grid grid, Grid grid2) {
+    if (secondController != null) secondController.setInitialGrid(grid2);
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen(), (Color) backgroundColor);
     Graphics.faster.setOnAction(event -> setMod(30));
@@ -297,7 +286,15 @@ public class GameLoop extends Application {
   private void updateGrid(ResourceBundle resourceBundle, Controller controller,
                           EventHandler<ActionEvent> event) {
     Grid grid = visuals.updateGrid(controller);
-    Scene scene = visuals.setGridView(grid, currentResourceBundle, event);
+    Scene scene;
+    if (hasSecondSimulation)  {
+      GraphicsTwoView secondGraphicsController = (GraphicsTwoView) visuals;
+      Grid grid2 = secondGraphicsController.updateGrid(secondController);
+      scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
+    }
+    else  {
+       scene = visuals.setGridView(grid, currentResourceBundle, event);
+    }
     myStage.setScene(scene);
   }
 
