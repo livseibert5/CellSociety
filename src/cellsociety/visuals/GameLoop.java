@@ -40,11 +40,12 @@ import java.util.ResourceBundle;
 
 public class GameLoop extends Application {
 
-  private Graphics visuals;
-  private Scene myScene;
   private static final String TITLE = "Cellular Automata";
   public static final int FRAMES_PER_SECOND = 60;
   public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
+  private Graphics visuals;
+  private Scene myScene;
   private Stage myStage;
   private ResourceBundle currentResourceBundle;
   private Controller currentControllerType;
@@ -55,6 +56,14 @@ public class GameLoop extends Application {
   private Paint backgroundColor = Color.AZURE;
   private Map<String, String> simulationData;
 
+  /**
+   * continuously runs when the project is running. Starts the simulation.
+   * updates grid every time it runs.
+   * @param elapsedTime
+   * @throws IOException
+   * @throws SAXException
+   * @throws ParserConfigurationException
+   */
   private void step(double elapsedTime)
       throws IOException, SAXException, ParserConfigurationException {
     time += 1;
@@ -66,83 +75,94 @@ public class GameLoop extends Application {
     }
   }
 
+  /**
+   * checks if simulation ended, stops simulation if it did.
+   */
   private void checkSimulationEnded() {
       if (currentControllerType.simulationEnded()) {
           simulationStarted = false;
       }
   }
 
+  /**
+   * returns the landing scene with the buttons of each simulation.
+   * Also has the option to change language and background color.
+   * @return Scene with buttons and the title of the project.
+   */
   public Scene creatingLandingScreen() {
+
+    //where the Simulation Menu text starts.
     int baseY = 20;
     simulationStarted = false;
-    VBox root = new VBox();
-    VBox buttonsInVeritcal = new VBox();
+    //vertical button layout.
+    VBox buttonsInVertical = new VBox();
     BorderPane sceneLayout = new BorderPane();
-    Text welcome = visuals.constructText(baseY, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
-    Text instructions = visuals.constructText(baseY + 20, 15,
-        "click on any simulation to start", FontWeight.NORMAL, Graphics.FONT);
+    //create the simulation title
+    Text welcome = Graphics.constructText(baseY, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
 
-    visuals
-        .createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 0, buttonsInVeritcal,
+    //create a button for each simulation, set controller type and resourceBundle based on what simulation is chosen.
+    //Game of Life
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("GameOfLifeSimulation"), 0, buttonsInVertical,
             event -> {
               try {
                 currentControllerType = new GameOfLifeController();
                 currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
+                //choose the XML file through the data folder on intelliJ
                 openFileChooser(currentControllerType, currentResourceBundle);
-
               } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
               }
             });
-
-    visuals.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 10,
-        buttonsInVeritcal, event -> {
+    //Percolation
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("PercolationSimulation"), 10,
+        buttonsInVertical, event -> {
           try {
-
             currentControllerType = new PercolationController();
             currentResourceBundle = Graphics.myPercolationSimulationResources;
+            //choose the XML file through the data folder on intelliJ
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
         });
-
-    visuals.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 20,
-        buttonsInVeritcal, event -> {
+    //Segregation
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("SegregationSimulation"), 20,
+        buttonsInVertical, event -> {
           try {
             currentControllerType = new SegregationController();
             currentResourceBundle = Graphics.mySegregationSimulationResources;
+            //choose the XML file through the data folder on intelliJ
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
         });
-
-    visuals.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 30, buttonsInVeritcal,
+    //Wa-Tor
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("WaTorSimulation"), 30, buttonsInVertical,
         event -> {
           try {
             currentControllerType = new WatorController();
             currentResourceBundle = Graphics.myWaTorSimulationResources;
+            //choose the XML file through the data folder on intelliJ
             openFileChooser(currentControllerType, currentResourceBundle);
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
         });
-
-    visuals.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 40, buttonsInVeritcal,
+    //Fire
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("FireSimulation"), 40, buttonsInVertical,
         event -> {
           try {
             currentControllerType = new FireController();
             currentResourceBundle = Graphics.myFireSimulationResources;
+            //choose the XML file through the data folder on intelliJ
             openFileChooser(currentControllerType, currentResourceBundle);
-
           } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
           }
         });
-
-    visuals
-            .createButton(Graphics.myLandingSceneResources.getString("AntSimulation"), 50, buttonsInVeritcal,
+    //Ant Forager
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("AntSimulation"), 50, buttonsInVertical,
                     event -> {
                       try {
                         currentControllerType = new AntController();
@@ -153,10 +173,9 @@ public class GameLoop extends Application {
                         e.printStackTrace();
                       }
                     });
-
-    visuals
-            .createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 60,
-                    buttonsInVeritcal,
+    //Sugar
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("SugarSimulation"), 60,
+                    buttonsInVertical,
                     event -> {
                       try {
                         currentControllerType = new SugarController();
@@ -167,42 +186,49 @@ public class GameLoop extends Application {
                         e.printStackTrace();
                       }
                     });
-
-    visuals
-            .createButton(Graphics.myLandingSceneResources.getString("Custom"), 70, buttonsInVeritcal,
+    //create a custom simulation
+    Graphics.createButton(Graphics.myLandingSceneResources.getString("Custom"), 70, buttonsInVertical,
                     event -> {
                       try {
+                        //goes to a second landing screen where you can choose all the parameters.
                         createSecondLandingScreen(currentControllerType, currentResourceBundle);
-
                       } catch (IOException | SAXException | ParserConfigurationException e) {
                         e.printStackTrace();
                       }
                     });
 
+    //vertical button layout second landing screen.
+    VBox root = new VBox();
     VBox leftOfLandingScreen = createLandingScreenCustom(root);
-
+    //add the title
     TextFlow text = new TextFlow();
     text.getChildren().add(welcome);
-
     text.setTextAlignment(TextAlignment.CENTER);
+    //set up the landing scene
     sceneLayout.setTop(text);
-    sceneLayout.setCenter(buttonsInVeritcal);
+    sceneLayout.setCenter(buttonsInVertical);
     sceneLayout.setLeft(leftOfLandingScreen);
-
     return new Scene(sceneLayout, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, backgroundColor);
-
   }
 
+  /**
+   * set this method as an action to go back to landing screen when the exit button is clicked on.
+   */
   public void setExitButtonToLandingScreen() {
     myStage.setScene(creatingLandingScreen());
   }
 
+  /**
+   * returns elements that need ot be set up in the lading screen. Controls colors and language.
+   * @param root need to put it in as a parameter because it is used in the getComboBox method to add the ComboBoxes
+   * @return a VBOX with the buttons that are needed in the landing screen to custom color and language.
+   */
   private VBox createLandingScreenCustom(VBox root){
     String[] languageOptions = {"english", "french", "spanish"};
     ComboBox typeOfLanguage = getComboBox(languageOptions, root, 1, 0);
     typeOfLanguage.setPromptText("Language");
     typeOfLanguage.setOnAction(event -> {
-      System.out.println(typeOfLanguage.getValue());
+      //change language value to whatever value is chosen in typeOfLanguage.
       language = (String) typeOfLanguage.getValue();
     });
 
@@ -217,8 +243,7 @@ public class GameLoop extends Application {
       }
     });
 
-    VBox comboBox = new VBox(typeOfLanguage, typeOfColor);
-    return comboBox;
+    return new VBox(typeOfLanguage, typeOfColor);
   }
 
   private void setMod(int mod) {
@@ -241,7 +266,7 @@ public class GameLoop extends Application {
     Graphics.play.setOnAction(event -> simulationStarted = true);
     Graphics.pause.setOnAction(event -> simulationStarted = false);
     Button downloadXMLFile = new Button();
-    visuals.downloadXMLFile.setOnAction(event -> {
+    Graphics.downloadXMLFile.setOnAction(event -> {
       try {
         new GridToXML(controllerType, simulationData);
       } catch (ParserConfigurationException | TransformerException | IOException e) {
@@ -258,14 +283,13 @@ public class GameLoop extends Application {
     myStage.setScene(scene);
   }
 
-  public Grid setSpecificConfigFile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
+  public void setSpecificConfigFile(String fileName, Controller currentControllerType, ResourceBundle currentResourceBundle)
       throws ParserConfigurationException, SAXException, IOException {
-    return setGrid(fileName, currentControllerType, currentResourceBundle);
+      setGrid(fileName, currentControllerType, currentResourceBundle);
   }
 
 
   private void openFileChooser(Controller currentControllerType, ResourceBundle currentResourceBundle) throws IOException, SAXException, ParserConfigurationException {
-
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
     if (selectedFile != null){
@@ -327,7 +351,7 @@ public class GameLoop extends Application {
     root.getChildren().add(createXMLInstance);
     createXMLInstance.setOnAction(event -> new XMLParser(readInXML));
     //root.getChildren().addAll(typeOfColor,typeOfStart,typeOfLanguage, typeOfShape, typeOfSimulation);
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT);
+    myScene = new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT);
     return readInXML;
   }
 
@@ -336,7 +360,7 @@ public class GameLoop extends Application {
 //  }
 
   private ComboBox getComboBox(String[] listOfOptions, VBox root, int listNumber, double xPosition) {
-    ComboBox typeOfComboBox = new ComboBox();
+    ComboBox<String> typeOfComboBox = new ComboBox<String>();
     //typeOfComboBox.setSt
     for(String s : listOfOptions){
       typeOfComboBox.getItems().add(s);
