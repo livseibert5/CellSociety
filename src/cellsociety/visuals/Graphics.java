@@ -39,7 +39,7 @@ public class Graphics {
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
   public static final int SCREEN_HEIGHT = 500;
-  private static Paint BACKGROUND = Color.AZURE;
+  public static Paint BACKGROUND = Color.AZURE;
   private static final int SQUARE_DIMENSIONS = 30;
 
   //properties package

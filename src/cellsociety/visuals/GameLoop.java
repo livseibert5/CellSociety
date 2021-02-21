@@ -173,7 +173,7 @@ public class GameLoop extends Application {
     root.getChildren().add(welcome);
     root.getChildren().add(instructions);
 
-    return new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, visuals.getBackgroundColor());
+    return new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT, visuals.BACKGROUND);
 
   }
 
@@ -257,7 +257,7 @@ public class GameLoop extends Application {
 
     String[] gridOptions = {"finite", "toroidal"};
     ComboBox typeOfGrid = getComboBox(gridOptions, root, 3);
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.getBackgroundColor());
+    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, visuals.BACKGROUND);
     typeOfGrid.setOnAction(event -> {
       System.out.println(typeOfGrid.getValue());
       readInXML.put("Grid", (String) typeOfGrid.getValue());});
