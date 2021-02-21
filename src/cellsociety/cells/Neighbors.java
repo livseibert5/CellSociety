@@ -68,10 +68,20 @@ public enum Neighbors {
 
   private final int[][] directions;
 
+  /**
+   * Constructor for Neighbors items, associates item with list of neighbor directions.
+   *
+   * @param directions neighbor cell coordinates
+   */
   Neighbors(int[][] directions) {
     this.directions = directions;
   }
 
+  /**
+   * Allows access to all neighbor coordinates belonging to the neighbor style.
+   *
+   * @return neighbor cell coordinates
+   */
   public int[][] directions() {
     return directions;
   }

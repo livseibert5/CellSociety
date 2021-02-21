@@ -49,8 +49,8 @@ public class TriangularGrid extends Grid {
   }
 
   /**
-   * Reads in initial grid layout from .txt file and specifies whether triangles should point
-   * up or down.
+   * Reads in initial grid layout from .txt file and specifies whether triangles should point up or
+   * down.
    *
    * @param fileName .txt file with initial layout
    */
@@ -85,10 +85,10 @@ public class TriangularGrid extends Grid {
   /**
    * Determines coordinates of all points of the triangle so view can display them.
    *
-   * @param row row location of triangle
-   * @param col column location of triangle
+   * @param row            row location of triangle
+   * @param col            column location of triangle
    * @param triangleHeight height of triangle
-   * @param triangleWidth width of triangle
+   * @param triangleWidth  width of triangle
    * @return coordinates of points of triangles
    */
   public List<Double> getCellCoordinatesRelativeToOrigin(int row, int col, int triangleHeight,
@@ -105,7 +105,6 @@ public class TriangularGrid extends Grid {
         generateTriangleUpCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
       } else {
         generateTriangleDownCoordinates(row, col, triangleHeight, triangleWidth, coordinates);
-
       }
     }
     return coordinates;
@@ -114,40 +113,29 @@ public class TriangularGrid extends Grid {
   private void generateTriangleUpCoordinates(int row, int col, int triangleHeight,
       int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((col/2.0 + 0.5) * triangleWidth);
+    coordinates.add((col / 2.0 + 0.5) * triangleWidth);
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((double) col/2.0 * triangleWidth);
+    coordinates.add((double) col / 2.0 * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
-    coordinates.add((col/2.0 + 1.0) * triangleWidth);
+    coordinates.add((col / 2.0 + 1.0) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
   }
 
   private void generateTriangleDownCoordinates(int row, int col, int triangleHeight,
       int triangleWidth,
       List<Double> coordinates) {
-    coordinates.add((double) (col/2.0 * triangleWidth));
+    coordinates.add((double) (col / 2.0 * triangleWidth));
     coordinates.add((double) (row * triangleHeight));
-    coordinates.add((col/2.0 + 1.0) * triangleWidth);
+    coordinates.add((col / 2.0 + 1.0) * triangleWidth);
     coordinates.add((double) row * triangleHeight);
-    coordinates.add((col/2.0 + 0.5) * triangleWidth);
+    coordinates.add((col / 2.0 + 0.5) * triangleWidth);
     coordinates.add((row + 1.0) * triangleHeight);
   }
 
   @Override
-  public Grid getCopyOfGrid() {
-    Grid newGrid = copySelf();
-    for (int i = 0; i < getSizeOfGrid()[0]; i++) {
-      for (int j = 0; j < getSizeOfGrid()[1]; j++) {
-        newGrid.setCellAtLocation(i, j, this.getCellAtLocation(i, j));
-        newGrid.getCellAtLocation(i, j).setNeighbors(this.getCellAtLocation(i, j).getNeighbors());
-      }
-    }
-    return newGrid;
-  }
-
-  @Override
   protected Grid copySelf() {
-    return new TriangularGrid(this.getSizeOfGrid()[1], this.getSizeOfGrid()[1], this.getFileName(), this.getType(), this.getParams(),
+    return new TriangularGrid(this.getSizeOfGrid()[1], this.getSizeOfGrid()[1], this.getFileName(),
+        this.getType(), this.getParams(),
         this.getNeighborDirections(), this.getPopulateType());
   }
 }

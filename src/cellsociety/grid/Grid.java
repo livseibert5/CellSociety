@@ -223,7 +223,7 @@ public class Grid {
   /**
    * Allows controller to make a deep copy of the grid to update the simulation without altering the
    * existing values.
-   *
+   * <p>
    * This gave a flag on design coach, but we believe it is necessary as we need to create a copy of
    * the new grid and then return it, so there is no other way to write the method
    *

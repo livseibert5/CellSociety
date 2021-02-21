@@ -19,6 +19,7 @@ public class XMLParser extends XMLReader {
 
   private Grid grid;
   Map<String, Grid> typeGridPairs;
+  private final String DEFAULT_SIZE = "10";
 
   /**
    * Constructor for XMLParser, sets the fileName that has the information XMLParser needs to set up
@@ -92,16 +93,22 @@ public class XMLParser extends XMLReader {
   private void typeGridPairs(Type type, Map<String, Double> params, Neighbors neighborType,
       String populateType) {
     typeGridPairs = new HashMap<>();
-    typeGridPairs.put("Square", grid = new Grid(Integer.parseInt(retrieveTextContent("Width")),
-        Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
-        type, params, neighborType, populateType));
-    typeGridPairs
-        .put("Toroidal", grid = new ToroidalGrid(Integer.parseInt(retrieveTextContent("Width")),
-            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+    typeGridPairs.put("Square",
+        grid = new Grid(Integer.parseInt(getInfo().getOrDefault("Width", DEFAULT_SIZE)),
+            Integer.parseInt(getInfo().getOrDefault("Height", DEFAULT_SIZE)),
+            getInfo().get("LayoutFile"),
             type, params, neighborType, populateType));
     typeGridPairs
-        .put("Triangle", grid = new TriangularGrid(Integer.parseInt(retrieveTextContent("Width")),
-            Integer.parseInt(retrieveTextContent("Height")), retrieveTextContent("LayoutFile"),
+        .put("Toroidal",
+            grid = new ToroidalGrid(Integer.parseInt(getInfo().getOrDefault("Width", DEFAULT_SIZE)),
+                Integer.parseInt(getInfo().getOrDefault("Height", DEFAULT_SIZE)),
+                getInfo().get("LayoutFile"),
+                type, params, neighborType, populateType));
+    typeGridPairs
+        .put("Triangle", grid = new TriangularGrid(
+            Integer.parseInt(getInfo().getOrDefault("Width", DEFAULT_SIZE)),
+            Integer.parseInt(getInfo().getOrDefault("Height", DEFAULT_SIZE)),
+            getInfo().get("LayoutFile"),
             type, params, neighborType, populateType));
   }
 
@@ -114,6 +121,9 @@ public class XMLParser extends XMLReader {
     getInfo().put("Author", retrieveTextContent("Author"));
     getInfo().put("Description", retrieveTextContent("Description"));
     getInfo().put("Style", retrieveTextContent("Style"));
+    getInfo().put("Width", retrieveTextContent("Width"));
+    getInfo().put("Height", retrieveTextContent("Height"));
+    getInfo().put("LayoutFile", retrieveTextContent("LayoutFile"));
   }
 
   /**

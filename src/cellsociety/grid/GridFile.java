@@ -18,8 +18,7 @@ public class GridFile {
   private final String TXT = ".txt";
 
   /**
-   * Constructor for a GridFile object that takes a name and a grid and creates
-   * a new .txt file.
+   * Constructor for a GridFile object that takes a name and a grid and creates a new .txt file.
    *
    * @param name filename for new .txt file
    * @param grid grid state to be written to the file

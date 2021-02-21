@@ -409,8 +409,7 @@ public class GameLoop extends Application {
     ComboBox typeOfStart = getComboBox(startGridOptions, root, 4, comboBoxXPosition);
     typeOfStart.setPromptText("Start Grid Layout");
     typeOfStart.setOnAction(event -> {
-      System.out.println(typeOfStart.getValue());
-      readInXML.put("Start", (String) typeOfStart.getValue());});
+      readInXML.put("PopulateType", (String) typeOfStart.getValue());});
 
     Button createXMLInstance = new Button("Start");
     createXMLInstance.setTranslateY(5*10);

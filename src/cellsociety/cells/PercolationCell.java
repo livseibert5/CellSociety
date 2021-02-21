@@ -20,7 +20,7 @@ public class PercolationCell extends Cell {
    */
   public PercolationCell(int state, int row, int col, Neighbors neighborDirections) {
     super(state, row, col, neighborDirections.directions());
-}
+  }
 
   /**
    * Cells that are BLOCKED or PERCOLATED remain BLOCKED or PERCOLATED, OPEN cells with neighbors

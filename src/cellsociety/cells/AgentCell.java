@@ -12,14 +12,15 @@ import java.util.Map;
 public class AgentCell extends Cell {
 
   private double sugar;
-  private double vision;
-  private double sugarMetabolism;
+  private final double vision;
+  private final double sugarMetabolism;
   private List<int[][]> visionLocations;
   private int[] nextLocation;
 
   public static final int ALIVE = 0;
   public static final int SUGAR_CELL = 1;
   public static final int DEAD = 2;
+
   private final double DEFAULT_SUGAR = 10.0;
   private final double DEFAULT_VISION = 3.0;
   private final double DEFAULT_METABOLISM = 2.0;
@@ -45,17 +46,13 @@ public class AgentCell extends Cell {
   }
 
   /**
-   * Next state stays the same unless it is updated in incrementSugar.
-   */
-  @Override
-  public void determineNextState() {
-    setNextState(getState());
-  }
-
-  /**
    * Determines location for agent to move to.
    */
-  public void determineNextLocation() {
+  public void determineNextLocation(SugarCell sugarCell) {
+    setNeighborDirections(sugarCell.getNeighborDirections());
+    visionLocations = new ArrayList<>();
+    getNeighborLocations();
+    setNeighborDirections();
     SugarCell maxSugar = findMaxSugar();
     if (maxSugar != null) {
       nextLocation = maxSugar.getLocation();
