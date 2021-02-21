@@ -130,12 +130,17 @@ public class Graphics {
     HBox topButtonsRight = new HBox(faster);
     topButtonsRight.setAlignment(Pos.TOP_RIGHT);
     HBox topButtons = new HBox(topButtonsRight, topButtonsLeft);
+    HBox leftButtonsTop = new HBox(slower);
+    leftButtonsTop.setAlignment(Pos.TOP_LEFT);
+    HBox leftButtonsBottom = new HBox(normal);
+    leftButtonsBottom.setAlignment(Pos.BOTTOM_LEFT);
+    HBox leftButtons2 = new HBox(leftButtonsBottom, leftButtonsTop);
     exit.setOnAction(eventExit);
     outside.autosize();
     outside.setBottom(bottomButtons);
     outside.setTop(topButtons);
-    outside.setLeft(slower);
-    outside.setRight(normal);
+    outside.setLeft(leftButtons2);
+    //outside.setRight(normal);
     outside.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     scene = new Scene(outside);
   }
