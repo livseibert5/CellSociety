@@ -3,6 +3,4 @@
   <GridType>Triangle</GridType>
   <GridPopulate>MANUAL</GridPopulate>
   <NeighborLayout>TRIANGLE_MOORE_UP</NeighborLayout>
-  <CellSize>10</CellSize>
-  <CellOutline>YES</CellOutline>
 </Style>

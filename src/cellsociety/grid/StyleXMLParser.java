@@ -35,8 +35,6 @@ public class StyleXMLParser extends XMLReader {
     buildParser();
     getInfo().put("GridType", retrieveTextContent("GridType"));
     getInfo().put("NeighborLayout", retrieveTextContent("NeighborLayout"));
-    getInfo().put("CellSize", retrieveTextContent("CellSize"));
-    getInfo().put("CellOutline", retrieveTextContent("CellOutline"));
     getInfo().put("GridPopulate", retrieveTextContent("GridPopulate"));
   }
 

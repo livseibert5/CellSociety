@@ -3,6 +3,4 @@
   <GridType>Square</GridType>
   <GridPopulate>MANUAL</GridPopulate>
   <NeighborLayout>SQUARE_MOORE</NeighborLayout>
-  <CellSize>10</CellSize>
-  <CellOutline>YES</CellOutline>
 </Style>

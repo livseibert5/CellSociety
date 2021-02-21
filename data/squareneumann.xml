@@ -3,6 +3,4 @@
   <GridType>Square</GridType>
   <GridPopulate>MANUAL</GridPopulate>
   <NeighborLayout>SQUARE_NEUMANN</NeighborLayout>
-  <CellSize>10</CellSize>
-  <CellOutline>YES</CellOutline>
 </Style>

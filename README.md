@@ -132,7 +132,8 @@ Interesting data files:
 * empty.xml - completely empty config file, throws SAX error but does not crash program
 * typelesssimulation.xml - required value type not specified, throws IllegalArgumentException but does not crash program
 * firebad.xml - specifies an unrecognized parameter with an integer value instead of a double, throws no errors
-* 
+* invalidstate.xml - fire simulation with unrecognized states in the txt file, gets rid of them and executes game play anyways
+* celloutofbounds.xml - cells are specified out of bounds, runs normally
 
 XML Layouts:
 * XML config files
@@ -148,7 +149,10 @@ XML Layouts:
   * LayoutFile contains the filename of the txt file with the initial layout
   * Style contains the filename of the xml stylesheet to pull from  
 * XML stylesheets
-
+  * Style tags wrap around the entire body of the file
+  * GridType tags specify what shape the grid should be (Square, Triangle, Toroidal)
+  * GridPopulate specifies whether the simulation grid should be populated from a txt file or chosen randomly (MANUAL or RANDOM)
+  * NeighborLayout specifies what kind of neighbors each cell in a grid should have (see Neighbors enum)
 
 Known Bugs:
 
