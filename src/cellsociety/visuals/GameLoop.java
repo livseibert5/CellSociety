@@ -72,6 +72,7 @@ public class GameLoop extends Application {
 
   private void checkSimulationEnded() {
       if (currentControllerType.simulationEnded()) {
+        if (secondController == null || secondController.simulationEnded())
           simulationStarted = false;
       }
   }
@@ -258,12 +259,12 @@ public class GameLoop extends Application {
     secondSimulationData = parse2.getInfo();
     Grid grid2 = parse2.getGrid();
     visuals = new GraphicsTwoView(controllerType, secondController, simulationType, language);
-    controllerType.setInitialGrid(grid);
     return setGraphicsParameters(controllerType, secondController, grid, grid2);
   }
 
   private Grid setGraphicsParameters(Controller controllerType, Controller secondController,
       Grid grid, Grid grid2) {
+    controllerType.setInitialGrid(grid);
     if (secondController != null) secondController.setInitialGrid(grid2);
     myScene = visuals
         .createVisualGrid(grid, currentResourceBundle, event -> setExitButtonToLandingScreen(), (Color) backgroundColor);
@@ -293,6 +294,7 @@ public class GameLoop extends Application {
       scene = secondGraphicsController.setGridView(grid, grid2, currentResourceBundle, event);
     }
     else  {
+      System.out.println("here");
        scene = visuals.setGridView(grid, currentResourceBundle, event);
     }
     myStage.setScene(scene);
@@ -318,15 +320,16 @@ public class GameLoop extends Application {
 
     FileChooser chooser = new FileChooser();
     File selectedFile = chooser.showOpenDialog(myStage);
-    simulationStarted = true;
     if (selectedFile != null){
       hasSecondSimulation = true;
       String fileName = selectedFile.getName();
       setTwoGrid(firstFileName, fileName, currentControllerType, secondController, currentResourceBundle);
     }
     else  {
+      hasSecondSimulation = false;
       setSpecificConfigFile(firstFileName, currentControllerType, currentResourceBundle);
     }
+    simulationStarted = true;
   }
 
   public HashMap<String, String> createCustom(){

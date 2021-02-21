@@ -53,13 +53,28 @@ public class GraphicsTwoView extends Graphics{
     else  {
       currentPane = addRectangularGrid(grid);
       outside.setCenter(currentPane);
-      GridPane pane2 = addRectangularGrid(secondGrid);
-      outside.setRight(pane2);
       if (firstControllerType instanceof AntController || secondControllerType instanceof SugarController)  {
         addOverlayedCells(grid, (GridPane) currentPane);
-        addOverlayedCells(secondGrid, pane2);
+      }
+    }
+
+    return setPane2(secondGrid, currentPane, outside);
+  }
+
+  private Scene setPane2(Grid secondGrid, Pane currentPane, BorderPane outside) {
+    Pane pane2;
+    if (secondGrid instanceof TriangularGrid) {
+      pane2 = addTriangularGrid(secondGrid);
+      outside.setRight(pane2);
+    }
+    else  {
+      pane2 = addRectangularGrid(secondGrid);
+      outside.setRight(pane2);
+      if (firstControllerType instanceof AntController || secondControllerType instanceof SugarController)  {
+        addOverlayedCells(secondGrid, (GridPane) pane2);
       }
     }
     return getScene();
   }
+
 }
