@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation>
+  <Type>PERCOLATIO</Type>
+  <Title>Percolatio</Title>
+  <Author>Team 9</Author>
+  <Description>Percolation but mispelled</Description>
+  <Width>8</Width>
+  <Height>8</Height>
+  <LayoutFile>percolationedges2.txt</LayoutFile>
+  <Style>squaremoore.xml</Style>
+</Simulation>

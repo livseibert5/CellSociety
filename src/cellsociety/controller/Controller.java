@@ -4,7 +4,7 @@ import cellsociety.grid.Grid;
 import java.util.HashMap;
 
 /**
- * Class that is abstract and creates methods for all contrller class Uses the grid class Called
+ * Class that is abstract and creates methods for all controller class Uses the grid class Called
  * from game loop to update game state
  *
  * @author billyluqiu
@@ -81,7 +81,7 @@ public abstract class Controller {
   /**
    * default method for simulationEnded
    *
-   * @returns true if state has not changed for any cell, false otherwise
+   * @return true if state has not changed for any cell, false otherwise
    */
   public boolean simulationEnded() {
     return simulationEnded;
@@ -111,11 +111,11 @@ public abstract class Controller {
 
   /**
    * Calculates the numbers of each type of cell
-   * @returns HashMap where the key is the type of cell and the value is the number of cells
+   * @return HashMap where the key is the type of cell and the value is the number of cells
    * of that type in the newGrid at the time
    */
   public HashMap<Integer, Integer> calculateNumberOfEachCell()  {
-    HashMap<Integer, Integer> counts = new HashMap();
+    HashMap<Integer, Integer> counts = new HashMap<>();
     int[] dims = oldGrid.getSizeOfGrid();
 
     for (int i = 0; i < dims[0]; i++) {

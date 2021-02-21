@@ -1,11 +1,8 @@
 package cellsociety.controller;
 
 import cellsociety.cells.AgentCell;
-import cellsociety.cells.EmptyCell;
 import cellsociety.cells.Neighbors;
-import cellsociety.cells.PredatorCell;
 import cellsociety.cells.SugarCell;
-import cellsociety.cells.WatorCell;
 import cellsociety.grid.Grid;
 
 public class SugarController extends Controller{

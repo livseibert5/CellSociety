@@ -80,22 +80,13 @@ public class PercolationController extends Controller {
   }
 
   private boolean simulationEndedByEdge(Grid grid, int[] dims) {
-    switch (startingEdge) {
-      case 0:
-        return checkBottomEdge(grid, dims);
-
-      case 1:
-        return checkLeftEdge(grid, dims);
-
-      case 2:
-        return checkTopEdge(grid, dims);
-
-      case 3:
-        return checkRightEdge(grid, dims);
-
-
-    }
-    return false;
+    return switch (startingEdge) {
+      case 0 -> checkBottomEdge(grid, dims);
+      case 1 -> checkLeftEdge(grid, dims);
+      case 2 -> checkTopEdge(grid, dims);
+      case 3 -> checkRightEdge(grid, dims);
+      default -> false;
+    };
   }
 
   private boolean checkLeftEdge(Grid grid, int[] dims) {
