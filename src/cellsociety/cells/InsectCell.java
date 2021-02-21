@@ -1,6 +1,9 @@
 package cellsociety.cells;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,10 +40,16 @@ public class InsectCell extends Cell {
     super(state, row, col,
         new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}});
     hasFoodItem = false;
-    orientation = Orientation.NORTH;
+    orientation = chooseStartingOrientation();
     forwardNeighbors = new ArrayList<>();
   }
 
+  private Orientation chooseStartingOrientation() {
+    List<Orientation> list = new ArrayList<Orientation>(
+        Arrays.asList(Orientation.NORTH, Orientation.SOUTH, Orientation.EAST, Orientation.WEST));
+    Collections.shuffle(list);
+    return list.get(0);
+  }
   /**
    * Ant cells always remain ants.
    */
@@ -123,14 +132,15 @@ public class InsectCell extends Cell {
    * @return next location chosen from probability function
    */
   private Cell chooseCellWithProbability(List<Cell> idealLocation) {
-    double random = Math.random();
-    double cumulativeProb = 0.0;
-    for (Cell cell : idealLocation) {
-      cumulativeProb += getWeight((ForagerCell) cell);
-      if (random <= cumulativeProb) {
-        return cell;
-      }
-    }
+//    double random = Math.random();
+//    double cumulativeProb = 0.0;
+//    for (Cell cell : idealLocation) {
+//      cumulativeProb += getWeight((ForagerCell) cell);
+//      if (random <= cumulativeProb) {
+//        return cell;
+//      }
+//    }
+    Collections.shuffle(idealLocation);
     return idealLocation.get(0);
   }
 

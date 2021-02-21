@@ -165,6 +165,7 @@ public class Graphics {
           Color circleColor = Color.rgb(Math.min(255, 150 + size),Math.min(255, 150 + size),Math.min(255, 150 + size));
           Circle circle = new Circle(SQUARE_DIMENSIONS /5, circleColor);
           pane.add(circle, j, i);
+          //System.out.println(i+" "+j);
         }
       }
     }

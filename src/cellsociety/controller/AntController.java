@@ -4,6 +4,7 @@ import cellsociety.cells.ForagerCell;
 import cellsociety.cells.InsectCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AntController extends Controller{
@@ -63,6 +64,7 @@ public class AntController extends Controller{
     while (insectCellToMove.size() > 0) {
       InsectCell insectCell = insectCellToMove.remove(0);
       int[] curLoc = insectCell.getNextLocation();
+      System.out.println(Arrays.toString(curLoc));
       ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(curLoc[0],curLoc[1]);
       foragerCell.addAnt(insectCell);
     }
