@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -74,7 +75,7 @@ public class GameLoop extends Application {
   public Scene creatingLandingScreen() {
     int baseY = 20;
     simulationStarted = false;
-    Group root = new Group();
+    VBox root = new VBox();
     VBox buttonsInVeritcal = new VBox();
     BorderPane sceneLayout = new BorderPane();
     Text welcome = visuals.constructText(baseY, 30, "Simulation Menu", FontWeight.BOLD, Graphics.FONT);
@@ -171,7 +172,6 @@ public class GameLoop extends Application {
             .createButton(Graphics.myLandingSceneResources.getString("Custom"), 70, buttonsInVeritcal,
                     event -> {
                       try {
-
                         createSecondLandingScreen(currentControllerType, currentResourceBundle);
 
                       } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -197,7 +197,7 @@ public class GameLoop extends Application {
     myStage.setScene(creatingLandingScreen());
   }
 
-  private VBox createLandingScreenCustom(Group root){
+  private VBox createLandingScreenCustom(VBox root){
     String[] languageOptions = {"english", "french", "spanish"};
     ComboBox typeOfLanguage = getComboBox(languageOptions, root, 1, 0);
     typeOfLanguage.setPromptText("Language");
@@ -282,39 +282,32 @@ public class GameLoop extends Application {
     //languages: english, spanish, and french.
     //color: dark, light, duke mode
     double comboBoxXPosition = visuals.SCREEN_WIDTH/2 - 40;
-    Group root = new Group();
     HashMap<String, String> readInXML = new HashMap<>();
-
+    VBox root = new VBox();
     String[] simulationOptions = {"Fire", "Wa-Tor", "Percolation", "Segregation", "Game of Life"};
-    ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 1, comboBoxXPosition);
-      typeOfSimulation.setOnAction(event -> {
-        readInXML.put("Type", (String) typeOfSimulation.getValue());});
+    ComboBox typeOfSimulation = getComboBox(simulationOptions, root, 0, comboBoxXPosition);
+    typeOfSimulation.setPromptText("Simulation");
+      typeOfSimulation.setOnAction(event ->
+        readInXML.put("Type", (String) typeOfSimulation.getValue()));
 
-    String[] shapeOptions = {"Triangle", "Rectangle"};
-    ComboBox typeOfShape = getComboBox(shapeOptions, root, 2, comboBoxXPosition);
-      typeOfShape.setOnAction(event -> {
-        System.out.println(typeOfShape.getValue());
-        readInXML.put("Shape", (String) typeOfShape.getValue());});
-
-    String[] gridOptions = {"finite", "toroidal"};
-    ComboBox typeOfGrid = getComboBox(gridOptions, root, 3, comboBoxXPosition);
-    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT, backgroundColor);
-    typeOfGrid.setOnAction(event -> {
-      System.out.println(typeOfGrid.getValue());
-      readInXML.put("Grid", (String) typeOfGrid.getValue());});
+    String[] shapeOptions = {"Triangle", "Square", "Toroidal"};
+    ComboBox typeOfShape = getComboBox(shapeOptions, root, 1, comboBoxXPosition);
+    typeOfShape.setPromptText("Grid Type");
+      typeOfShape.setOnAction(event ->
+        readInXML.put("GridType", (String) typeOfShape.getValue()));
 
     String[] languageOptions = {"english", "french", "spanish"};
-    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 4, comboBoxXPosition);
+    ComboBox typeOfLanguage = getComboBox(languageOptions, root, 2, comboBoxXPosition);
+    typeOfLanguage.setPromptText("Language");
     typeOfLanguage.setOnAction(event -> {
-      System.out.println(typeOfLanguage.getValue());
-      readInXML.put("Language", (String) typeOfLanguage.getValue());
+      readInXML.put("Language", ((String) typeOfLanguage.getValue()).toUpperCase(Locale.ROOT));
       language = readInXML.get("Language");
     });
 
     String[] colorOptions = {"dark", "light", "duke"};
-    ComboBox typeOfColor = getComboBox(colorOptions, root, 5, comboBoxXPosition);
+    ComboBox typeOfColor = getComboBox(colorOptions, root, 3, comboBoxXPosition);
+    typeOfColor.setPromptText("Color");
     typeOfColor.setOnAction(event -> {
-      System.out.println(typeOfColor.getValue());
       readInXML.put("Color", (String) typeOfColor.getValue());
         String color = readInXML.get("Color");
       if(Graphics.colorResourceBundle.containsKey(color)){
@@ -323,11 +316,14 @@ public class GameLoop extends Application {
     });
 
     String[] startGridOptions = {"normal", "random"};
-    ComboBox typeOfStart = getComboBox(startGridOptions, root, 6, comboBoxXPosition);
+    ComboBox typeOfStart = getComboBox(startGridOptions, root, 4, comboBoxXPosition);
+    typeOfStart.setPromptText("Start Grid Layout");
     typeOfStart.setOnAction(event -> {
       System.out.println(typeOfStart.getValue());
       readInXML.put("Start", (String) typeOfStart.getValue());});
 
+    //root.getChildren().addAll(typeOfColor,typeOfStart,typeOfLanguage, typeOfShape, typeOfSimulation);
+    myScene = new Scene(root, visuals.SCREEN_WIDTH, visuals.SCREEN_HEIGHT);
     return readInXML;
   }
 
@@ -335,15 +331,16 @@ public class GameLoop extends Application {
 //    backgroundColor =
 //  }
 
-  private ComboBox getComboBox(String[] listOfOptions, Group root, int listNumber, double xPosition) {
+  private ComboBox getComboBox(String[] listOfOptions, VBox root, int listNumber, double xPosition) {
     ComboBox typeOfComboBox = new ComboBox();
     //typeOfComboBox.setSt
     for(String s : listOfOptions){
       typeOfComboBox.getItems().add(s);
     }
-    typeOfComboBox.setTranslateX(xPosition);
-    typeOfComboBox.setTranslateY(40*listNumber);
+    //typeOfComboBox.setTranslateX(xPosition);
+    typeOfComboBox.setTranslateY(10*listNumber);
     root.getChildren().add(typeOfComboBox);
+    root.setAlignment(Pos.CENTER);
     return typeOfComboBox;
   }
 
