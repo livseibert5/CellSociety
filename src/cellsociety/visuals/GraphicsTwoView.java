@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class GraphicsTwoView extends Graphics{
@@ -40,17 +41,23 @@ public class GraphicsTwoView extends Graphics{
     return setGridView(grid, simulationResource, eventExit);
   }
 
-  @Override
-  public Scene setGridView(Grid grid, ResourceBundle simulationResource,
+  public Scene setGridView(Grid grid, Grid secondGrid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit) {
-    GridPane currentPane;
+    Pane currentPane;
+    BorderPane outside = getOutside();
     if (grid instanceof TriangularGrid) {
-      addTriangularGrid(grid);
+      currentPane = addTriangularGrid(grid);
+      outside.setCenter(currentPane);
+      outside.setRight(addTriangularGrid(grid));
     }
     else  {
       currentPane = addRectangularGrid(grid);
-      if (firstControllerType instanceof AntController || firstControllerType instanceof SugarController)  {
-        addOverlayedCells(grid, currentPane);
+      outside.setCenter(currentPane);
+      GridPane pane2 = addRectangularGrid(secondGrid);
+      outside.setRight(pane2);
+      if (firstControllerType instanceof AntController || secondControllerType instanceof SugarController)  {
+        addOverlayedCells(grid, (GridPane) currentPane);
+        addOverlayedCells(secondGrid, pane2);
       }
     }
     return getScene();
