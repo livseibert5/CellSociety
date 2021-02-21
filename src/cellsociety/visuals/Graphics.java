@@ -8,19 +8,18 @@ import cellsociety.controller.Controller;
 import cellsociety.controller.SugarController;
 import cellsociety.grid.Grid;
 import cellsociety.grid.TriangularGrid;
-import java.util.List;
+
+import java.util.*;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -30,17 +29,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ResourceBundle;
-
 
 public class Graphics {
 
   public static final String FONT = "Verdana";
   public static final int SCREEN_WIDTH = 400;
-  public static final int SCREEN_HEIGHT = 400;
-  public static final Paint BACKGROUND = Color.AZURE;
+  public static final int SCREEN_HEIGHT = 500;
   private static final int SQUARE_DIMENSIONS = 30;
 
   //properties package
@@ -52,7 +46,7 @@ public class Graphics {
   public static final String WATOR_PACKAGE = "cellsociety.visuals.resources.WaTorSimulation";
   public static final String ANT_PACKAGE = "cellsociety.visuals.resources.AntSimulation";
   public static final String SUGAR_SIMULATION = "cellsociety.visuals.resources.SugarSimulation";
-
+  public static final String COLOR_RESOURCE_BUNDLE = "cellsociety.visuals.resources.Color";
   //resource bundles for each simulation
   public static final ResourceBundle myLandingSceneResources = ResourceBundle
       .getBundle(LANDING_SCREEN_PACKAGE);
@@ -70,6 +64,7 @@ public class Graphics {
           .getBundle(ANT_PACKAGE);
   public static final ResourceBundle mySugarSimulation = ResourceBundle
           .getBundle(SUGAR_SIMULATION);
+  public static final ResourceBundle colorResourceBundle = ResourceBundle.getBundle(COLOR_RESOURCE_BUNDLE);
 
   private ResourceBundle languageResourceBundle;
 
@@ -87,6 +82,7 @@ public class Graphics {
 
   private Controller controllerType;
   private HashMap<Integer, String> stateColor;
+
   public Graphics(Controller controllerType, ResourceBundle currentResourceBundle, String language) {
     this.controllerType = controllerType;
     this.stateColor = new HashMap<>();
@@ -112,7 +108,7 @@ public class Graphics {
   }
 
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
-      EventHandler<ActionEvent> eventExit) {
+      EventHandler<ActionEvent> eventExit, Color color) {
     outside = new BorderPane();
     outside.getChildren().clear();
 
@@ -134,7 +130,9 @@ public class Graphics {
     outside.setTop(topButtons);
     outside.setLeft(slower);
     outside.setRight(normal);
+    outside.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     scene = new Scene(outside);
+
 
     return setGridView(grid, simulationResource, eventExit);
   }
@@ -233,7 +231,6 @@ public class Graphics {
   }
 
 
-
   public static Text constructText(double baseY, int size, String message, FontWeight fontWeight,
                             String font) {
     Text text = new Text(75, 100, message);
@@ -244,8 +241,9 @@ public class Graphics {
     double ascent = -textBounds.getMinY();
     double width = textBounds.getWidth();
 
-    double leftX = (SCREEN_WIDTH - width) / 2;
-    double topY = baseY - ascent;
+    double leftX = 0;
+           // (SCREEN_WIDTH - width) / 2;
+    double topY = baseY;
     text.relocate(leftX, topY);
 
     return text;
@@ -257,16 +255,11 @@ public class Graphics {
     return controllerType.getNewGrid();
   }
 
-
-
-
-
-
-  public static void createButton(String buttonName, double baseY, Group root,
+  public static void createButton(String buttonName, double baseY, VBox root,
                            EventHandler<ActionEvent> event) {
     Button button = new Button(buttonName);
 
-    double xPosition = ((SCREEN_WIDTH / 2) - 50);
+    double xPosition = 50;
     double yPosition = baseY + 100;
 
     button.setTranslateY(yPosition);
