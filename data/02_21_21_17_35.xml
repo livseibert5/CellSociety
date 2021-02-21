@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Simulation>
+    <Type>LIFE</Type>
+    <Description>Beacon</Description>
+    <Title>Game of Life</Title>
+    <Author>Team 9</Author>
+    <Style>squaremoore.xml</Style>
+    <ConfigParams/>
+    <Width>6</Width>
+    <Height>6</Height>
+    <LayoutFile>02_21_21_17_35.txt</LayoutFile>
+</Simulation>
