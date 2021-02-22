@@ -405,7 +405,7 @@ public class GameLoop extends Application {
       }
     });
 
-    String[] startGridOptions = {"MANUAL", "RANDOM"};
+    String[] startGridOptions = {"RANDOM"};
     ComboBox typeOfStart = getComboBox(startGridOptions, root, 4, comboBoxXPosition);
     typeOfStart.setPromptText("Start Grid Layout");
     typeOfStart.setOnAction(event -> {
@@ -452,6 +452,7 @@ public class GameLoop extends Application {
     simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
     visuals = new Graphics(controllerType, simulationType, language);
+    simulationStarted = true;
     return setGraphicsParameters(controllerType, null, grid, grid);
   }
 
@@ -461,7 +462,6 @@ public class GameLoop extends Application {
     for(String s : listOfOptions){
       typeOfComboBox.getItems().add(s);
     }
-    //typeOfComboBox.setTranslateX(xPosition);
     typeOfComboBox.setTranslateY(10*listNumber);
     root.getChildren().add(typeOfComboBox);
     root.setAlignment(Pos.CENTER);
