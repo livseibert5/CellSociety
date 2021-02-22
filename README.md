@@ -171,6 +171,12 @@ XML Layouts:
 
 Known Bugs:
 
+* the custom simulation throws an error when you try to run it with the wa-tor simulation, the percolation simulation,
+  or the segregation simulation.
+  
+* the custom simulation throws an error whenever it runs because the oldGrid is null. So there is a null pointer exception. 
+
+
 Extra credit:
 
 ### Impressions
