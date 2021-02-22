@@ -6,20 +6,20 @@ import cellsociety.grid.Grid;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AntController extends Controller{
+public class AntController extends Controller {
 
   private final List<InsectCell> insectCellToMove = new ArrayList<>();
 
   /**
    * default constructor for ant controller
    */
-  public AntController()  {
+  public AntController() {
     super();
   }
 
   /**
-   * overridden method for setting initial grid that also
-   * sets initial pheromones and places ants
+   * overridden method for setting initial grid that also sets initial pheromones and places ants
+   *
    * @param grid grid of cells
    */
   @Override
@@ -48,17 +48,19 @@ public class AntController extends Controller{
     int[] nest = findSource(grid, ForagerCell.NEST);
     int[] food = findSource(grid, ForagerCell.FOOD_SOURCE);
     for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
-      for (int j = 0; j <grid.getSizeOfGrid()[1]; j++) {
+      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
         int[] location = {i, j};
-        ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones(ForagerCell.HOME, ForagerCell.MAX_PHEROMONES / distanceFrom(location, nest));
-        ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones(ForagerCell.FOOD, ForagerCell.MAX_PHEROMONES / distanceFrom(location, food));
+        ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones(ForagerCell.HOME,
+            ForagerCell.MAX_PHEROMONES / distanceFrom(location, nest));
+        ((ForagerCell) grid.getCellAtLocation(i, j)).setPheromones(ForagerCell.FOOD,
+            ForagerCell.MAX_PHEROMONES / distanceFrom(location, food));
       }
     }
   }
 
   private int[] findSource(Grid grid, int type) {
     for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
-      for (int j = 0; j <grid.getSizeOfGrid()[1]; j++) {
+      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
         if (grid.getCellAtLocation(i, j).getState() == type) {
           return new int[]{i, j};
         }
@@ -68,13 +70,13 @@ public class AntController extends Controller{
   }
 
   private double distanceFrom(int[] locationOne, int[] locationTwo) {
-    return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math.pow(locationOne[1] - locationTwo[1], 2));
+    return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math
+        .pow(locationOne[1] - locationTwo[1], 2));
   }
 
   /**
-   * overridden method for updating state of the grid
-   * updates ant locations and moves them to new cells
-   * resets controller after that is done
+   * overridden method for updating state of the grid updates ant locations and moves them to new
+   * cells resets controller after that is done
    */
   @Override
   public void updateState() {
@@ -92,7 +94,7 @@ public class AntController extends Controller{
     int[] dims = newGrid.getSizeOfGrid();
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
+        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i, j);
         insectCellToMove.addAll(foragerCell.getAnts());
         foragerCell.getAnts().clear();
       }
@@ -100,19 +102,20 @@ public class AntController extends Controller{
   }
 
   private void moveAntCells(Grid newGrid) {
-    for (InsectCell cell: insectCellToMove) {
-      ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(cell.getNextLocation()[0],cell.getNextLocation()[1]);
-      cell.setLocation(cell.getNextLocation()[0],cell.getNextLocation()[1]);
+    for (InsectCell cell : insectCellToMove) {
+      ForagerCell foragerCell = (ForagerCell) newGrid
+          .getCellAtLocation(cell.getNextLocation()[0], cell.getNextLocation()[1]);
+      cell.setLocation(cell.getNextLocation()[0], cell.getNextLocation()[1]);
       foragerCell.addAnt(cell);
     }
   }
 
 
-  private void determineNextStates( Grid newGrid) {
+  private void determineNextStates(Grid newGrid) {
     int[] dims = newGrid.getSizeOfGrid();
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i,j);
+        ForagerCell foragerCell = (ForagerCell) newGrid.getCellAtLocation(i, j);
         foragerCell.determineNextAction();
       }
     }
@@ -120,6 +123,7 @@ public class AntController extends Controller{
 
   /**
    * simulation never ends for ant simulation
+   *
    * @return false all the time, every single time
    */
   @Override
