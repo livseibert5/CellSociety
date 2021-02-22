@@ -32,8 +32,9 @@ public class SegregationController extends Controller {
   }
 
   /**
-   * method to set intial grid of segregation cell and make sure that the map is properly set
-   * as well as any empty cells
+   * method to set intial grid of segregation cell and make sure that the map is properly set as
+   * well as any empty cells
+   *
    * @param oldGrid initial grid of the simulation
    */
   @Override
@@ -84,7 +85,8 @@ public class SegregationController extends Controller {
     newGrid.initializeCells();
   }
 
-  private void setNewCellStateAndAddToEmptyLocations(Grid newGrid, int i, int j, int oldState, int newState) {
+  private void setNewCellStateAndAddToEmptyLocations(Grid newGrid, int i, int j, int oldState,
+      int newState) {
     if (newState == SegregationCell.MOVE) {
       statesToAddAtCurrentIteration.add(oldState);
       newGrid.setCellAtLocation(i, j, new EmptyCell(SegregationCell.EMPTY, i, j));
@@ -123,10 +125,10 @@ public class SegregationController extends Controller {
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
         if (oldGrid.getCellAtLocation(i, j).getState() == SegregationCell.EMPTY && newGrid
-            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY ) {
+            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY) {
           continue;
-        } else if (oldGrid.getCellAtLocation(i, j).getState() == SegregationCell.EMPTY  || newGrid
-            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY ) {
+        } else if (oldGrid.getCellAtLocation(i, j).getState() == SegregationCell.EMPTY || newGrid
+            .getCellAtLocation(i, j).getState() == SegregationCell.EMPTY) {
           return false;
         }
         if (checkIfCellStateHasChanged(oldGrid, newGrid, i, j)) {

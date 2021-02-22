@@ -17,6 +17,7 @@ public class PercolationController extends Controller {
   public static final int RIGHT = 1;
   public static final int BOTTOM = 2;
   public static final int LEFT = 3;
+
   /**
    * Constructor to create the controller
    */
@@ -67,8 +68,7 @@ public class PercolationController extends Controller {
   }
 
   /**
-   * checks to see if simulation ended by seeing if cell is percolrated or if state has not
-   * changed
+   * checks to see if simulation ended by seeing if cell is percolrated or if state has not changed
    *
    * @return true if simulation ended
    */
