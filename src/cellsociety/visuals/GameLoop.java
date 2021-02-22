@@ -414,10 +414,46 @@ public class GameLoop extends Application {
     Button createXMLInstance = new Button("Start");
     createXMLInstance.setTranslateY(5*10);
     root.getChildren().add(createXMLInstance);
-    createXMLInstance.setOnAction(event -> new XMLParser(readInXML));
-    //root.getChildren().addAll(typeOfColor,typeOfStart,typeOfLanguage, typeOfShape, typeOfSimulation);
+    createXMLInstance.setOnAction(event -> {
+              try {
+                if(readInXML.get("Type").equals("FIRE")){
+                  currentControllerType = new FireController();
+                  currentResourceBundle = Graphics.myFireSimulationResources;
+                }else if(readInXML.get("Type").equals("WATOR")){
+                  currentControllerType = new WatorController();
+                  currentResourceBundle = Graphics.myWaTorSimulationResources;
+                }else if(readInXML.get("Type").equals("PERCOLATION")){
+                  currentControllerType = new PercolationController();
+                  currentResourceBundle = Graphics.myPercolationSimulationResources;
+                }else if(readInXML.get("Type").equals("SEGREGATION")){
+                  currentControllerType = new SegregationController();
+                  currentResourceBundle = Graphics.mySegregationSimulationResources;
+                }else if(readInXML.get("Type").equals("LIFE")){
+                  currentControllerType = new GameOfLifeController();
+                  currentResourceBundle = Graphics.myGameOfLifeSimulationResources;
+                }
+                setCustomGrid(new XMLParser(readInXML), currentControllerType, currentResourceBundle);
+
+              } catch (IOException e) {
+                e.printStackTrace();
+              } catch (SAXException e) {
+                e.printStackTrace();
+              } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+              }
+            }
+    );
     myScene = new Scene(root, Graphics.SCREEN_WIDTH, Graphics.SCREEN_HEIGHT);
     return readInXML;
+  }
+
+  private Grid setCustomGrid(XMLParser parse, Controller controllerType, ResourceBundle simulationType)
+          throws IOException, SAXException, ParserConfigurationException {
+    parse.readFile();
+    simulationData = parse.getInfo();
+    Grid grid = parse.getGrid();
+    visuals = new Graphics(controllerType, simulationType, language);
+    return setGraphicsParameters(controllerType, null, grid, grid);
   }
 
   private ComboBox getComboBox(String[] listOfOptions, VBox root, int listNumber, double xPosition) {
