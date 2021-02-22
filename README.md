@@ -130,11 +130,26 @@ Features implemented:
 * Saving current configuration state as XML file
 * Randomized initial configuration
 * Different languages
-* Colors (in progress)
+* Colors 
+* Side by side view
+* Statistics about grid type (not fully implemented)
+* 
 
 ### Notes/Assumptions
 
 Assumptions or Simplifications:
+
+* Percolation simulation only assumes that one edge is initially percolated
+* Wator simulation has fixed values for fish/shark spawn/death
+* Ant simulation just darkens circle if more ants are on the grid
+* Sugar gradient becomes black if it's dark enough
+* Will always ask for two simulation files and if the second simulation isn't selected it
+defaults to one simulation
+* Grid does not auto resize if two grids are different size
+* Moving cells for wator is purely random process, same for segregation
+* Statistics for grid type is not fully implemented in front end
+* Probability for ant movement is just random
+* Triangular grid does not work for the two additional simulations
 
 Interesting data files:
 
@@ -176,6 +191,7 @@ Known Bugs:
   
 * the custom simulation throws an error whenever it runs because the oldGrid is null. So there is a null pointer exception. 
 
+* First file chosen must be non empty
 
 Extra credit:
 
