@@ -449,7 +449,6 @@ public class GameLoop extends Application {
 
   private Grid setCustomGrid(XMLParser parse, Controller controllerType, ResourceBundle simulationType)
           throws IOException, SAXException, ParserConfigurationException {
-    parse.readFile();
     simulationData = parse.getInfo();
     Grid grid = parse.getGrid();
     visuals = new Graphics(controllerType, simulationType, language);
