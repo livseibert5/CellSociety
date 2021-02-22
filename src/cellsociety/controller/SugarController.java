@@ -5,9 +5,9 @@ import cellsociety.cells.Neighbors;
 import cellsociety.cells.SugarCell;
 import cellsociety.grid.Grid;
 
-public class SugarController extends Controller{
+public class SugarController extends Controller {
 
-  public SugarController()  {
+  public SugarController() {
     super();
   }
 
@@ -37,21 +37,23 @@ public class SugarController extends Controller{
     int[] peakOne = {grid.getSizeOfGrid()[0] / 4, grid.getSizeOfGrid()[1] / 4};
     int[] peakTwo = {grid.getSizeOfGrid()[0] * 3 / 4, grid.getSizeOfGrid()[1] * 3 / 4};
     for (int i = 0; i < grid.getSizeOfGrid()[0]; i++) {
-      for (int j = 0; j <grid.getSizeOfGrid()[1]; j++) {
+      for (int j = 0; j < grid.getSizeOfGrid()[1]; j++) {
         int[] location = {i, j};
-        double distance = Math.min(distanceFrom(location, peakOne), distanceFrom(location, peakTwo));
+        double distance = Math
+            .min(distanceFrom(location, peakOne), distanceFrom(location, peakTwo));
         ((SugarCell) grid.getCellAtLocation(i, j)).setMaxSugarCapacity(10 / distance);
       }
     }
   }
 
   private double distanceFrom(int[] locationOne, int[] locationTwo) {
-    return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math.pow(locationOne[1] - locationTwo[1], 2));
+    return Math.sqrt(Math.pow(locationOne[0] - locationTwo[0], 2) + Math
+        .pow(locationOne[1] - locationTwo[1], 2));
   }
 
   /**
-   * method that overloads the updateState method
-   * determines next location for all cells and moves the agent cells accordingly
+   * method that overloads the updateState method determines next location for all cells and moves
+   * the agent cells accordingly
    */
   @Override
   public void updateState() {
@@ -69,7 +71,7 @@ public class SugarController extends Controller{
       for (int j = 0; j < dims[1]; j++) {
         SugarCell currentCell = (SugarCell) oldGrid.getCellAtLocation(i, j);
         currentCell.determineNextState();
-        if (currentCell.getHasAgent())  {
+        if (currentCell.getHasAgent()) {
           AgentCell agentCell = currentCell.getAgent();
           agentCell.determineNextLocation(currentCell);
         }
@@ -82,16 +84,17 @@ public class SugarController extends Controller{
       for (int j = 0; j < dims[1]; j++) {
 
         SugarCell sugarCell = (SugarCell) oldGrid.getCellAtLocation(i, j);
-        if (sugarCell.getHasAgent())  {
+        if (sugarCell.getHasAgent()) {
           AgentCell agentCell = sugarCell.getAgent();
           int[] newLocation = agentCell.getNextLocation();
-          SugarCell newCellLocation = (SugarCell) newGrid.getCellAtLocation(newLocation[0], newLocation[1]);
+          SugarCell newCellLocation = (SugarCell) newGrid
+              .getCellAtLocation(newLocation[0], newLocation[1]);
           newCellLocation.setAgent(agentCell);
           if (newLocation[0] != i || newLocation[1] != j) {
             sugarCell.removeAgent();
           }
           agentCell.incrementSugar(newCellLocation.getSugar());
-          if (agentCell.getNextState() == AgentCell.DEAD)  {
+          if (agentCell.getNextState() == AgentCell.DEAD) {
             newCellLocation.removeAgent();
           }
         }
@@ -102,6 +105,7 @@ public class SugarController extends Controller{
 
   /**
    * sugar simualtion never ends
+   *
    * @return false all the time, everytime
    */
   @Override

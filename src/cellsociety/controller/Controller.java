@@ -18,7 +18,6 @@ public abstract class Controller {
 
   /**
    * Creates controller and creates copy of grid for new grid
-   *
    */
 
   public Controller() {
@@ -111,10 +110,11 @@ public abstract class Controller {
 
   /**
    * Calculates the numbers of each type of cell
-   * @return HashMap where the key is the type of cell and the value is the number of cells
-   * of that type in the newGrid at the time
+   *
+   * @return HashMap where the key is the type of cell and the value is the number of cells of that
+   * type in the newGrid at the time
    */
-  public HashMap<Integer, Integer> calculateNumberOfEachCell()  {
+  public HashMap<Integer, Integer> calculateNumberOfEachCell() {
     HashMap<Integer, Integer> counts = new HashMap<>();
     int[] dims = oldGrid.getSizeOfGrid();
 

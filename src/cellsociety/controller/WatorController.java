@@ -52,8 +52,8 @@ public class WatorController extends Controller {
     int[] dims = oldGrid.getSizeOfGrid();
     for (int i = 0; i < dims[0]; i++) {
       for (int j = 0; j < dims[1]; j++) {
-        if (oldGrid.getCellAtLocation(i, j).getState() != WatorCell.EMPTY)  {
-          WatorCell watorCell = (WatorCell) oldGrid.getCellAtLocation(i,j);
+        if (oldGrid.getCellAtLocation(i, j).getState() != WatorCell.EMPTY) {
+          WatorCell watorCell = (WatorCell) oldGrid.getCellAtLocation(i, j);
           watorCell.determineAction();
         }
       }
@@ -107,7 +107,8 @@ public class WatorController extends Controller {
     } else if (watorCell.getState() == WatorCell.PREY) {
       HashMap<String, Double> params = new HashMap<>();
       params.put("breedTime", ((PreyCell) watorCell).getBreedTime());
-      newGrid.setCellAtLocation(i, j, new PreyCell(WatorCell.PREY, i, j, params, Neighbors.SQUARE_NEUMANN));
+      newGrid.setCellAtLocation(i, j,
+          new PreyCell(WatorCell.PREY, i, j, params, Neighbors.SQUARE_NEUMANN));
     }
   }
 

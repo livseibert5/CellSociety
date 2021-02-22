@@ -20,7 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class GraphicsTwoView extends Graphics{
+public class GraphicsTwoView extends Graphics {
 
   private Controller secondControllerType;
   private Controller firstControllerType;
@@ -31,6 +31,7 @@ public class GraphicsTwoView extends Graphics{
     firstControllerType = controllerType;
     secondControllerType = secondController;
   }
+
   @Override
   public Scene createVisualGrid(Grid grid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit, Color color) {
@@ -43,8 +44,9 @@ public class GraphicsTwoView extends Graphics{
 
   public Scene setGridView(Grid grid, Grid secondGrid, ResourceBundle simulationResource,
       EventHandler<ActionEvent> eventExit, boolean firstSimulation, boolean secondSimulation) {
-    if (firstSimulation)
+    if (firstSimulation) {
       super.setGridView(grid, simulationResource, eventExit);
+    }
     BorderPane outside = super.getOutside();
     if (secondSimulation) {
       return setPane2(secondGrid, outside);
@@ -52,16 +54,16 @@ public class GraphicsTwoView extends Graphics{
     return getScene();
   }
 
-  private Scene setPane2(Grid secondGrid,  BorderPane outside) {
+  private Scene setPane2(Grid secondGrid, BorderPane outside) {
     Pane pane2;
     if (secondGrid instanceof TriangularGrid) {
       pane2 = addTriangularGrid(secondGrid);
       outside.setRight(pane2);
-    }
-    else  {
+    } else {
       pane2 = addRectangularGrid(secondGrid);
       outside.setRight(pane2);
-      if (firstControllerType instanceof AntController || secondControllerType instanceof SugarController)  {
+      if (firstControllerType instanceof AntController
+          || secondControllerType instanceof SugarController) {
         addOverlayedCells(secondGrid, (GridPane) pane2);
       }
     }
