@@ -462,7 +462,6 @@ public class GameLoop extends Application {
     for(String s : listOfOptions){
       typeOfComboBox.getItems().add(s);
     }
-    //typeOfComboBox.setTranslateX(xPosition);
     typeOfComboBox.setTranslateY(10*listNumber);
     root.getChildren().add(typeOfComboBox);
     root.setAlignment(Pos.CENTER);
