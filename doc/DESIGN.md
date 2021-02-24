@@ -59,5 +59,16 @@ on the board and could easily determine the neighbors of any given cell.
 
 #### Easy to Add Features
 
+It's easy to add new simulation types to the game, as already-written classes do not have to be added
+to in order to create these new simulations. The abstract Controller and abstract Cell class makes it
+so that adding a new simulation type is as easy as creating a new Controller and Cell type for the new
+simulation. Once XML config files are created for the new simulation, the new types of Cells can be used
+to populate the Grid, and the new Controller can be used to update the Grid, which makes the simulation run.
+
 #### Other Features not yet Done
+
+The custom simulation screen is not completely done. While you can create a random layout for some basic
+simulation types with it, it does not let you specify the starting layout manually or specify the neighbor
+types for the custom simulation. Additionally, it does not yet have robust error handling to ensure that
+the parameters selected will create a functional simulation.
 
