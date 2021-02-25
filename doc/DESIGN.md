@@ -1,5 +1,5 @@
 # Cell Society Design Final
-### Names Livia Seibert, Billy Luqiu, Lola Maglione
+### Names: Livia Seibert, Billy Luqiu, Lola Maglione
 
 ## Team Roles and Responsibilities
 
@@ -11,7 +11,10 @@
 
  * Team Member #2
 
- * Team Member #3
+ * Team Member #3: Lola Maglione
+    
+    * My role was to create the front-end. I was in charge of creating the GUI and implementing all the 
+    visualization features. I wrote the GameLoop and Graphics classes. 
 
 
 ## Design goals
@@ -54,6 +57,12 @@ that that choice led to a two-way dependency between Grid and Cell and was not a
 choice to maximize encapsulation. In order to remedy this, we had Grid compile a list of the
 neighbors of each cell and pass it back to the cell, as Grid already had access to all the cells
 on the board and could easily determine the neighbors of any given cell.
+
+Another difference from the plan is that the Graphics and the GameLoop classes are not divided equally
+into all the visuals in the Graphics and only what need to run in the GameLoop (which was the original
+plan). Instead, the GameLoop also contains a lot of things that affect the visual. This was mainly because
+the GameLoop and Graphics class did not have a well defined job description, so it made it hard for me (lola)
+to understand specifically where to draw the line. 
 
 ## New Features HowTo
 

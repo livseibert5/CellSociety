@@ -178,7 +178,6 @@ public class Graphics {
 
   /**
    * set the grid depending on which simulation is chosen.
-   *
    * @param grid               grid created when a simulation is chosen.
    * @param simulationResource resource bundle that correlates with the simulation chosen.
    * @param eventExit          event that makes the scene go back to the landing screen.
