@@ -21,6 +21,10 @@
 
 #### What Features are Easy to Add
 
+We wanted a new simulation to be easy to add. This is why we created abstract cells and controller classes, 
+so you would have to extend a class to create new type of cell and new type of controller, but you would just 
+have to adapt it to the new simulation. 
+
 ## High-level Design
 
 #### Core Classes
@@ -34,6 +38,14 @@ and it has two subclasses, ToroidalGrid and TriangularGrid, that extend its func
 to create different types of grids. XMLReader, XMLParser, and StyleXMLParser are also important
 because they read in the config files and setup the initial state of game play, passing the
 needed parameters to each simulation type.
+
+Another core class is Graphics because it is in charge of all the visuals. In the Graphics 
+class all the buttons are created and the color of the cell's state are set depending on what 
+simulation is running. It is also where all the resource bundles are initialized and declared. 
+In the graphics class the shape of the cell is set and how the grid of the simulation is going to 
+look is defined. This takes us to another core class, the GameLoop. The GameLoop is what runs the 
+program, where the landing screen is set, where the button events are created, and where the gridView is
+updated. 
 
 ## Assumptions that Affect the Design
 
@@ -58,13 +70,20 @@ choice to maximize encapsulation. In order to remedy this, we had Grid compile a
 neighbors of each cell and pass it back to the cell, as Grid already had access to all the cells
 on the board and could easily determine the neighbors of any given cell.
 
-Another difference from the plan is that the Graphics and the GameLoop classes are not divided equally
+Another difference from the plan is that the Graphics, and the GameLoop classes are not divided equally
 into all the visuals in the Graphics and only what need to run in the GameLoop (which was the original
 plan). Instead, the GameLoop also contains a lot of things that affect the visual. This was mainly because
-the GameLoop and Graphics class did not have a well defined job description, so it made it hard for me (lola)
-to understand specifically where to draw the line. 
+the GameLoop and Graphics class did not have a well-defined job description, so it made it hard for me (lola)
+to understand specifically where to draw the line. Something else that was different in the display part of the plan
+was that we had not thought of using file chooser. In the final project, to implement whatever simulation you 
+have to choose a file yourself with file chooser. 
 
 ## New Features HowTo
+
+The user can already change features in a simulation like color and language, but they still can't change them while the
+simulation is running. We could do that by updating the language and the color in the step method and adding a ComboBox
+in the simulation grid view. The updateGrid method could check for the value in the ComboBox and set the color of the
+background, and the language to what the value in each ComboBox is. 
 
 #### Easy to Add Features
 
@@ -74,10 +93,20 @@ so that adding a new simulation type is as easy as creating a new Controller and
 simulation. Once XML config files are created for the new simulation, the new types of Cells can be used
 to populate the Grid, and the new Controller can be used to update the Grid, which makes the simulation run.
 
+You would also have to create a new button for the simulation in order to set the specific controller and specific
+colors for the cell states. You would create a resource bundle with the amount of states the cell has, and the colors
+you want each cell to represent. Then, once the resource bundle is added and defined in the graphics class, you would set
+it when the button for the simulation is pressed. 
+
 #### Other Features not yet Done
 
 The custom simulation screen is not completely done. While you can create a random layout for some basic
 simulation types with it, it does not let you specify the starting layout manually or specify the neighbor
 types for the custom simulation. Additionally, it does not yet have robust error handling to ensure that
 the parameters selected will create a functional simulation.
+
+
+Another feature on the front-end that could not be done was implementing the scroll bar. Right now when there are
+two screens, you can only see the second screen if you make the GUI larger manually. It would be good if we had 
+implemented a scroll bar to let the user know that there is something beyond what they are seeing. 
 
