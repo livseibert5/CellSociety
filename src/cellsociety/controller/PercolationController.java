@@ -6,7 +6,10 @@ import cellsociety.grid.Grid;
 /**
  * Class that controls the percolration game, Uses the grid class and extends basic controller class
  * Called from game loop to update percolation state
- *
+ * Assumptions: Percolration rules as described on course page
+ * Only one starting edge and ending edge will be checked for
+ * Dependencies, Grid and cell class, Java collections
+ * Example usage, see controller specs
  * @author billyluqiu
  */
 public class PercolationController extends Controller {

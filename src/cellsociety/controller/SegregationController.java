@@ -14,7 +14,9 @@ import java.util.List;
 /**
  * Class that controls the Segregation game, Uses the grid class and extends basic controller class
  * Called from game loop to update segregation state
- *
+ * Assumptions: Segregation rules as described on course page
+ * Dependencies, Grid and cell class, Java collections
+ * Example usage, see controller specs
  * @author billyluqiu
  */
 public class SegregationController extends Controller {
