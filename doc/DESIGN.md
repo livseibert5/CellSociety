@@ -27,10 +27,11 @@
 
 We wanted a new simulation to be easy to add. This is why we created abstract cells and controller classes, 
 so you would have to extend a class to create new type of cell and new type of controller, but you would just 
-have to adapt it to the new simulation. 
+have to adapt it to the new simulation.
 
-We also wanted the front end to be easily adapable to different language and color schemes, which is why we decided 
-to 
+We also wanted the front end to be easily adaptable to different language and color schemes, which is why we decided 
+to use resources files to handle that aspect, so we could easily swap out the resources files.
+
 
 ## High-level Design
 
@@ -46,6 +47,13 @@ to create different types of grids. XMLReader, XMLParser, and StyleXMLParser are
 because they read in the config files and setup the initial state of game play, passing the
 needed parameters to each simulation type.
 
+The basic functionality of all controllers is implemented in the abstract controller class. The
+abstract controller class provides implementations for setting the initial grid, resetting the controller
+in between runs, updating the state of the controller, determining whether the simulation ended or not,
+and getting the new state of the grid. This allows for the most basic controller tasks
+to only be written in that class, and overriden as necessary. It also provides a simple API 
+for the graphics to call, as the methods are given their own implementations. 
+
 Another core class is Graphics because it is in charge of all the visuals. In the Graphics 
 class all the buttons are created and the color of the cell's state are set depending on what 
 simulation is running. It is also where all the resource bundles are initialized and declared. 
@@ -57,7 +65,11 @@ updated.
 ## Assumptions that Affect the Design
 
 #### Features Affected by Assumptions
+Assumptions regarding the simulations are documented in the controllers readmes. For instance,
+the percolation controller assumes only one edge is percolated at the start.
 
+It is assumed that for the two separate views, they will have the same controller and simulation type,
+if not, an exception will occur. 
 
 ## Significant differences from Original Plan
 
@@ -117,3 +129,6 @@ Another feature on the front-end that could not be done was implementing the scr
 two screens, you can only see the second screen if you make the GUI larger manually. It would be good if we had 
 implemented a scroll bar to let the user know that there is something beyond what they are seeing. 
 
+A feature that is halfway implemented is the second view of the simulation that displays
+stats on the simulation such as number of each type of cell. The logic is handled in the controller 
+to return the map, but that map is currently not being displayed in the front end. 
