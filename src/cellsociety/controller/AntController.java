@@ -5,7 +5,14 @@ import cellsociety.cells.InsectCell;
 import cellsociety.grid.Grid;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Class that controls the Ant game, Uses the grid class and extends basic controller class
+ * Called from game loop to update segregation state
+ * Assumptions: Ant rules as described on course page
+ * Dependencies, Grid and cell class, Java collections
+ * Example usage, see controller specs
+ * @author billyluqiu
+ */
 public class AntController extends Controller {
 
   private final List<InsectCell> insectCellToMove = new ArrayList<>();

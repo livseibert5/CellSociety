@@ -14,7 +14,11 @@ import java.util.ArrayList;
 /**
  * Class that controls the Wator game, Uses the grid class and extends basic controller class Called
  * from game loop to update Wator state
- *
+ * Class that controls the Segregation game, Uses the grid class and extends basic controller class
+ * Called from game loop to update segregation state
+ * Assumptions: wator rules as described on course page
+ * Dependencies, Grid and cell class, Java collections
+ * Example usage, see controller specs
  * @author billyluqiu
  */
 public class WatorController extends Controller {

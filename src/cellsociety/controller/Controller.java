@@ -6,7 +6,10 @@ import java.util.HashMap;
 /**
  * Class that is abstract and creates methods for all controller class Uses the grid class Called
  * from game loop to update game state
- *
+ * Assumptions: Will not be called, but subclass will be inherited
+ * Dependencies, Grid and cell class, Java collections
+ * Example usage, create instnace, and you can reset controller/update state
+ * and get new grid corresponding to the new state
  * @author billyluqiu
  */
 

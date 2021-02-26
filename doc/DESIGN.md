@@ -9,7 +9,11 @@
     and the XML stylesheet layout, as well as the classes to parse this XML. I also created
       the Cell and grid classes.
 
- * Team Member #2
+ * Team Member #2 Billy Luqiu
+    * My role was to create the controller for the project. I created all classes in the controller
+    package and implemented the rules for all of them. I also helped out on the front end,
+      and implemented the split screen feature as well as the extra languages during week 2 
+      of the project. 
 
  * Team Member #3: Lola Maglione
     
@@ -24,6 +28,9 @@
 We wanted a new simulation to be easy to add. This is why we created abstract cells and controller classes, 
 so you would have to extend a class to create new type of cell and new type of controller, but you would just 
 have to adapt it to the new simulation. 
+
+We also wanted the front end to be easily adapable to different language and color schemes, which is why we decided 
+to 
 
 ## High-level Design
 

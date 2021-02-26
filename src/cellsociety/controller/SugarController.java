@@ -5,12 +5,25 @@ import cellsociety.cells.Neighbors;
 import cellsociety.cells.SugarCell;
 import cellsociety.grid.Grid;
 
+/**
+ * Class that controls the Sugar game, Uses the grid class and extends basic controller class Called
+ * from game loop to update Sugar state
+ * Assumptions: Sugar rules as described on course page, only works for first type of sugar simulation
+ * Dependencies, Grid and cell class
+ * Example usage, see controller specs
+ * @author billyluqiu
+ */
 public class SugarController extends Controller {
 
   public SugarController() {
     super();
   }
 
+  /**
+   * sets initial grid of controller and loads the agents and sets the sugar states for all
+   * cells in the grid
+   * @param grid non null grid
+   */
   @Override
   public void setInitialGrid(Grid grid) {
     super.setInitialGrid(grid);
